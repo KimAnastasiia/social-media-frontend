@@ -1,24 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+
+import Menu from './CommonParts/Menu';
+import { Route, Routes, useHref } from "react-router-dom"
+import LoginUser from './User/LoginUser';
+import {Box, Hide, Show, useStatStyles} from '@chakra-ui/react'
+import Registration from './User/Registration';
+import React,{useState, useEffect} from "react"
+import PasswordUser from './User/PasswordUser';
 
 function App() {
+
+  const [login, setLogin]=useState("")
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Box >
+      <Menu/>
+      <Routes>
+        <Route  path='/' element={<LoginUser setLogin={setLogin}/>} />
+        <Route  path='/registration' element={<Registration/>} />
+        <Route  path='/verification/password' element={<PasswordUser  login={login}/>} />
+      </Routes>
+   </Box>
   );
 }
 
