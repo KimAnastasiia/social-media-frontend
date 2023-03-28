@@ -1,17 +1,45 @@
 
 import React,{useState, useEffect} from "react"
-import { Box, Checkbox, Text, Button, Stack, Img, Badge,Avatar,Hide,Show ,Input,InputGroup,InputLeftElement} from "@chakra-ui/react";
+import { Box, Checkbox, Text, Button, Stack, Img, Badge,Avatar,Hide,Show ,Input,InputGroup,InputLeftElement,Alert,
+AlertIcon, AlertTitle} from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { SearchIcon } from '@chakra-ui/icons'
 import {QqOutlined } from '@ant-design/icons';
+import { useNavigate   } from "react-router-dom";
+import Commons from "../Utility/Commons";
 
 
 export default function LoginUser(props){
+
+
     const [email , setEmail]=useState("")
+    const navigate  = useNavigate();
+    const [emailError, setEmailError]=useState(false)
+
+    useEffect(()=>{
+        if(email.length==0){
+            setEmailError(false)
+        }
+    },[email])
 
     const putEmail=(e)=>{
         setEmail(e.target.value)
         props.setLogin(e.target.value)
+    }
+
+    let signInOnClick=async()=>{
+
+        let response = await fetch(Commons.baseUrl+"/users?email="+email)
+        if(response.ok){
+            let data = await response.json()
+            if(!data.error && data.length > 0  ){
+                setEmailError(false)
+                navigate("/verification/password")
+            }else{
+                setEmailError("There is no account with this email")
+            }
+        }
+
     }
 
 return (
@@ -27,6 +55,10 @@ return (
     <Box ml={"20px"} >
         <Box mb={"30px"} borderRadius={"lg"} bg="lightblue" h="300px" display="flex" flexDirection={"column"} justifyContent="center" alignItems={"center"}>
             <Text m={"30px"} fontWeight="bold" fontSize="2xl" textAlign={"center"}>Sign in to Penguin</Text>
+            { emailError &&  <Alert status='error' w={"80%"} borderRadius="3xl" >
+                    <AlertIcon />
+                    <AlertTitle>{emailError}</AlertTitle>
+                </Alert>}
             <Input
             onChange={putEmail}
             errorBorderColor='crimson'
@@ -37,10 +69,9 @@ return (
             <Box mt={"20px"} mb={"20px"} w="80%" display={"flex"} justifyContent={"flex-start"} alignItems="flex-start" >
                 <Checkbox defaultChecked>Save user</Checkbox>
             </Box>
-            
-            <Link w="100%" to={"/verification/password"}>
-                <Button color={"white"}  bg={"#0077FF"} w={"100%"} >Sign in</Button>
-            </Link>
+
+            <Button  onClick={signInOnClick} color={"white"}  bg={"#0077FF"} w={"70%"} >Sign in</Button>
+          
         </Box>
 
         <Box borderRadius={"lg"}  p={"20px"} bg={"lightblue"} display="flex" flexDirection={"column"} justifyContent="center" alignItems={"center"} >
