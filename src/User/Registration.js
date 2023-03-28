@@ -8,7 +8,7 @@ import { Box, Checkbox, Text, Button, Stack, Img, Badge,Avatar,Hide,Show ,Input,
 import { Link } from "react-router-dom";
 import Commons from "../Utility/Commons";
 import {QqOutlined ,UserOutlined,LoginOutlined,LockOutlined} from '@ant-design/icons';
-
+import { useCookies } from 'react-cookie'; 
 
 export default function Registration(props){
 
@@ -26,30 +26,43 @@ export default function Registration(props){
     const  [passwordCheckError, setPasswordCheckError]=useState(false)
     const  [numberError, setNumberError]=useState(false)
 
+    const [cookieObjectApiKey, setObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey']);
 
 
     useEffect(()=>{
 
-        
-
-        if(password===passwordCheck){
-            setPasswordCheckError(false)
+        if(!emailError && email.length!=0 && phoneNumber.length!=0 && password.length!=0  && surname.length!=0 && passwordCheck.length!=0  && name.length!=0 && !passwordError && !passwordCheckError && !numberError){
+            setDisabledButton(false)
+        }else{
+            setDisabledButton(true)
         }
-        if(password!==passwordCheck){
+        if(password.length==0){
+            setPasswordError(false)
+        }
+        if(phoneNumber.length==0){
+            setNumberError(false)
+        }
+        if(email.length==0){
+            setEmailError(false)
+        }
+    },[email,phoneNumber, name, surname,passwordCheck,password])
+
+    useEffect(()=>{
+
+        if(passwordCheck.length===0){
+            setPasswordCheckError(false)
+        }else if(password===passwordCheck){
+            setPasswordCheckError(false)
+        }else if(password!==passwordCheck){
             setPasswordCheckError(true)
         }
 
-     
-     
-       
-
-    },[email,phoneNumber, name, surname,passwordCheck,password  ])
-
+    },[passwordCheck])
 
     let putPhoneNumber=(e)=>{
 
         let myNumber = e.target.value;
-        setPhoneNumber(myNumber) ///5565655
+        setPhoneNumber(myNumber) 
     
         if( myNumber.match(/^[0-9]+$/) == null && myNumber.length>0){
             setNumberError("Phone number can have onle numbers")
@@ -69,9 +82,10 @@ export default function Registration(props){
     let onChangePassword=(e)=>{
 
         setPassword(e.target.value)
+
         if(password.length<= 5){
             setPasswordError(true)
-        }else {
+        }else{
             setPasswordError(false)
         }
 
@@ -109,6 +123,13 @@ export default function Registration(props){
                     phoneNumber:phoneNumber
                 })
         })
+        if(response.ok){
+            let data = await response.json()
+            if(data.apiKey){
+                setObjectApiKey("apiKey", data.apiKey, { path: '/' } )
+                console.log(cookieObjectApiKey)
+            }
+        }
       
     }
 return(
