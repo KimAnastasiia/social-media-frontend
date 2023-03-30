@@ -56,9 +56,9 @@ export default function PasswordUser(props){
     }
 
     return (
-        <Box  pt="16%" pl={"25%"} pr="25%">
-        <Box  border={"1px"} borderColor="lightgray" borderRadius={"lg"} display={"flex"}>
-            <Box p={"50px"} w={"50%"} bg={"#F9F9F9"} >
+        <Box  pt={["20%","20%","16%","16%","16%"]} pl={["5%","5%","10%","15%","25%"]} pr={["5%","5%","10%","15%","25%"]}>
+        <Box  border={"1px"} borderColor="lightgray" borderRadius={"lg"} display={"flex"} flexDirection={["column","column","row","row","row"]} >
+            <Box p={"50px"}w={["100%","100%","50%","50%", "50%"]}  bg={"#F9F9F9"}>
                 <Box m="10px" display={"flex"}>
                     <QqOutlined style={{fontSize: '30px', color: "#0077FF"} } />
                     <Text ml={"5px"} fontWeight={"bold"} fontSize="20px" color={"black"} >ID</Text>
@@ -78,7 +78,7 @@ export default function PasswordUser(props){
                         <Text color={"#99A2AD"} m={"10px"}>A secure account linked to your phone number</Text>
                     </Box>
             </Box>
-            <Box p={"50px"} w={"50%"} display="flex" flexDirection={"column"} justifyContent="center" alignItems={"center"}>
+            <Box p={"50px"} w={["100%","100%","50%","50%", "50%"]} display="flex" flexDirection={"column"} justifyContent="center" alignItems={"center"}>
                 <QqOutlined style={{fontSize: '50px', color: "#0077FF"} } />
                 <Text  mt={"20px"} mb={"20px"} fontSize="20px" color={"black"}>Enter your password</Text>
                 <Text color={"#99A2AD"} mb={"20px"}>Enter the current password linked to {props.login}</Text>
