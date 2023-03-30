@@ -20,18 +20,18 @@ return (
             w={'100%'}
         >
 
-    <Box  w={"20%"} mt={"10px"} mb={"10px"} display="flex" alignItems={"center"} justifyContent="space-between" >
-            <QqOutlined style={{fontSize: '30px', color: "#0077FF"} } />
-            <InputGroup w={"50%"} >
-                <InputLeftElement
-                    pointerEvents='none'
-                    children={<SearchIcon color='gray.300' />}
-                />
-                <Input placeholder="Search" 
-                bg={"white"}>
-                </Input>
-            </InputGroup>
-    </Box>        
+            <Box  w={[0,"50%","50%","40%","30%"]} mt={"10px"} mb={"10px"} display="flex" alignItems={"center"} justifyContent="space-between" >
+                    <QqOutlined style={{fontSize: '30px', color: "#0077FF"} } />
+                    <InputGroup w={["80%","50%","50%","50%","40%"]} >
+                        <InputLeftElement
+                            pointerEvents='none'
+                            children={<SearchIcon color='gray.300' />}
+                        />
+                        <Input placeholder="Search" 
+                        bg={"white"}>
+                        </Input>
+                    </InputGroup>
+            </Box>        
            
         </Stack>
    </Flex>   

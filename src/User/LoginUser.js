@@ -44,7 +44,8 @@ export default function LoginUser(props){
 
 return (
 <Box pt="200px" display={"flex"} justifyContent="center"  >
-    <Box mr={"20px"}  >
+
+    <Box mr={"20px"} display={["none","none","none","block","block"]}>
         <Text textAlign={"center"} fontSize="2xl" fontWeight={"bold"} >Penguin for mobile devices</Text>
         <Text textAlign={"center"} color="#555657" >Install our official mobile app and stay in touch with your friends anytime and anywhere.</Text>
         <Box m={"20px"} display={"flex"} justifyContent="center" >
@@ -52,8 +53,8 @@ return (
             <img src="/images/VD3VpchXcC8.png" ></img>
         </Box>
     </Box>
-    <Box ml={"20px"} >
-        <Box mb={"30px"} borderRadius={"lg"} bg="lightblue" h="300px" display="flex" flexDirection={"column"} justifyContent="center" alignItems={"center"}>
+    <Box ml={["20px","20px",0,0,"20px"]} mr={["20px","20px",0,"10px",0]} display="flex" alignItems={"center"} flexDirection={"column"} justifyContent={"center"} >
+        <Box w={["80%", "80%", "100%", "100%","100%"]} mb={"30px"} borderRadius={"lg"} bg="lightblue" h="300px" display="flex" flexDirection={"column"} justifyContent="center" alignItems={"center"}>
             <Text m={"30px"} fontWeight="bold" fontSize="2xl" textAlign={"center"}>Sign in to Penguin</Text>
             { emailError &&  <Alert status='error' w={"80%"} borderRadius="3xl" >
                     <AlertIcon />
@@ -74,7 +75,7 @@ return (
           
         </Box>
 
-        <Box borderRadius={"lg"}  p={"20px"} bg={"lightblue"} display="flex" flexDirection={"column"} justifyContent="center" alignItems={"center"} >
+        <Box w={["80%", "80%",  "100%", "100%","100%"]} borderRadius={"lg"}  p={"20px"} bg={"lightblue"} display="flex" flexDirection={"column"} justifyContent="center" alignItems={"center"} >
             <Link w="100%" to={"/registration"}>
                 <Button color={"white"}  mb={"20px"} w={"80%"}  bg={"#4BB34B"}>Registration</Button>
             </Link>    
