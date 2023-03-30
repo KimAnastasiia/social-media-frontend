@@ -10,28 +10,28 @@ import Commons from "../Utility/Commons";
 import {QqOutlined ,UserOutlined,LoginOutlined,LockOutlined} from '@ant-design/icons';
 import { useCookies } from 'react-cookie'; 
 
-export default function Registration(props){
+export default function RegistrationUser(props){
 
     const [disabledButton , setDisabledButton]=useState(true)
     const [saveUser , setSaveUser]=useState(false)
     const [email , setEmail]=useState("")
-    const [phoneNumber , setPhoneNumber]=useState(null)
+    const [phoneNumber , setPhoneNumber]=useState("")
     const [password , setPassword]=useState("")
     const [passwordCheck, setPasswordCheck ]=useState("")
     const [name , setName]=useState("")
     const [surname , setSurname]=useState("")
-
-    const  [emailError, setEmailError]=useState(false)
-    const  [passwordError, setPasswordError]=useState(false)
-    const  [passwordCheckError, setPasswordCheckError]=useState(false)
-    const  [numberError, setNumberError]=useState(false)
+    const [emailAlreadyInUse, setEmailAlreadyInUse]=useState(false)
+    const [emailError, setEmailError]=useState(false)
+    const [passwordError, setPasswordError]=useState(false)
+    const [passwordCheckError, setPasswordCheckError]=useState(false)
+    const [numberError, setNumberError]=useState(false)
 
     const [cookieObjectApiKey, setObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey']);
 
 
     useEffect(()=>{
 
-        if(!emailError && email.length!=0 && phoneNumber.length!=0 && password.length!=0  && surname.length!=0 && passwordCheck.length!=0  && name.length!=0 && !passwordError && !passwordCheckError && !numberError){
+        if(!emailError && email.length!==0 && phoneNumber.length!==0 && password.length!==0  && surname.length!=0 && passwordCheck.length!==0  && name.length!==0 && !passwordError && !passwordCheckError && !numberError){
             setDisabledButton(false)
         }else{
             setDisabledButton(true)
@@ -39,12 +39,17 @@ export default function Registration(props){
         if(password.length==0){
             setPasswordError(false)
         }
+
+
         if(phoneNumber.length==0){
             setNumberError(false)
         }
+
         if(email.length==0){
             setEmailError(false)
+            setEmailAlreadyInUse(false)
         }
+        setEmailAlreadyInUse(false)
     },[email,phoneNumber, name, surname,passwordCheck,password])
 
     useEffect(()=>{
@@ -129,6 +134,11 @@ export default function Registration(props){
                 setObjectApiKey("apiKey", data.apiKey, { path: '/' } )
                 console.log(cookieObjectApiKey)
             }
+            if(data.error){
+                setEmailAlreadyInUse(data.messege)
+            }else{
+                setEmailAlreadyInUse(false)
+            }
         }
       
     }
@@ -179,6 +189,10 @@ return(
                 {emailError && <Alert status='error' w={"80%"} borderRadius="3xl" >
                     <AlertIcon />
                     <AlertTitle>Wrong email</AlertTitle>
+                </Alert>}
+                {emailAlreadyInUse && <Alert status='error' w={"80%"} borderRadius="3xl" >
+                    <AlertIcon />
+                    <AlertTitle>Email already in use</AlertTitle>
                 </Alert>}
                 <Input color={"black"} onChange={putEmail} value={email} mb={"20px"} w={"80%"}  placeholder="Email"></Input>
 
