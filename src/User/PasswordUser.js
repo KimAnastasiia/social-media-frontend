@@ -86,7 +86,7 @@ export default function PasswordUser(props){
                     <AlertIcon />
                     <AlertTitle>{alert}</AlertTitle>
                 </Alert>}
-                <Input color={"black"} onChange={putPassword} value={password} mb={"20px"} w={"80%"}  placeholder="Enter password"></Input>
+                <Input color={"black"} onChange={putPassword} value={password} mb={"20px"} w={"80%"} type={"password"} placeholder="Enter password"></Input>
                 <Box  mb={"20px"} w={"80%"} display={"flex"} justifyContent={"flex-start"} alignItems="flex-start" >
                     <Checkbox color={"#99A2AD"} defaultChecked onChange={()=>setSaveUser(!saveUser)} >Save user</Checkbox>
                 </Box>
