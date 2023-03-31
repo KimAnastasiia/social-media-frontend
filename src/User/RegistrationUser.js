@@ -143,15 +143,14 @@ export default function RegistrationUser(props){
       
     }
 return(
-    <Box  pt="8%" pl={"25%"} pr="25%">
-        <Box  border={"1px"} borderColor="lightgray" borderRadius={"lg"} display={"flex"}>
-            <Box p={"50px"} w={"50%"} bg={"#F9F9F9"} >
+    <Box pt={["20%","20%","16%","16%","16%"]} pl={["5%","5%","10%","15%","25%"]} pr={["5%","5%","10%","15%","25%"]} >
+        <Box display={"flex"} flexDirection={["column","column","row","row","row"]}  border={"1px"} borderColor="lightgray" borderRadius={"lg"} >
+            <Box p={"50px"}  bg={"#F9F9F9"}  w={["100%","100%","50%","50%", "50%"]}>
                 <Box m="10px" display={"flex"}>
                     <QqOutlined style={{fontSize: '30px', color: "#0077FF"} } />
-                    <Text ml={"5px"} fontWeight={"bold"} fontSize="20px" color={"black"} >ID</Text>
-                    
+                    <Text ml={"5px"} fontWeight={"bold"} fontSize="20px" color={"black"} >ID</Text>  
                 </Box>
-                <Text mb={"20px"} mt="20px" fontSize="19px"  color={"black"}>Sign in to Penguin with Penguin ID</Text>
+                <Text  mb={"20px"} mt="20px" fontSize="19px"  color={"black"}>Sign in to Penguin with Penguin ID</Text>
                     <Box color={"#99A2AD"} display={"flex"} alignItems={"center"} > 
                         <UserOutlined style={{fontSize: '20px'}}  /> 
                         <Text m={"10px"} >Single account for Penguin  and partner services</Text>
@@ -165,7 +164,7 @@ return(
                         <Text m={"10px"}>A secure account linked to your phone number</Text>
                     </Box>
             </Box>
-            <Box p={"50px"} w={"50%"} display="flex" flexDirection={"column"} justifyContent="center" alignItems={"center"}>
+            <Box p={"50px"} w={["100%","100%","50%","50%", "50%"]} display="flex" flexDirection={"column"} justifyContent="center" alignItems={"center"}>
                 <QqOutlined style={{fontSize: '50px', color: "#0077FF"} } />
                 <Text  mt={"20px"} mb={"20px"} fontSize="20px" color={"black"}>Enter phone number</Text>
                 <Text  color={"#99A2AD"} mb={"20px"}>You'll use your phone number to sign in to your account</Text>
