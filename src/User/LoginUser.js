@@ -24,7 +24,7 @@ export default function LoginUser(props){
 
     const putEmail=(e)=>{
         setEmail(e.target.value)
-        props.setLogin(e.target.value)
+        props.setEmail(e.target.value)
     }
 
     let signInOnClick=async()=>{

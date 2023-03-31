@@ -78,9 +78,6 @@ export default function RegistrationUser(props){
         else if( myNumber.match(/^[0-9]+$/) !== null && myNumber.length>12){
             setNumberError(false)
         }
-
-        
-
     }
 
 

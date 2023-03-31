@@ -33,7 +33,7 @@ export default function PasswordUser(props){
             'Content-Type': 'application/json'
             },
             body: JSON.stringify({ 
-                email : props.login,
+                email : props.email,
                 password: password
             })
         })
@@ -81,7 +81,7 @@ export default function PasswordUser(props){
             <Box p={"50px"} w={["100%","100%","50%","50%", "50%"]} display="flex" flexDirection={"column"} justifyContent="center" alignItems={"center"}>
                 <QqOutlined style={{fontSize: '50px', color: "#0077FF"} } />
                 <Text  mt={"20px"} mb={"20px"} fontSize="20px" color={"black"}>Enter your password</Text>
-                <Text color={"#99A2AD"} mb={"20px"}>Enter the current password linked to {props.login}</Text>
+                <Text color={"#99A2AD"} mb={"20px"}>Enter the current password linked to {props.email}</Text>
                 { alert &&  <Alert status='error' w={"80%"} borderRadius="3xl" >
                     <AlertIcon />
                     <AlertTitle>{alert}</AlertTitle>
