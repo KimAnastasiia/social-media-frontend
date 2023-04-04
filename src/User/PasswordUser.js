@@ -4,15 +4,15 @@ import { Link } from "react-router-dom";
 import {QqOutlined ,UserOutlined,LoginOutlined,LockOutlined} from '@ant-design/icons';
 import Commons from "../Utility/Commons";
 import { useCookies } from 'react-cookie'; 
-
+import { useNavigate   } from "react-router-dom";
 
 export default function PasswordUser(props){
 
     const [password, setPassword]=useState("")
     const [saveUser , setSaveUser]=useState(false)
     const [alert, setAlert] = useState(false)
-    const [cookieObjectApiKey, setObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey']);
-
+    const [cookieObjectApiKey, setObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email"]);
+    const navigate  = useNavigate();
     useEffect(()=>{
         if(password.length==0){
             setAlert(false)
@@ -48,7 +48,10 @@ export default function PasswordUser(props){
             }
             if(data.apiKey){
                 setObjectApiKey("apiKey", data.apiKey, { path: '/' } )
+                setObjectApiKey("id",  data.userId, { path: '/' } )
+                setObjectApiKey("email", data.email, { path: '/' } )
                 console.log(cookieObjectApiKey)
+                navigate("/profile")
             }
         }
   

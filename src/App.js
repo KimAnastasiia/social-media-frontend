@@ -18,7 +18,7 @@ function App() {
     <Box >
       <Menu/>
       <Routes>
-        <Route  path='/' element={<LoginUser setLogin={setEmail}/>} />
+        <Route  path='/' element={<LoginUser setEmail={setEmail}/>} />
         <Route  path='/registration' element={<RegistrationUser/>} />
         <Route  path='/profile' element={<PrrofileUser email={email}/>} />
         <Route  path='/verification/password' element={<PasswordUser  email={email}/>} />

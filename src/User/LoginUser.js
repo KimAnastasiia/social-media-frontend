@@ -32,7 +32,7 @@ export default function LoginUser(props){
         let response = await fetch(Commons.baseUrl+"/users?email="+email)
         if(response.ok){
             let data = await response.json()
-            if(!data.error && data.length > 0  ){
+            if(!data.error && data[0].count > 0){
                 setEmailError(false)
                 navigate("/verification/password")
             }else{
