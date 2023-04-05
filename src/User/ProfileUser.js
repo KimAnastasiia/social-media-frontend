@@ -1,6 +1,6 @@
 
 import React,{useState, useEffect,useRef} from "react"
-import { Box, Checkbox, Text, Button, Stack, Img, HStack,Avatar,Hide,Show ,Input,InputGroup,InputLeftElement,Alert,
+import { Box, Flex, Text, Button, Stack, Img, HStack,Avatar,Hide,Show ,Input,InputGroup,InputLeftElement,Alert,
     Image,
     AlertTitle,
     AlertDescription,
@@ -9,6 +9,8 @@ import { Link } from "react-router-dom";
 import Commons from "../Utility/Commons";
 import {QqOutlined ,UserOutlined,LoginOutlined,LockOutlined} from '@ant-design/icons';
 import { useCookies } from 'react-cookie'; 
+import { useNavigate   } from "react-router-dom";
+import FormatDate from "../Utility/FormatDate";
 
 export default function PrrofileUser(props){
     const [name, setName]=useState("")
@@ -16,9 +18,10 @@ export default function PrrofileUser(props){
     const [seguidores, setSeguidores]=useState(0)
     const [seguidos, setSeguidos]=useState(0)
     const [selectedFile, setSelectedFile] = useState(null);
-    const [listOfImage, setlistOfimage]=useState([])
+    const [comment, setComment]=useState("")
     const img = useRef(null)
     const [idImg, setIdImg]=useState([])
+    const navigate  = useNavigate();
     const [cookieObjectApiKey, setObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email"]);
 
     useEffect(()=>{
@@ -41,7 +44,6 @@ export default function PrrofileUser(props){
         if(response.ok){
             let data = await response.json()
             setIdImg(data)
-            
         }
 
     }
@@ -49,36 +51,42 @@ export default function PrrofileUser(props){
         setSelectedFile(event.target.files[0]);
     };
 
+
     let publishPublication=async()=>{
         const formData = new FormData();
         formData.append('myImage', selectedFile);
-
-
-        let response = await fetch (Commons.baseUrl+"/mediaPost?apiKey="+cookieObjectApiKey.apiKey,{
-            method: 'POST',
-            body:formData
-        })
+        formData.append('comment', comment);
+        if(selectedFile!==null){
+            let response = await fetch (Commons.baseUrl+"/mediaPost?apiKey="+cookieObjectApiKey.apiKey,{
+                method: 'POST',
+                body:formData
+            })
+        }
         img.current.value=""
+        setComment("")
         console.log(cookieObjectApiKey.apiKey)
         console.log(cookieObjectApiKey.id)
         signInOnClick()
+        showImg()
     }
+
+
     return(
-        <Box>
-            <Box justifyContent={"center"}  pt="200px" display={"flex"}>
+        <Box  display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}  >
+            <Box alignItems={"center"}   justifyContent={"center"}  pt="200px" display={"flex"}>
                 
-                    <Box w={"50%"} display={"flex"} justifyContent={"end"}>
+                    <Box w={"30%"} display={"flex"} >
                         <Stack direction='row' >
                             <Avatar size={"2xl"} src='https://bit.ly/broken-link' />
                         </Stack>
                     </Box>
 
-                    <Box  w={"50%"}  ml={"6%"}  >
-                        <Box display={"flex"} alignItems={"center"}>
+                    <Box  w={"70%"}  ml={"6%"}  >
+                        <Box display={"flex"} alignItems={"center"} justifyContent={"space-around"}>
                             <Text fontSize={"24px"}>{name}</Text>
-                            <Button ml={"2%"}>Edit profile</Button>
+                            <Button >Edit profile</Button>
                         </Box>
-                        <Box mb={"2%"} mt={"2%"} w={"40%"} display={"flex"} justifyContent={"space-between"} >
+                        <Box mb={"2%"} mt={"2%"} w={"80%"} display={"flex"} justifyContent={"space-between"} >
 
                             <HStack>
                                 <Text fontWeight={"bold"}>{publicaciones}</Text>  
@@ -100,19 +108,33 @@ export default function PrrofileUser(props){
                             type="file"
                             placeholder="Choose file"
                             accept=".png" 
-                            w={"20%"}
+                            w={"100%"}
                             mt={"2%"}
                             onChange={onChangeFile}
                             ref={img}
+                            
                         />
-                    <Button onClick={publishPublication} ml={"1%"}>Post</Button>
+                        <Input
+                            placeholder="Add a comment to your post"
+                            w={"100%"}
+                            mt={"2%"}
+                            mb={"2%"}
+                            onChange={(e)=>setComment(e.target.value)}
+                            value={comment}
+                        />
+                        <Flex justifyContent={"center"}>
+                            <Button w="70%" onClick={publishPublication} ml={"1%"}>Post</Button>
+                        </Flex>
                     </Box>
             
             
             </Box>
-            <Box>
+            <Box mt={"60px"} h={"309px"} w={["90%","90%","100%","90%","60%"]} display={"flex"} justifyContent={["center"]} flexWrap={"wrap"}>
                 {idImg.map((img)=>
-                <Image  src={Commons.baseUrl+"/images/"+cookieObjectApiKey.id+cookieObjectApiKey.email+img.id+".png"} />)}
+                <Box h={"100%"}  display={"flex"} alignItems={"center"}  flexDirection={"column"} w={"25%"} m={"0.3%"} justifyContent={"center"}>
+                    <Image h="100%" onClick={()=>{navigate("/mediaPost/"+img.id)}} w={["100%"]} src={Commons.baseUrl+"/images/"+cookieObjectApiKey.id+cookieObjectApiKey.email+img.id+".png"} />
+                </Box>
+                )}
             </Box>
         </Box>
     )

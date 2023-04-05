@@ -7,7 +7,7 @@ import RegistrationUser from './User/RegistrationUser';
 import React,{useState, useEffect} from "react"
 import PasswordUser from './User/PasswordUser';
 import PrrofileUser from './User/ProfileUser';
-
+import PublicationDetails from './Publication.js/PublicationDetails';
 function App() {
 
   const [email, setEmail]=useState("")
@@ -22,6 +22,7 @@ function App() {
         <Route  path='/registration' element={<RegistrationUser/>} />
         <Route  path='/profile' element={<PrrofileUser email={email}/>} />
         <Route  path='/verification/password' element={<PasswordUser  email={email}/>} />
+        <Route  path='/mediaPost/:id' element={<PublicationDetails/>} />
       </Routes>
    </Box>
   );
