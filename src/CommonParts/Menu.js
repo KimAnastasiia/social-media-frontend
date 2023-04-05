@@ -4,7 +4,22 @@ import { Box, Flex, Text, Button, Stack, Img, Badge,Avatar,Hide,Show ,Input,Inpu
 import { Link } from "react-router-dom";
 import { SearchIcon } from '@chakra-ui/icons'
 import {QqOutlined } from '@ant-design/icons';
+import Commons from "../Utility/Commons";
 export default function Menu(props){
+
+    const [users, setUsers]=useState([])
+ 
+    let searchUser=async(e)=>{
+        if( e.target.value.length < 1){
+            setUsers([])
+        }else{
+            let response = await fetch(Commons.baseUrl+"/users/"+e.target.value)
+            if(response.ok){
+                let data = await response.json()
+                setUsers(data)
+            }
+        }
+    }
 
 return (
  
@@ -27,9 +42,17 @@ return (
                             pointerEvents='none'
                             children={<SearchIcon color='gray.300' />}
                         />
-                        <Input placeholder="Search" 
-                        bg={"white"}>
+                        <Input 
+                            placeholder="Search" 
+                            bg={"white"}
+                            onChange={searchUser}
+                            list="list"
+                            type="text"
+                        >
                         </Input>
+                        <datalist id="list">
+                            {users.map((user)=><option value={user.uniqueName}></option>)}
+                        </datalist>
                     </InputGroup>
             </Box>        
            
