@@ -132,7 +132,7 @@ export default function PrrofileUser(props){
             <Box mt={"60px"} h={"309px"} w={["90%","90%","100%","90%","60%"]} display={"flex"} justifyContent={["center"]} flexWrap={"wrap"}>
                 {idImg.map((img)=>
                 <Box h={"100%"}  display={"flex"} alignItems={"center"}  flexDirection={"column"} w={"25%"} m={"0.3%"} justifyContent={"center"}>
-                    <Image h="100%" onClick={()=>{navigate("/mediaPost/"+img.id)}} w={["100%"]} src={Commons.baseUrl+"/images/"+cookieObjectApiKey.id+cookieObjectApiKey.email+img.id+".png"} />
+                    <Image h="100%" onClick={()=>{navigate("/mediaPost/"+img.id)}} w={["100%"]} src={Commons.baseUrl+"/images/"+cookieObjectApiKey.id+cookieObjectApiKey.email+img.id+"mini.png"} />
                 </Box>
                 )}
             </Box>

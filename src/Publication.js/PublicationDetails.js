@@ -37,7 +37,7 @@ export default function PublicationDetails (props){
     return(
         <Box  justifyContent={"center"} display={"flex"} pt={"100px"}>
             <Box w={"30%"} bg={"black"} justifyContent={"center"} display={"flex"}> 
-                <Image src={Commons.baseUrl+"/images/"+cookieObjectApiKey.id+cookieObjectApiKey.email+publication.id+".png"} />
+                <Image src={Commons.baseUrl+"/images/"+cookieObjectApiKey.id+cookieObjectApiKey.email+publication.id+"big.png"} />
             </Box>
             <Box borderWidth={"3px"} borderColor={"black"} w={"30%"} >
                     <Box borderBottomWidth={"2px"} h={"10%"} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
