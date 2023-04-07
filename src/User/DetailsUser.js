@@ -34,8 +34,10 @@ export default function DetailsUser(props){
 
     useEffect(()=>{
         getUser()
-        console.log("id: "+cookieObjectApiKey.id)
     },[uniqueName])
+
+
+
 
     let getUser=async()=>{
         let response = await fetch(Commons.baseUrl+"/users/"+uniqueName)
@@ -47,12 +49,14 @@ export default function DetailsUser(props){
 
     }
 
+   
     let getPosts=async(uid)=>{
 
         let response = await fetch(Commons.baseUrl+"/mediaPost?userId="+uid)
         if(response.ok){
             let data = await response.json()
             setPosts(data)
+            setPublicaciones(data.length)
         }
 
     }
@@ -83,7 +87,7 @@ export default function DetailsUser(props){
 
     return(
         <Box  display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}  >
-            <Box alignItems={"center"}   justifyContent={"center"}  pt="200px" display={"flex"}>
+            <Box alignItems={"center"} w={"30%"}  justifyContent={"center"}  pt="200px" display={"flex"}>
                 
                     <Box w={"30%"} display={"flex"} >
                         <Stack direction='row' >
@@ -98,7 +102,7 @@ export default function DetailsUser(props){
                             {cookieObjectApiKey.id==user.id &&<Button >Edit profile</Button>}
                         </Box>
 
-                        <Box mb={"2%"} mt={"2%"} w={"80%"} display={"flex"} justifyContent={"space-between"} >
+                        <Box  mb={"2%"} mt={"2%"} w={"100%"} display={"flex"} justifyContent={"space-between"} >
 
                             <HStack>
                                 <Text fontWeight={"bold"}>{publicaciones}</Text>  

@@ -28,7 +28,6 @@ export default function ProfileUser(props){
 
     useEffect(()=>{
         signInOnClick()
-        console.log("id: "+cookieObjectApiKey.id)
         showImg()
     },[])
 
@@ -48,6 +47,7 @@ export default function ProfileUser(props){
         if(response.ok){
             let data = await response.json()
             setIdImg(data)
+            setPublicaciones(data.length)
         }
 
     }
