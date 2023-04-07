@@ -17,6 +17,8 @@ import FormatDate from "../Utility/FormatDate";
 
 export default function PublicationDetails (props){
     const {id} = useParams()
+  
+    const [userEmail, setUserEmail]=useState("")
     const navigate  = useNavigate();
     const [cookieObjectApiKey, setObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email"]);
     const [publication, setPublication]=useState({})
@@ -26,18 +28,30 @@ export default function PublicationDetails (props){
     },[])
 
     let dataOfpublication=async()=>{
-        let response = await fetch(Commons.baseUrl+"/mediaPost/"+id+"?apiKey="+cookieObjectApiKey.apiKey)
+
+        let response = await fetch(Commons.baseUrl+"/mediaPost/"+id)
         if(response.ok){
             let data = await response.json()
             if(!data.error){
                 setPublication(data[0])
+                getUser(data[0].userId)
+            }
+        }
+    }
+    let getUser=async(p)=>{
+
+        let response = await fetch(Commons.baseUrl+"/users?id="+p)
+        if(response.ok){
+            let data = await response.json()
+            if(!data.error){
+                setUserEmail(data[0].email)
             }
         }
     }
     return(
         <Box  justifyContent={"center"} display={"flex"} pt={"100px"}>
             <Box w={"30%"} bg={"black"} justifyContent={"center"} display={"flex"}> 
-                <Image src={Commons.baseUrl+"/images/"+cookieObjectApiKey.id+cookieObjectApiKey.email+publication.id+"big.png"} />
+                <Image src={Commons.baseUrl+"/images/"+ publication.userId+userEmail+id+"big.png"} />
             </Box>
             <Box borderWidth={"3px"} borderColor={"black"} w={"30%"} >
                     <Box borderBottomWidth={"2px"} h={"10%"} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>

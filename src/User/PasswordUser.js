@@ -11,7 +11,7 @@ export default function PasswordUser(props){
     const [password, setPassword]=useState("")
     const [saveUser , setSaveUser]=useState(false)
     const [alert, setAlert] = useState(false)
-    const [cookieObjectApiKey, setObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email"]);
+    const [cookieObjectApiKey, setCookieObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email"]);
     const navigate  = useNavigate();
     useEffect(()=>{
         if(password.length==0){
@@ -47,10 +47,10 @@ export default function PasswordUser(props){
                 }
             }
             if(data.apiKey){
-                setObjectApiKey("apiKey", data.apiKey, { path: '/' } )
-                setObjectApiKey("id",  data.userId, { path: '/' } )
-                setObjectApiKey("email", data.email, { path: '/' } )
-                console.log(cookieObjectApiKey)
+                setCookieObjectApiKey("apiKey", data.apiKey, { path: '/' } )
+                setCookieObjectApiKey("id",  data.userId, { path: '/' } )
+                setCookieObjectApiKey("email", data.email, { path: '/' } )
+                console.log("id: "+cookieObjectApiKey.id)
                 navigate("/profile")
             }
         }

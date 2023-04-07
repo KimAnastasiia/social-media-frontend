@@ -6,51 +6,57 @@ import { Box, Flex, Text, Button, Stack, Img, HStack,Avatar,Hide,Show ,Input,Inp
     AlertDescription,
  } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+
 import Commons from "../Utility/Commons";
-import {QqOutlined ,UserOutlined,LoginOutlined,LockOutlined} from '@ant-design/icons';
+import {MessageOutlined ,SmileOutlined,SendOutlined,HeartOutlined,EllipsisOutlined,BookOutlined} from '@ant-design/icons';
 import { useCookies } from 'react-cookie'; 
 import { useNavigate   } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import FormatDate from "../Utility/FormatDate";
 
-export default function ProfileUser(props){
+export default function DetailsUser(props){
 
-    
-    const [name, setName]=useState("")
     const [publicaciones, setPublicaciones]=useState(0)
     const [seguidores, setSeguidores]=useState(0)
     const [seguidos, setSeguidos]=useState(0)
-    const [selectedFile, setSelectedFile] = useState(null);
-    const [comment, setComment]=useState("")
-    const img = useRef(null)
-    const [idImg, setIdImg]=useState([])
+
+
+    const [posts, setPosts]=useState([])
+    const [user, setUser]=useState({})
+    const {uniqueName} = useParams()
     const navigate  = useNavigate();
-    const [cookieObjectApiKey, setCookieObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email"]);
+
+    const img = useRef(null)
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [cookieObjectApiKey, setObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email"]);
+    const [comment, setComment]=useState("")
+
 
     useEffect(()=>{
-        signInOnClick()
+        getUser()
         console.log("id: "+cookieObjectApiKey.id)
-        showImg()
-    },[])
+    },[uniqueName])
 
-    let signInOnClick=async()=>{
-
-        let response = await fetch(Commons.baseUrl+"/users?email="+props.email)
+    let getUser=async()=>{
+        let response = await fetch(Commons.baseUrl+"/users/"+uniqueName)
         if(response.ok){
             let data = await response.json()
-            setName(data[0].name)
+            setUser(data[0])
+            getPosts(data[0].id)
         }
 
     }
 
-    let showImg = async()=>{
+    let getPosts=async(uid)=>{
 
-        let response = await fetch(Commons.baseUrl+"/mediaPost?userId="+cookieObjectApiKey.id)
+        let response = await fetch(Commons.baseUrl+"/mediaPost?userId="+uid)
         if(response.ok){
             let data = await response.json()
-            setIdImg(data)
+            setPosts(data)
         }
 
     }
+    
     const onChangeFile = (event) => {
         setSelectedFile(event.target.files[0]);
     };
@@ -70,8 +76,8 @@ export default function ProfileUser(props){
         setComment("")
         console.log(cookieObjectApiKey.apiKey)
         console.log(cookieObjectApiKey.id)
-        signInOnClick()
-        showImg()
+        getUser()
+       
     }
 
 
@@ -86,10 +92,12 @@ export default function ProfileUser(props){
                     </Box>
 
                     <Box  w={"70%"}  ml={"6%"}  >
+
                         <Box display={"flex"} alignItems={"center"} justifyContent={"space-around"}>
-                            <Text fontSize={"24px"}>{name}</Text>
-                            <Button >Edit profile</Button>
+                            <Text fontSize={"24px"}>{user.uniqueName}</Text>
+                            {cookieObjectApiKey.id==user.id &&<Button >Edit profile</Button>}
                         </Box>
+
                         <Box mb={"2%"} mt={"2%"} w={"80%"} display={"flex"} justifyContent={"space-between"} >
 
                             <HStack>
@@ -105,39 +113,40 @@ export default function ProfileUser(props){
                                 <Text>seguidos</Text>
                             </HStack>
                         </Box>
-                        <Text>{name}</Text>
-                        <Input
-                            errorBorderColor='crimson'
-                            name="myImage" 
-                            type="file"
-                            placeholder="Choose file"
-                            accept=".png" 
-                            w={"100%"}
-                            mt={"2%"}
-                            onChange={onChangeFile}
-                            ref={img}
-                            
-                        />
-                        <Input
-                            placeholder="Add a comment to your post"
-                            w={"100%"}
-                            mt={"2%"}
-                            mb={"2%"}
-                            onChange={(e)=>setComment(e.target.value)}
-                            value={comment}
-                        />
-                        <Flex justifyContent={"center"}>
-                            <Button w="70%" onClick={publishPublication} ml={"1%"}>Post</Button>
-                        </Flex>
+                        <Text>{user.name}</Text>
+                        {cookieObjectApiKey.id==user.id &&
+                        <div>
+                            <Input
+                                errorBorderColor='crimson'
+                                name="myImage" 
+                                type="file"
+                                placeholder="Choose file"
+                                accept=".png" 
+                                w={"100%"}
+                                mt={"2%"}
+                                onChange={onChangeFile}
+                                ref={img}
+                                
+                            />
+                            <Input
+                                placeholder="Add a comment to your post"
+                                w={"100%"}
+                                mt={"2%"}
+                                mb={"2%"}
+                                onChange={(e)=>setComment(e.target.value)}
+                                value={comment}
+                            />
+                            <Flex justifyContent={"center"}>
+                                <Button w="70%" onClick={publishPublication} ml={"1%"}>Post</Button>
+                            </Flex>   
+                        </div>}
                     </Box>
-            
-            
             </Box>
             <Box mt={"60px"} h={"309px"} w={["90%","90%","100%","90%","60%"]} display={"flex"} justifyContent={["center"]} flexWrap={"wrap"}>
-                {idImg.map((img)=>
-                <Box h={"100%"}  display={"flex"} alignItems={"center"}  flexDirection={"column"} w={"25%"} m={"0.3%"} justifyContent={"center"}>
-                    <Image h="100%" onClick={()=>{navigate("/mediaPost/"+img.id)}} w={["100%"]} src={Commons.baseUrl+"/images/"+cookieObjectApiKey.id+cookieObjectApiKey.email+img.id+"mini.png"} />
-                </Box>
+                {posts.map((post)=>
+                    <Box h={"100%"}  display={"flex"} alignItems={"center"}  flexDirection={"column"} w={"25%"} m={"0.3%"} justifyContent={"center"}>
+                        <Image h="100%" onClick={()=>{navigate("/mediaPost/"+post.id)}} w={["100%"]} src={Commons.baseUrl+"/images/"+user.id+user.email+post.id+"mini.png"} />
+                    </Box>
                 )}
             </Box>
         </Box>
