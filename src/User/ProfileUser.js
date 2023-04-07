@@ -13,6 +13,7 @@ import { useNavigate   } from "react-router-dom";
 import FormatDate from "../Utility/FormatDate";
 
 export default function PrrofileUser(props){
+
     const [name, setName]=useState("")
     const [publicaciones, setPublicaciones]=useState(0)
     const [seguidores, setSeguidores]=useState(0)
