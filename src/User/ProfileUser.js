@@ -55,10 +55,10 @@ export default function ProfileUser(props){
 
 
     return(
-        <Box  display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}  >
-            <Box alignItems={"center"}   justifyContent={"center"}  pt="200px" display={"flex"}>
+        <Box  display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}    >
+            <Box alignItems={"center"} w={["90%","90%","60%","50%","37%"]}  justifyContent={"center"}  pt="200px" display={"flex"}>
                 
-                    <Box w={"30%"} display={"flex"} >
+                    <Box  display={"flex"} w={["20%","20%","30%","30%","30%"]} alignItems={"flex-start"} >
                         <Stack direction='row' >
                             <Avatar size={["xl","xl","2xl","2xl","2xl"]} src='https://bit.ly/broken-link' />
                         </Stack>
@@ -69,7 +69,7 @@ export default function ProfileUser(props){
                             <Text fontSize={"24px"}>{name}</Text>
                             <Button >Edit profile</Button>
                         </Box>
-                        <Box mb={"2%"} mt={"2%"} w={"80%"} display={"flex"} justifyContent={"space-between"} >
+                        <Box mb={"2%"} mt={"2%"}w={["100%"]}  display={"flex"} justifyContent={"space-between"} >
 
                             <HStack>
                                 <Text fontWeight={"bold"}>{publicaciones}</Text>  
@@ -91,8 +91,8 @@ export default function ProfileUser(props){
             
             </Box>
             <Box mt={"60px"} h={"309px"} w={["90%","90%","100%","90%","60%"]} display={"flex"} justifyContent={["center"]} flexWrap={"wrap"}>
-                {idImg.map((img)=>
-                <Box h={"100%"}  display={"flex"} alignItems={"center"}  flexDirection={"column"} w={"25%"} m={"0.3%"} justifyContent={"center"}>
+                {idImg.sort((a,b)=>b.id-a.id).map((img)=>
+                <Box h={"100%"}  display={"flex"} alignItems={"center"}  flexDirection={"column"} m={"0.3%"} justifyContent={"center"}>
                     <Image h="100%" onClick={()=>{navigate("/mediaPost/"+img.id)}} w={["100%"]} src={Commons.baseUrl+"/images/"+cookieObjectApiKey.id+cookieObjectApiKey.email+img.id+"mini.png"} />
                 </Box>
                 )}
