@@ -60,11 +60,11 @@ export default function ProfileUser(props){
                 
                     <Box w={"30%"} display={"flex"} >
                         <Stack direction='row' >
-                            <Avatar size={"2xl"} src='https://bit.ly/broken-link' />
+                            <Avatar size={["xl","xl","2xl","2xl","2xl"]} src='https://bit.ly/broken-link' />
                         </Stack>
                     </Box>
 
-                    <Box  w={"70%"}  ml={"6%"}  >
+                    <Box   w={["80%","80%","70%","70%","70%"]} ml={"6%"}  >
                         <Box display={"flex"} alignItems={"center"} justifyContent={"space-around"}>
                             <Text fontSize={"24px"}>{name}</Text>
                             <Button >Edit profile</Button>
