@@ -87,22 +87,22 @@ export default function DetailsUser(props){
 
     return(
         <Box  display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}  >
-            <Box alignItems={"center"} w={"30%"}  justifyContent={"center"}  pt="200px" display={"flex"}>
+            <Box  alignItems={"center"} w={["90%","90%","60%","50%","37%"]}  justifyContent={"center"}  pt="200px" display={"flex"}>
                 
-                    <Box w={"30%"} display={"flex"} >
+                    <Box w={["20%","20%","30%","30%","30%"]} display={"flex"} alignItems={"flex-start"}>
                         <Stack direction='row' >
-                            <Avatar size={"2xl"} src='https://bit.ly/broken-link' />
+                            <Avatar size={["xl","xl","2xl","2xl","2xl"]} src='https://bit.ly/broken-link' />
                         </Stack>
                     </Box>
 
-                    <Box  w={"70%"}  ml={"6%"}  >
+                    <Box w={["80%","80%","70%","70%","70%"]}  ml={"6%"}  >
 
                         <Box display={"flex"} alignItems={"center"} justifyContent={"space-around"}>
                             <Text fontSize={"24px"}>{user.uniqueName}</Text>
                             {cookieObjectApiKey.id==user.id &&<Button >Edit profile</Button>}
                         </Box>
 
-                        <Box  mb={"2%"} mt={"2%"} w={"100%"} display={"flex"} justifyContent={"space-between"} >
+                        <Box  mb={"2%"} mt={"2%"} w={["100%"]} display={"flex"} justifyContent={"space-between"} >
 
                             <HStack>
                                 <Text fontWeight={"bold"}>{publicaciones}</Text>  
@@ -117,7 +117,7 @@ export default function DetailsUser(props){
                                 <Text>seguidos</Text>
                             </HStack>
                         </Box>
-                        <Text>{user.name}</Text>
+                        <Text fontWeight={"bold"} >{user.name}</Text>
                         {cookieObjectApiKey.id==user.id &&
                         <div>
                             <Input
@@ -147,8 +147,9 @@ export default function DetailsUser(props){
                     </Box>
             </Box>
             <Box mt={"60px"} h={"309px"} w={["90%","90%","100%","90%","60%"]} display={"flex"} justifyContent={["center"]} flexWrap={"wrap"}>
-                {posts.map((post)=>
-                    <Box h={"100%"}  display={"flex"} alignItems={"center"}  flexDirection={"column"} w={"25%"} m={"0.3%"} justifyContent={"center"}>
+                {posts.sort((a,b)=>b.id-a.id)
+                .map((post)=>
+                    <Box h={"100%"}  display={"flex"} alignItems={"center"}  flexDirection={"column"} m={"0.3%"} justifyContent={"center"}>
                         <Image h="100%" onClick={()=>{navigate("/mediaPost/"+post.id)}} w={["100%"]} src={Commons.baseUrl+"/images/"+user.id+user.email+post.id+"mini.png"} />
                     </Box>
                 )}
