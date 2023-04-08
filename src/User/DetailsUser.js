@@ -119,31 +119,9 @@ export default function DetailsUser(props){
                         </Box>
                         <Text fontWeight={"bold"} >{user.name}</Text>
                         {cookieObjectApiKey.id==user.id &&
-                        <div>
-                            <Input
-                                errorBorderColor='crimson'
-                                name="myImage" 
-                                type="file"
-                                placeholder="Choose file"
-                                accept=".png" 
-                                w={"100%"}
-                                mt={"2%"}
-                                onChange={onChangeFile}
-                                ref={img}
-                                
-                            />
-                            <Input
-                                placeholder="Add a comment to your post"
-                                w={"100%"}
-                                mt={"2%"}
-                                mb={"2%"}
-                                onChange={(e)=>setComment(e.target.value)}
-                                value={comment}
-                            />
-                            <Flex justifyContent={"center"}>
-                                <Button w="70%" onClick={publishPublication} ml={"1%"}>Post</Button>
-                            </Flex>   
-                        </div>}
+                        <Box  display={"flex"} justifyContent={"center"}>
+                           <Button  onClick={()=>navigate("/users/publication")}  >Add new publication</Button>
+                        </Box>}
                     </Box>
             </Box>
             <Box mt={"60px"} h={"309px"} w={["90%","90%","100%","90%","60%"]} display={"flex"} justifyContent={["center"]} flexWrap={"wrap"}>
