@@ -19,9 +19,8 @@ export default function ProfileUser(props){
     const [publicaciones, setPublicaciones]=useState(0)
     const [seguidores, setSeguidores]=useState(0)
     const [seguidos, setSeguidos]=useState(0)
-    const [selectedFile, setSelectedFile] = useState(null);
-    const [comment, setComment]=useState("")
-    const img = useRef(null)
+
+
     const [idImg, setIdImg]=useState([])
     const navigate  = useNavigate();
     const [cookieObjectApiKey, setCookieObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email"]);
@@ -51,28 +50,8 @@ export default function ProfileUser(props){
         }
 
     }
-    const onChangeFile = (event) => {
-        setSelectedFile(event.target.files[0]);
-    };
 
 
-    let publishPublication=async()=>{
-        const formData = new FormData();
-        formData.append('myImage', selectedFile);
-        formData.append('comment', comment);
-        if(selectedFile!==null){
-            let response = await fetch (Commons.baseUrl+"/mediaPost?apiKey="+cookieObjectApiKey.apiKey,{
-                method: 'POST',
-                body:formData
-            })
-        }
-        img.current.value=""
-        setComment("")
-        console.log(cookieObjectApiKey.apiKey)
-        console.log(cookieObjectApiKey.id)
-        signInOnClick()
-        showImg()
-    }
 
 
     return(
@@ -106,29 +85,7 @@ export default function ProfileUser(props){
                             </HStack>
                         </Box>
                         <Text>{name}</Text>
-                        <Input
-                            errorBorderColor='crimson'
-                            name="myImage" 
-                            type="file"
-                            placeholder="Choose file"
-                            accept=".png" 
-                            w={"100%"}
-                            mt={"2%"}
-                            onChange={onChangeFile}
-                            ref={img}
-                            
-                        />
-                        <Input
-                            placeholder="Add a comment to your post"
-                            w={"100%"}
-                            mt={"2%"}
-                            mb={"2%"}
-                            onChange={(e)=>setComment(e.target.value)}
-                            value={comment}
-                        />
-                        <Flex justifyContent={"center"}>
-                            <Button w="70%" onClick={publishPublication} ml={"1%"}>Post</Button>
-                        </Flex>
+                        
                     </Box>
             
             

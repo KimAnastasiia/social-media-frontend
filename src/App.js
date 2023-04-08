@@ -9,6 +9,7 @@ import PasswordUser from './User/PasswordUser';
 import ProfileUser from './User/ProfileUser';
 import PublicationDetails from './Publication.js/PublicationDetails';
 import DetailsUser from './User/DetailsUser';
+import CreatePublication from './Publication.js/CreatePublication';
 function App() {
 
   const [email, setEmail]=useState("")
@@ -25,6 +26,7 @@ function App() {
         <Route  path='/verification/password' element={<PasswordUser  email={email}/>} />
         <Route  path='/mediaPost/:id' element={<PublicationDetails/>} />
         <Route  path='/users/:uniqueName' element={<DetailsUser/>} />
+        <Route  path='/users/publication' element={<CreatePublication/>} />
       </Routes>
    </Box>
   );
