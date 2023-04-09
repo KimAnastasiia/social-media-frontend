@@ -17,7 +17,7 @@ import FormatDate from "../Utility/FormatDate";
 
 export default function PublicationDetails (props){
     const {id} = useParams()
-  
+    const [name, setName]=useState("")
     const [userEmail, setUserEmail]=useState("")
     const navigate  = useNavigate();
     const [cookieObjectApiKey, setObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email"]);
@@ -45,19 +45,22 @@ export default function PublicationDetails (props){
             let data = await response.json()
             if(!data.error){
                 setUserEmail(data[0].email)
+                setName(data[0].uniqueName)
             }
         }
     }
     return(
-        <Box  justifyContent={"center"} display={"flex"} pt={"100px"}>
+        <div>
+        <Hide below="md" >
+        <Box  justifyContent={"center"} display={["flex"]} pt={"100px"}>
             <Box w={"30%"} bg={"black"} justifyContent={"center"} display={"flex"}> 
                 <Image src={Commons.baseUrl+"/images/"+ publication.userId+userEmail+id+"big.png"} />
             </Box>
             <Box borderWidth={"3px"} borderColor={"black"} w={"30%"} >
                     <Box borderBottomWidth={"2px"} h={"10%"} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
-                        <Box pl={"2%"} w={"20%"} display={"flex"} justifyContent={"space-between"} alignItems={"center"} >
+                        <Box  pl={"2%"} w={"100%"} display={"flex"} justifyContent={"start"} alignItems={"center"} >
                             <Avatar size={"md"}></Avatar>
-                            <Text>Mariia</Text>
+                            <Text ml={"4%"}>{name}</Text>
                         </Box>
                         <Box  pr={"2%"}  >
                             <EllipsisOutlined style={{ fontSize: '25px' }}/>
@@ -79,7 +82,7 @@ export default function PublicationDetails (props){
                         </Box>
                         <Box h={"35%"} display={"flex"} justifyContent={"flex-start"}>
                             <Avatar mr={"1%"} size={"sm"}></Avatar>
-                            <Text fontSize={"20px"}>who likes</Text>
+                            <Text fontSize={"20px"}>names of users which liked this publication</Text>
                         </Box>
                         <Box h={"25%"}>
                             <Text fontSize={"12px"}>{FormatDate (publication.date)}</Text>
@@ -95,5 +98,52 @@ export default function PublicationDetails (props){
              
             </Box>
         </Box>
+        </Hide>
+        <Show below='md'>
+       
+            <Box pt={"60px"} w={"100%"} >
+                    <Box pb={"10px"}pt={"10px"} borderBottomWidth={"2px"} h={"10%"} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
+                        <Box  pl={"2%"} w={"100%"} display={"flex"} justifyContent={"start"} alignItems={"center"} >
+                            <Avatar size={"md"}></Avatar>
+                            <Text ml={"4%"}>{name}</Text>
+                        </Box>
+                        <Box  pr={"2%"}  >
+                            <EllipsisOutlined style={{ fontSize: '25px' }}/>
+                        </Box>
+                    </Box>
+                    <Box h={"70%"} mb={"10px"}>
+                        <Image src={Commons.baseUrl+"/images/"+ publication.userId+userEmail+id+"big.png"} />
+                    </Box>
+                    <Box  pl={"2%"} pr={"2%"}  justifyContent={"flex-start"} h={"15%"} >
+                        <Box mb={"10px"}  h={"40%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+                            <Box w={"18%"} justifyContent={"space-between"} display={"flex"}>
+                                <HeartOutlined style={{ fontSize: '25px' }} />
+                                <MessageOutlined style={{ fontSize: '25px' }}/>
+                                <SendOutlined style={{ fontSize: '25px' }}/>
+                            </Box>
+                            <Box   w={"70%"} display={"flex"} justifyContent={"end"}>
+                                <BookOutlined style={{ fontSize: '25px' }}/>
+                            </Box>
+                        </Box>
+                        <Box h={"35%"} display={"flex"} justifyContent={"flex-start"}>
+                            <Avatar mr={"1%"} size={"sm"}></Avatar>
+                            <Text fontSize={"20px"}>names of users which liked this publication</Text>
+                        </Box>
+                        <Box h={"25%"}>
+                            <Text fontSize={"12px"}>{FormatDate (publication.date)}</Text>
+                        </Box>
+                    </Box>
+                    <Box borderTopWidth={"2px"} borderBottomWidth={"1px"}  display={"flex"} alignItems={"center"} h={"5%"} >
+                        <Box w={"10%"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
+                            <SmileOutlined style={{ fontSize: '25px' }}/>
+                        </Box>
+                        
+                        <Input border={"none"} placeholder="Add a comment"></Input>
+                    </Box>
+             
+            </Box>
+        
+        </Show>
+        </div>
     )
 }
