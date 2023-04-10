@@ -13,6 +13,7 @@ import { useCookies } from 'react-cookie';
 import { useNavigate   } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import FormatDate from "../Utility/FormatDate";
+import CommentsPublication from "./CommentsPublication";
 
 
 export default function PublicationDetails (props){
@@ -60,20 +61,22 @@ export default function PublicationDetails (props){
                     <Box borderBottomWidth={"2px"} h={"10%"} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
                         <Box  pl={"2%"} w={"100%"} display={"flex"} justifyContent={"start"} alignItems={"center"} >
                             <Avatar size={"md"}></Avatar>
-                            <Text ml={"4%"}>{name}</Text>
+                        <Box ml={"4%"}>
+                            <Text>{name}</Text>
+                            <Text fontSize={"xs"} fontWeight={"bold"} >{publication.comment} b</Text>
+                        </Box>
                         </Box>
                         <Box  pr={"2%"}  >
                             <EllipsisOutlined style={{ fontSize: '25px' }}/>
                         </Box>
                     </Box>
                     <Box pr={"2%"} pl={"2%"} borderBottomWidth={"2px"} h={"70%"}>
-                        <Text>{publication.comment}</Text>
+                        <CommentsPublication postId={id} />
                     </Box>
                     <Box  pl={"2%"} pr={"2%"}  justifyContent={"flex-start"} h={"15%"} >
                         <Box  h={"40%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-                            <Box w={"18%"} justifyContent={"space-between"} display={"flex"}>
+                            <Box w={"18%"} justifyContent={"space-around"} display={"flex"}>
                                 <HeartOutlined style={{ fontSize: '25px' }} />
-                                <MessageOutlined  onClick={()=>{navigate("/users/publication/comments/"+id)}}  style={{ fontSize: '25px' }}/>
                                 <SendOutlined style={{ fontSize: '25px' }}/>
                             </Box>
                             <Box   w={"70%"} display={"flex"} justifyContent={"end"}>

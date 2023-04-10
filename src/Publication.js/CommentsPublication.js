@@ -27,12 +27,25 @@ export default function CommentsPublication (props){
 
 
     let getComments=async()=>{
+        
+        if(props.postId){
 
-        let response = await fetch(Commons.baseUrl+"/comments/"+postId)
-        if(response.ok){
-            let data = await response.json()
-            if(!data.error){
-                setComments(data)
+            let response = await fetch(Commons.baseUrl+"/comments/"+props.postId)
+            if(response.ok){
+                let data = await response.json()
+                if(!data.error){
+                    setComments(data)
+                }
+            }
+        }
+        if(!props.postId){
+            
+            let response = await fetch(Commons.baseUrl+"/comments/"+postId)
+            if(response.ok){
+                let data = await response.json()
+                if(!data.error){
+                    setComments(data)
+                }
             }
         }
     }
