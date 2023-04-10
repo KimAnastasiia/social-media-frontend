@@ -73,7 +73,7 @@ export default function PublicationDetails (props){
                         <Box  h={"40%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                             <Box w={"18%"} justifyContent={"space-between"} display={"flex"}>
                                 <HeartOutlined style={{ fontSize: '25px' }} />
-                                <MessageOutlined style={{ fontSize: '25px' }}/>
+                                <MessageOutlined  onClick={()=>{navigate("/users/publication/comments/"+id)}}  style={{ fontSize: '25px' }}/>
                                 <SendOutlined style={{ fontSize: '25px' }}/>
                             </Box>
                             <Box   w={"70%"} display={"flex"} justifyContent={"end"}>
@@ -116,9 +116,9 @@ export default function PublicationDetails (props){
                     </Box>
                     <Box  pl={"2%"} pr={"2%"}  justifyContent={"flex-start"} h={"15%"} >
                         <Box mb={"10px"}  h={"40%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-                            <Box w={"18%"} justifyContent={"space-between"} display={"flex"}>
+                            <Box  w={"18%"} justifyContent={"space-between"} display={"flex"}>
                                 <HeartOutlined style={{ fontSize: '25px' }} />
-                                <MessageOutlined style={{ fontSize: '25px' }}/>
+                                <MessageOutlined onClick={()=>{navigate("/users/publication/comments/"+id)}} style={{ fontSize: '25px' }}/>
                                 <SendOutlined style={{ fontSize: '25px' }}/>
                             </Box>
                             <Box   w={"70%"} display={"flex"} justifyContent={"end"}>

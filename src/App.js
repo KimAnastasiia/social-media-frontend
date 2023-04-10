@@ -10,6 +10,7 @@ import ProfileUser from './User/ProfileUser';
 import PublicationDetails from './Publication.js/PublicationDetails';
 import DetailsUser from './User/DetailsUser';
 import CreatePublication from './Publication.js/CreatePublication';
+import CommentsPublication from './Publication.js/CommentsPublication';
 function App() {
 
   const [email, setEmail]=useState("")
@@ -27,6 +28,7 @@ function App() {
         <Route  path='/mediaPost/:id' element={<PublicationDetails/>} />
         <Route  path='/users/:uniqueName' element={<DetailsUser/>} />
         <Route  path='/users/publication' element={<CreatePublication/>} />
+        <Route  path='/users/publication/comments/:postId' element={<CommentsPublication/>} />
       </Routes>
    </Box>
   );
