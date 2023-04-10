@@ -13,13 +13,13 @@ import { useCookies } from 'react-cookie';
 import { useNavigate   } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import FormatDate from "../Utility/FormatDate";
-
+import { DeleteIcon, AddIcon, WarningIcon } from '@chakra-ui/icons'
 
 export default function CommentsPublication (props){
 
     const {postId} = useParams()
-    const [comments, setComments]=useState([])
-
+    const [commentsUsers, setCommentsUsers]=useState([])
+    const [cookieObjectApiKey, setObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email"]);
 
     useEffect (()=>{ 
         getComments()
@@ -27,14 +27,13 @@ export default function CommentsPublication (props){
 
 
     let getComments=async()=>{
-        
         if(props.postId){
 
             let response = await fetch(Commons.baseUrl+"/comments/"+props.postId)
             if(response.ok){
                 let data = await response.json()
                 if(!data.error){
-                    setComments(data)
+                    setCommentsUsers(data)
                 }
             }
         }
@@ -44,14 +43,29 @@ export default function CommentsPublication (props){
             if(response.ok){
                 let data = await response.json()
                 if(!data.error){
-                    setComments(data)
+                    setCommentsUsers(data)
                 }
             }
         }
     }
 return(
-    <Box pt={"200px"}>
-        {comments.map((comment)=><Text>{comment.comment}</Text>)}
+    <Box pt={"10px"} >
+        {commentsUsers.map((commentUser)=>
+        <Box borderWidth={"1px"} mb={"10px"}  borderRadius={"lg"} display={"flex"} justifyContent={"space-between"} >
+            <Box>
+                <Box display={"flex"}>
+                    <Avatar size={"xs"} name={commentUser.uniqueName}></Avatar>
+                    <Text ml={"10px"} >{commentUser.uniqueName}</Text>
+                </Box>
+                <Text>{commentUser.comment}</Text>
+            </Box>
+            <Box alignItems={"center"} display={"flex"} >
+                {(cookieObjectApiKey.id == commentUser.userId) &&
+                    <DeleteIcon/>
+                }
+            </Box>
+        </Box>
+        )}
     </Box>
 )
 
