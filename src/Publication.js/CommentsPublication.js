@@ -48,8 +48,14 @@ export default function CommentsPublication (props){
             }
         }
     }
+    let deleteComment=async(comment)=>{
+        let response = await fetch (Commons.baseUrl+"/comments/"+comment.postId+"?apiKey="+cookieObjectApiKey.apiKey,{
+            method: 'DELETE' 
+        })
+        getComments()
+    }
 return(
-    <Box pt={"10px"} >
+    <Box pt={"100px"} >
         {commentsUsers.map((commentUser)=>
         <Box borderWidth={"1px"} mb={"10px"}  borderRadius={"lg"} display={"flex"} justifyContent={"space-between"} >
             <Box>
@@ -61,7 +67,7 @@ return(
             </Box>
             <Box alignItems={"center"} display={"flex"} >
                 {(cookieObjectApiKey.id == commentUser.userId) &&
-                    <DeleteIcon/>
+                    <DeleteIcon onClick={()=>{deleteComment(commentUser)}} />
                 }
             </Box>
         </Box>
