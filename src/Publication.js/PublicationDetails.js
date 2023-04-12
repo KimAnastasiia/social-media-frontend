@@ -23,6 +23,7 @@ export default function PublicationDetails (props){
     const navigate  = useNavigate();
     const [cookieObjectApiKey, setObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email"]);
     const [publication, setPublication]=useState({})
+    const [comment, setComment]=useState("")
     
     useEffect (()=>{ 
         dataOfpublication()
@@ -49,6 +50,22 @@ export default function PublicationDetails (props){
                 setName(data[0].uniqueName)
             }
         }
+    }
+    let addComment=async()=>{
+        
+        let response = await fetch (Commons.baseUrl+"/comments",{
+
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+
+            body:
+                JSON.stringify({ 
+                    postId:id,
+                    comment:comment
+                })
+        })
     }
     return(
         <div>
@@ -96,7 +113,8 @@ export default function PublicationDetails (props){
                             <SmileOutlined style={{ fontSize: '25px' }}/>
                         </Box>
                         
-                        <Input border={"none"} placeholder="Add a comment"></Input>
+                        <Input onChange={(e)=>{setComment(e.target.value)}} border={"none"} placeholder="Add a comment"></Input>
+                        <Button onClick={addComment} >sent</Button>
                     </Box>
              
             </Box>
@@ -141,7 +159,8 @@ export default function PublicationDetails (props){
                             <SmileOutlined style={{ fontSize: '25px' }}/>
                         </Box>
                         
-                        <Input border={"none"} placeholder="Add a comment"></Input>
+                        <Input onChange={(e)=>{setComment(e.target.value)}} border={"none"} placeholder="Add a comment"></Input>
+                        <Button onClick={addComment}>sent</Button>
                     </Box>
              
             </Box>
