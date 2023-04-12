@@ -65,7 +65,8 @@ return(
                 </Box>
                 <Text>{commentUser.comment}</Text>
             </Box>
-            <Box alignItems={"center"} display={"flex"} >
+            <Box display={"flex"} alignItems={"end"} flexDirection={"column"}>
+                    <Text>{FormatDate(commentUser.date)}</Text>
                 {(cookieObjectApiKey.id == commentUser.userId) &&
                     <DeleteIcon onClick={()=>{deleteComment(commentUser)}} />
                 }
