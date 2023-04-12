@@ -49,7 +49,7 @@ export default function CommentsPublication (props){
         }
     }
     let deleteComment=async(comment)=>{
-        let response = await fetch (Commons.baseUrl+"/comments/"+comment.postId+"?apiKey="+cookieObjectApiKey.apiKey,{
+        let response = await fetch (Commons.baseUrl+"/comments/"+comment.postId+"/"+comment.id+"?apiKey="+cookieObjectApiKey.apiKey,{
             method: 'DELETE' 
         })
         getComments()
