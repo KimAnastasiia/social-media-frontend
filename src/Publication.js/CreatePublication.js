@@ -42,7 +42,7 @@ export default function CreatePublication(props){
     }
 
     return(
-        <Box  pt="100px" minH={["90vh"]} alignItems={"center"} justifyContent={"center"} display={"flex"} flexDirection={"column"} >
+        <Box   minH={["90vh"]} alignItems={"center"} justifyContent={"center"} display={"flex"} flexDirection={"column"} >
             <Box borderRadius={"2xl"} w={["80%", "80%", "70%","50%", "30%"]} minH={["60vh"]}  borderWidth={"1px"} borderColor={"lightgray"}  display={"flex"} flexDirection={"column"}>
                 
                 <Box minH={["5vh"]} display={"flex"} justifyContent={"center"} alignItems={"center"}  borderColor={"lightgray"} borderBottomWidth={"1px"}>

@@ -32,7 +32,7 @@ export default function Menu(props){
 
 return (
 
-   <Flex w="100%" bg="lightblue"  zIndex="sticky" as="nav" align="center" justify={["space-between" ,"space-between" ,"space-between" ,"space-around" , "space-around"]} position={"fixed"}>
+   <Flex  w="100%" bg="lightblue"  zIndex="sticky" as="nav" align="center" justify={["space-between" ,"space-between" ,"space-between" ,"space-around" , "space-around"]} position={"fixed"}>
  
         <Stack
             h={"60px"}

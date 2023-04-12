@@ -20,16 +20,17 @@ function App() {
   return (
     <Box >
       <Menu/>
-      <Routes>
-        <Route  path='/' element={<LoginUser setEmail={setEmail}/>} />
-        <Route  path='/registration' element={<RegistrationUser/>} />
-        <Route  path='/profile' element={<ProfileUser email={email}/>} />
-        <Route  path='/verification/password' element={<PasswordUser  email={email}/>} />
-        <Route  path='/mediaPost/:id' element={<PublicationDetails/>} />
-        <Route  path='/users/:uniqueName' element={<DetailsUser/>} />
-        <Route  path='/users/publication' element={<CreatePublication/>} />
-        <Route  path='/users/publication/comments' element={<CommentsPublication/>} />
-      </Routes>
+      <Box pt={"100px"}>
+        <Routes>
+          <Route  path='/' element={<LoginUser setEmail={setEmail}/>} />
+          <Route  path='/registration' element={<RegistrationUser/>} />
+          <Route  path='/profile' element={<ProfileUser email={email}/>} />
+          <Route  path='/verification/password' element={<PasswordUser  email={email}/>} />
+          <Route  path='/mediaPost/:id' element={<PublicationDetails/>} />
+          <Route  path='/users/:uniqueName' element={<DetailsUser/>} />
+          <Route  path='/users/publication' element={<CreatePublication/>} />
+        </Routes>
+      </Box>
    </Box>
   );
 }

@@ -87,7 +87,7 @@ export default function DetailsUser(props){
 
     return(
         <Box  display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}  >
-            <Box  alignItems={"center"} w={["90%","90%","60%","50%","37%"]}  justifyContent={"center"}  pt="200px" display={"flex"}>
+            <Box  alignItems={"center"} w={["90%","90%","60%","50%","37%"]}  justifyContent={"center"}   display={"flex"}>
                 
                     <Box w={["20%","20%","30%","30%","30%"]} display={"flex"} alignItems={"flex-start"}>
                         <Stack direction='row' >

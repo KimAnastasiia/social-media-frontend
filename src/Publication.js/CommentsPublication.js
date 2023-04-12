@@ -41,7 +41,7 @@ export default function CommentsPublication (props){
     }
     
 return(
-    <Box pt={"100px"}   >
+    <Box  >
         {props.commentsUsers.sort((a,b)=>b.date-a.date)
         .map((commentUser)=>
         <Box >
