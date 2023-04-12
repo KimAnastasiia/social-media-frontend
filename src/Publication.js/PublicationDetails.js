@@ -17,6 +17,7 @@ import CommentsPublication from "./CommentsPublication";
 
 
 export default function PublicationDetails (props){
+  
     const {id} = useParams()
     const [name, setName]=useState("")
     const [userEmail, setUserEmail]=useState("")
@@ -24,10 +25,21 @@ export default function PublicationDetails (props){
     const [cookieObjectApiKey, setObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email"]);
     const [publication, setPublication]=useState({})
     const [comment, setComment]=useState("")
-    
+    const [commentsUsers, setCommentsUsers]=useState([])
     useEffect (()=>{ 
         dataOfpublication()
     },[])
+
+
+    let getComments=async()=>{
+        let response = await fetch(Commons.baseUrl+"/public/comments/"+id)
+        if(response.ok){
+            let data = await response.json()
+            if(!data.error){
+                setCommentsUsers(data)
+            }
+        }
+    }
 
     let dataOfpublication=async()=>{
 
@@ -52,7 +64,6 @@ export default function PublicationDetails (props){
         }
     }
     let addComment=async()=>{
-        
         let response = await fetch (Commons.baseUrl+"/comments?apiKey="+cookieObjectApiKey.apiKey,{
 
             method: 'POST',
@@ -69,7 +80,9 @@ export default function PublicationDetails (props){
         if(response.ok){
             setComment("")
         }
+        getComments();
     }
+
     return(
         <div>
         <Hide below="md" >
@@ -91,7 +104,11 @@ export default function PublicationDetails (props){
                         </Box>
                     </Box>
                     <Box pr={"2%"} pl={"2%"} borderBottomWidth={"2px"} h={"70%"}>
-                        <CommentsPublication postId={id} />
+                        <CommentsPublication 
+                            getComments={getComments} 
+                            commentsUsers={commentsUsers} 
+                            setCommentsUsers={setCommentsUsers} 
+                            postId={id} />
                     </Box>
                     <Box  pl={"2%"} pr={"2%"}  justifyContent={"flex-start"} h={"15%"} >
                         <Box  h={"40%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>

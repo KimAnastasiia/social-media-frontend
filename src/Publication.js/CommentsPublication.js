@@ -13,62 +13,42 @@ import { useCookies } from 'react-cookie';
 import { useNavigate   } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import FormatDate from "../Utility/FormatDate";
-import { DeleteIcon, AddIcon, WarningIcon } from '@chakra-ui/icons'
+import { DeleteIcon, EditIcon, WarningIcon } from '@chakra-ui/icons'
 
 export default function CommentsPublication (props){
-
-    const {postId} = useParams()
-    const [commentsUsers, setCommentsUsers]=useState([])
     const [cookieObjectApiKey, setObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email"]);
 
     useEffect (()=>{ 
-        getComments()
+        props.getComments()
     },[])
 
 
-    let getComments=async()=>{
-        if(props.postId){
-
-            let response = await fetch(Commons.baseUrl+"/public/comments/"+props.postId)
-            if(response.ok){
-                let data = await response.json()
-                if(!data.error){
-                    setCommentsUsers(data)
-                }
-            }
-        }
-        if(!props.postId){
-            
-            let response = await fetch(Commons.baseUrl+"/public/comments/"+postId)
-            if(response.ok){
-                let data = await response.json()
-                if(!data.error){
-                    setCommentsUsers(data)
-                }
-            }
-        }
-    }
     let deleteComment=async(comment)=>{
         let response = await fetch (Commons.baseUrl+"/comments/"+comment.postId+"/"+comment.id+"?apiKey="+cookieObjectApiKey.apiKey,{
             method: 'DELETE' 
         })
-        getComments()
+        props.getComments()
     }
+    
 return(
     <Box pt={"100px"} >
-        {commentsUsers.map((commentUser)=>
-        <Box borderWidth={"1px"} mb={"10px"}  borderRadius={"lg"} display={"flex"} justifyContent={"space-between"} >
-            <Box>
-                <Box display={"flex"}>
+        {props.commentsUsers.sort((a,b)=>b.date-a.date)
+        .map((commentUser)=>
+        <Box borderWidth={"1px"} mb={"10px"} minH={["7vh"]} borderRadius={"lg"} display={"flex"} justifyContent={"space-between"} >
+            <Box m={"10px"} w={"50%"} flexDirection={"column"} display={"flex"} justifyContent={"space-around"}>
+                <Box display={"flex"} >
                     <Avatar size={"xs"} name={commentUser.uniqueName}></Avatar>
                     <Text ml={"10px"} >{commentUser.uniqueName}</Text>
                 </Box>
                 <Text>{commentUser.comment}</Text>
             </Box>
-            <Box display={"flex"} alignItems={"end"} flexDirection={"column"}>
+            <Box m={"10px"} w={"30%"} justifyContent={"space-around"} display={"flex"} alignItems={"end"} flexDirection={"column"}>
                     <Text>{FormatDate(commentUser.date)}</Text>
                 {(cookieObjectApiKey.id == commentUser.userId) &&
+                <Box w={"30%"} justifyContent={"space-around"} display={"flex"}  >
+                    <EditIcon/>
                     <DeleteIcon onClick={()=>{deleteComment(commentUser)}} />
+                </Box>
                 }
             </Box>
         </Box>
