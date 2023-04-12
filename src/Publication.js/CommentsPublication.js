@@ -1,6 +1,6 @@
 
 import React,{useState, useEffect, useRef} from "react"
-import { Box, Flex, Text, Button, Stack, Img, HStack,Avatar,Hide,Show ,Input,InputGroup,InputLeftElement,Alert,
+import { Box, Flex, Text, Button, Textarea, Img, HStack,Avatar,Hide,Show ,Input,InputGroup,InputLeftElement,Alert,
     Image,
     AlertTitle,
     AlertDescription,
@@ -13,8 +13,18 @@ import { useCookies } from 'react-cookie';
 import { useNavigate   } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import FormatDate from "../Utility/FormatDate";
-import { DeleteIcon, EditIcon, WarningIcon } from '@chakra-ui/icons'
-
+import { DeleteIcon, EditIcon, CheckIcon } from '@chakra-ui/icons'
+import {
+    Popover,
+    PopoverTrigger,
+    PopoverContent,
+    PopoverHeader,
+    PopoverBody,
+    PopoverFooter,
+    PopoverArrow,
+    PopoverCloseButton,
+    PopoverAnchor,Portal
+  } from '@chakra-ui/react'
 export default function CommentsPublication (props){
     const [cookieObjectApiKey, setObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email"]);
 
@@ -31,26 +41,45 @@ export default function CommentsPublication (props){
     }
     
 return(
-    <Box pt={"100px"} >
+    <Box pt={"100px"}   >
         {props.commentsUsers.sort((a,b)=>b.date-a.date)
         .map((commentUser)=>
-        <Box borderWidth={"1px"} mb={"10px"} minH={["7vh"]} borderRadius={"lg"} display={"flex"} justifyContent={"space-between"} >
-            <Box m={"10px"} w={"50%"} flexDirection={"column"} display={"flex"} justifyContent={"space-around"}>
-                <Box display={"flex"} >
-                    <Avatar size={"xs"} name={commentUser.uniqueName}></Avatar>
-                    <Text ml={"10px"} >{commentUser.uniqueName}</Text>
+        <Box >
+            <Box mb={"10px"} minH={["7vh"]} display={"flex"} justifyContent={"space-between"} >
+                <Box m={"10px"} w={"50%"} flexDirection={"column"} display={"flex"} justifyContent={"space-around"}>
+                    <Box display={"flex"} >
+                        <Avatar size={"xs"} name={commentUser.uniqueName}></Avatar>
+                        <Text mr={"20px"} fontWeight={"bold"} ml={"10px"} >{commentUser.uniqueName}</Text>
+                        <Text>{commentUser.comment}</Text>
+                    </Box>
+                    <Box display={"flex"} alignItems={"center"} >
+                        <Text mr={"20px"} fontSize={"14px"} >{FormatDate(commentUser.date)}</Text>
+                        {(cookieObjectApiKey.id == commentUser.userId) &&  
+                        <Popover>
+                            <PopoverTrigger>
+                            <EllipsisOutlined style={{ fontSize: '20px' }}/>
+                            </PopoverTrigger>
+                            <Portal>
+                                <PopoverContent>
+                                <PopoverArrow />
+                                <PopoverHeader>
+                                    <Button colorScheme='blue' variant='link' >
+                                        Edit
+                                    </Button>  
+                                </PopoverHeader>
+                                <PopoverCloseButton />
+                                <PopoverBody>
+                                    <Button  colorScheme='red' variant='link'  onClick={()=>{deleteComment(commentUser)}} >
+                                        Delete
+                                    </Button>
+                                </PopoverBody>
+                                </PopoverContent>
+                            </Portal>
+                        </Popover>}
+                    </Box>
                 </Box>
-                <Text>{commentUser.comment}</Text>
             </Box>
-            <Box m={"10px"} w={"30%"} justifyContent={"space-around"} display={"flex"} alignItems={"end"} flexDirection={"column"}>
-                    <Text>{FormatDate(commentUser.date)}</Text>
-                {(cookieObjectApiKey.id == commentUser.userId) &&
-                <Box w={"30%"} justifyContent={"space-around"} display={"flex"}  >
-                    <EditIcon/>
-                    <DeleteIcon onClick={()=>{deleteComment(commentUser)}} />
-                </Box>
-                }
-            </Box>
+           
         </Box>
         )}
     </Box>

@@ -86,7 +86,7 @@ export default function PublicationDetails (props){
     return(
         <div>
         <Hide below="md" >
-        <Box  justifyContent={"center"} display={["flex"]} pt={"100px"}>
+        <Box  justifyContent={"center"} display={["flex"]} pt={"100px"}  >
             <Box w={"30%"} bg={"black"} justifyContent={"center"} display={"flex"}> 
                 <Image src={Commons.baseUrl+"/images/"+ publication.userId+userEmail+id+"big.png"} />
             </Box>
@@ -103,12 +103,12 @@ export default function PublicationDetails (props){
                             <EllipsisOutlined style={{ fontSize: '25px' }}/>
                         </Box>
                     </Box>
-                    <Box pr={"2%"} pl={"2%"} borderBottomWidth={"2px"} h={"70%"}>
+                    <Box pr={"2%"} pl={"2%"} borderBottomWidth={"2px"} h={"530px"} overflowY="scroll">
                         <CommentsPublication 
                             getComments={getComments} 
                             commentsUsers={commentsUsers} 
                             setCommentsUsers={setCommentsUsers} 
-                            postId={id} />
+                           />
                     </Box>
                     <Box  pl={"2%"} pr={"2%"}  justifyContent={"flex-start"} h={"15%"} >
                         <Box  h={"40%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
@@ -133,8 +133,8 @@ export default function PublicationDetails (props){
                             <SmileOutlined style={{ fontSize: '25px' }}/>
                         </Box>
                         
-                        <Input value={comment} onChange={(e)=>{setComment(e.target.value)}} border={"none"} placeholder="Add a comment"></Input>
-                        <Button onClick={addComment} >sent</Button>
+                        <Input  variant='unstyled'  value={comment} onChange={(e)=>{setComment(e.target.value)}} border={"none"} placeholder="Add a comment"></Input>
+                        <Button onClick={addComment} colorScheme='teal' variant='link' >sent</Button>
                     </Box>
              
             </Box>
@@ -159,7 +159,7 @@ export default function PublicationDetails (props){
                         <Box mb={"10px"}  h={"40%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                             <Box  w={"18%"} justifyContent={"space-between"} display={"flex"}>
                                 <HeartOutlined style={{ fontSize: '25px' }} />
-                                <MessageOutlined onClick={()=>{navigate("/users/publication/comments/"+id)}} style={{ fontSize: '25px' }}/>
+                                <MessageOutlined  style={{ fontSize: '25px' }}/>
                                 <SendOutlined style={{ fontSize: '25px' }}/>
                             </Box>
                             <Box   w={"70%"} display={"flex"} justifyContent={"end"}>
@@ -179,8 +179,8 @@ export default function PublicationDetails (props){
                             <SmileOutlined style={{ fontSize: '25px' }}/>
                         </Box>
                         
-                        <Input value={comment} onChange={(e)=>{setComment(e.target.value)}} border={"none"} placeholder="Add a comment"></Input>
-                        <Button onClick={addComment}>sent</Button>
+                        <Input  variant='unstyled' value={comment} onChange={(e)=>{setComment(e.target.value)}} border={"none"} placeholder="Add a comment"></Input>
+                        <Button colorScheme='teal' variant='link' onClick={addComment}>sent</Button>
                     </Box>
              
             </Box>

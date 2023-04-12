@@ -28,7 +28,7 @@ function App() {
         <Route  path='/mediaPost/:id' element={<PublicationDetails/>} />
         <Route  path='/users/:uniqueName' element={<DetailsUser/>} />
         <Route  path='/users/publication' element={<CreatePublication/>} />
-        <Route  path='/users/publication/comments/:postId' element={<CommentsPublication/>} />
+        <Route  path='/users/publication/comments' element={<CommentsPublication/>} />
       </Routes>
    </Box>
   );
