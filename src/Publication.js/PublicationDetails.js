@@ -53,7 +53,7 @@ export default function PublicationDetails (props){
     }
     let addComment=async()=>{
         
-        let response = await fetch (Commons.baseUrl+"/comments",{
+        let response = await fetch (Commons.baseUrl+"/comments?apiKey="+cookieObjectApiKey.apiKey,{
 
             method: 'POST',
             headers: {
@@ -66,6 +66,9 @@ export default function PublicationDetails (props){
                     comment:comment
                 })
         })
+        if(response.ok){
+            setComment("")
+        }
     }
     return(
         <div>
@@ -113,7 +116,7 @@ export default function PublicationDetails (props){
                             <SmileOutlined style={{ fontSize: '25px' }}/>
                         </Box>
                         
-                        <Input onChange={(e)=>{setComment(e.target.value)}} border={"none"} placeholder="Add a comment"></Input>
+                        <Input value={comment} onChange={(e)=>{setComment(e.target.value)}} border={"none"} placeholder="Add a comment"></Input>
                         <Button onClick={addComment} >sent</Button>
                     </Box>
              
@@ -159,7 +162,7 @@ export default function PublicationDetails (props){
                             <SmileOutlined style={{ fontSize: '25px' }}/>
                         </Box>
                         
-                        <Input onChange={(e)=>{setComment(e.target.value)}} border={"none"} placeholder="Add a comment"></Input>
+                        <Input value={comment} onChange={(e)=>{setComment(e.target.value)}} border={"none"} placeholder="Add a comment"></Input>
                         <Button onClick={addComment}>sent</Button>
                     </Box>
              
