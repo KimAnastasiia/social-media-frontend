@@ -112,6 +112,7 @@ export default function PublicationDetails (props){
                             getComments={getComments} 
                             commentsUsers={commentsUsers} 
                             setCommentsUsers={setCommentsUsers} 
+                            postId={id}
                            />
                     </Box>
                     <Box  pl={"2%"} pr={"2%"}  justifyContent={"flex-start"} h={"15%"} >
@@ -147,7 +148,7 @@ export default function PublicationDetails (props){
         <Show below='md'>
         {!showComments &&
             <Box w={"100%"} >
-                    <Box borderTopColor={"lightgray"} borderTop={"1px"} pt={"10px"} pb={"10px"} borderBottomWidth={"2px"} h={"10%"} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
+                    <Box borderTopWidth={"2px"}pt={"10px"} pb={"10px"} borderBottomWidth={"2px"} h={"10%"} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
                         <Box  pl={"2%"} w={"100%"} display={"flex"} justifyContent={"start"} alignItems={"center"} >
                             <Avatar size={"md"}></Avatar>
                             <Text ml={"4%"}>{name}</Text>
@@ -159,7 +160,7 @@ export default function PublicationDetails (props){
                     <Box h={"70%"} mb={"10px"}>
                         <Image src={Commons.baseUrl+"/images/"+ publication.userId+userEmail+id+"big.png"} />
                     </Box>
-                    <Box borderBottom={"1px"}  pl={"2%"} pr={"2%"}  justifyContent={"flex-start"} h={"15%"} >
+                    <Box pb={"10px"} borderBottomWidth={"2px"} pl={"2%"} pr={"2%"}  justifyContent={"flex-start"} h={"15%"} >
                         <Box mb={"10px"}  h={"40%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                             <Box  w={"18%"} justifyContent={"space-between"} display={"flex"}>
                                 <HeartOutlined style={{ fontSize: '25px' }} />
@@ -195,9 +196,10 @@ export default function PublicationDetails (props){
                         getComments={getComments} 
                         commentsUsers={commentsUsers} 
                         setCommentsUsers={setCommentsUsers} 
+                        postId={id}
                         />
                 </Box>
-                <Box borderBottomWidth={"1px"}  display={"flex"} alignItems={"center"} h={"50px"} >
+                <Box   display={"flex"} alignItems={"center"} h={"50px"} >
                     <Box w={"10%"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
                         <SmileOutlined style={{ fontSize: '25px' }}/>
                     </Box>
