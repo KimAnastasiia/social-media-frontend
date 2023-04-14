@@ -115,7 +115,7 @@ export default function PublicationDetails (props){
                             postId={id}
                            />
                     </Box>
-                    <Box  pl={"2%"} pr={"2%"}  justifyContent={"flex-start"} h={"15%"} >
+                    <Box zIndex={"sticky"} pl={"2%"} pr={"2%"}  justifyContent={"flex-start"} h={"15%"} >
                         <Box  h={"40%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                             <Box w={"18%"} justifyContent={"space-around"} display={"flex"}>
                                 <HeartOutlined style={{ fontSize: '25px' }} />
