@@ -53,7 +53,7 @@ export default function CommentsPublication (props){
         }
     }
     let deleteComment=async(comment)=>{
-        let response = await fetch (Commons.baseUrl+"/comments/"+comment.postId+"/"+comment.id+"?apiKey="+cookieObjectApiKey.apiKey,{
+        let response = await fetch (Commons.baseUrl+"/comments/"+comment.postId+"/"+comment.id+"/"+props.userIdOfPublication+"?apiKey="+cookieObjectApiKey.apiKey,{
             method: 'DELETE' 
         })
         props.getComments()
@@ -144,6 +144,25 @@ return(
                                         Edit
                                     </Button>  
                                 </PopoverHeader>
+                                <PopoverCloseButton />
+                                <PopoverBody>
+                                    <Button colorScheme='red' variant='link'  onClick={()=>{deleteComment(commentUser)}} >
+                                        Delete
+                                    </Button>
+                                </PopoverBody>
+                                </PopoverContent>
+                            </Portal>
+                        </Popover>
+                        }
+
+                        {(cookieObjectApiKey.id == props.userIdOfPublication && cookieObjectApiKey.id != commentUser.userId) &&  
+                        <Popover>
+                            <PopoverTrigger>
+                            <EllipsisOutlined style={{ fontSize: '20px' }}/>
+                            </PopoverTrigger>
+                            <Portal>
+                                <PopoverContent>
+                                <PopoverArrow />
                                 <PopoverCloseButton />
                                 <PopoverBody>
                                     <Button colorScheme='red' variant='link'  onClick={()=>{deleteComment(commentUser)}} >

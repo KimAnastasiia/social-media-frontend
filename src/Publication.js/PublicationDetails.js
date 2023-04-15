@@ -27,7 +27,7 @@ export default function PublicationDetails (props){
     const [comment, setComment]=useState("")
     const [commentsUsers, setCommentsUsers]=useState([])
     const [showComments, setShowComments]=useState(false)
-  
+    let userIdOfPublication=useRef(0)
 
     useEffect (()=>{ 
         dataOfpublication()
@@ -73,6 +73,7 @@ export default function PublicationDetails (props){
             if(!data.error){
                 setPublication(data[0])
                 getUser(data[0].userId)
+                userIdOfPublication.current=data[0].userId
             }
         }
     }
@@ -135,7 +136,7 @@ export default function PublicationDetails (props){
                             commentsUsers={commentsUsers} 
                             setCommentsUsers={setCommentsUsers} 
                             postId={id}
-                            
+                            userIdOfPublication={userIdOfPublication.current}
                            />
                     </Box>
                     <Box zIndex={"sticky"} pl={"2%"} pr={"2%"}  justifyContent={"flex-start"} h={"15%"} >
@@ -220,6 +221,7 @@ export default function PublicationDetails (props){
                         commentsUsers={commentsUsers} 
                         setCommentsUsers={setCommentsUsers} 
                         postId={id}
+                        userIdOfPublication={userIdOfPublication.current}
                         />
                 </Box>
                 <Box   display={"flex"} alignItems={"center"} h={"50px"} >
