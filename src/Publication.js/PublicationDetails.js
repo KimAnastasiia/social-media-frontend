@@ -27,6 +27,7 @@ export default function PublicationDetails (props){
     const [comment, setComment]=useState("")
     const [commentsUsers, setCommentsUsers]=useState([])
     const [showComments, setShowComments]=useState(false)
+  
 
     useEffect (()=>{ 
         dataOfpublication()
@@ -34,11 +35,32 @@ export default function PublicationDetails (props){
 
 
     let getComments=async()=>{
-        let response = await fetch(Commons.baseUrl+"/public/comments/"+id)
+        let response = await fetch(Commons.baseUrl+"/likes?apiKey="+cookieObjectApiKey.apiKey)
         if(response.ok){
-            let data = await response.json()
-            if(!data.error){
-                setCommentsUsers(data)
+            let listOfMyLikes = await response.json()
+            if(!listOfMyLikes.error){
+                // listOfMyLikes  all the likes of my User  like.commentID
+
+                response = await fetch(Commons.baseUrl+"/public/comments/"+id)
+                if(response.ok){
+                    let allComments = await response.json()
+                    if(!allComments.error){
+                       
+                        let modifyCommentsUsers = allComments.map((comment)=>{
+                            
+                            let myLikeInThisComment= listOfMyLikes.filter((myLike)=>comment.id==myLike.commentId)
+                           
+                            if (myLikeInThisComment.length == 0){
+                                comment.likeOfMyUser = false
+                            } else {
+                                comment.likeOfMyUser = true
+                            }
+                            return comment
+                        })
+                        setCommentsUsers(modifyCommentsUsers)
+
+                    }
+                }
             }
         }
     }
@@ -113,6 +135,7 @@ export default function PublicationDetails (props){
                             commentsUsers={commentsUsers} 
                             setCommentsUsers={setCommentsUsers} 
                             postId={id}
+                            
                            />
                     </Box>
                     <Box zIndex={"sticky"} pl={"2%"} pr={"2%"}  justifyContent={"flex-start"} h={"15%"} >
