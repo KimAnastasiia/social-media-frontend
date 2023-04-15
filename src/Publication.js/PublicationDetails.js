@@ -124,6 +124,9 @@ export default function PublicationDetails (props){
         let response = await fetch (Commons.baseUrl+"/mediaPost/"+id+"?apiKey="+cookieObjectApiKey.apiKey,{
             method: 'DELETE' 
         })
+        if(response.ok){
+            navigate("/users/"+cookieObjectApiKey.uniqueName)
+        }
     }
     return(
         <div>
