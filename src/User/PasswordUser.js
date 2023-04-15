@@ -11,7 +11,7 @@ export default function PasswordUser(props){
     const [password, setPassword]=useState("")
     const [saveUser , setSaveUser]=useState(false)
     const [alert, setAlert] = useState(false)
-    const [cookieObjectApiKey, setCookieObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email"]);
+    const [cookieObjectApiKey, setCookieObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email","uniqueName"]);
     const navigate  = useNavigate();
 
     useEffect(()=>{
@@ -51,6 +51,7 @@ export default function PasswordUser(props){
                 setCookieObjectApiKey("apiKey", data.apiKey, { path: '/' } )
                 setCookieObjectApiKey("id",  data.userId, { path: '/' } )
                 setCookieObjectApiKey("email", data.email, { path: '/' } )
+                setCookieObjectApiKey("uniqueName", data.uniqueName, { path: '/' } )
                 console.log("id: "+cookieObjectApiKey.id)
                 navigate("/users/"+data.uniqueName)
             }

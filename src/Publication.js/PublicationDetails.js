@@ -32,7 +32,7 @@ export default function PublicationDetails (props){
     const [name, setName]=useState("")
     const [userEmail, setUserEmail]=useState("")
     const navigate  = useNavigate();
-    const [cookieObjectApiKey, setObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email"]);
+    const [cookieObjectApiKey, setObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email", "uniqueName"]);
     const [publication, setPublication]=useState({})
     const [comment, setComment]=useState("")
     const [commentsUsers, setCommentsUsers]=useState([])
