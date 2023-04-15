@@ -6,7 +6,17 @@ import { Box, Flex, Text, Button, Stack, Img, HStack,Avatar,Hide,Show ,Input,Inp
     AlertDescription,
  } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-
+import {
+    Popover,
+    PopoverTrigger,
+    PopoverContent,
+    PopoverHeader,
+    PopoverBody,
+    PopoverFooter,
+    PopoverArrow,
+    PopoverCloseButton,
+    PopoverAnchor,Portal,useDisclosure
+  } from '@chakra-ui/react'
 import Commons from "../Utility/Commons";
 import {MessageOutlined ,SmileOutlined,SendOutlined,HeartOutlined,EllipsisOutlined,BookOutlined} from '@ant-design/icons';
 import { useCookies } from 'react-cookie'; 
@@ -110,6 +120,11 @@ export default function PublicationDetails (props){
     let onClickCommentsButton=()=>{
         setShowComments(!showComments)
     }
+    let deletePost=async()=>{
+        let response = await fetch (Commons.baseUrl+"/mediaPost/"+id+"?apiKey="+cookieObjectApiKey.apiKey,{
+            method: 'DELETE' 
+        })
+    }
     return(
         <div>
         <Hide below="md" >
@@ -126,9 +141,25 @@ export default function PublicationDetails (props){
                             <Text fontSize={"xs"} fontWeight={"bold"} >{publication.comment} b</Text>
                         </Box>
                         </Box>
-                        <Box  pr={"2%"}  >
-                            <EllipsisOutlined style={{ fontSize: '25px' }}/>
-                        </Box>
+
+                    {(cookieObjectApiKey.id == userIdOfPublication.current) && <Box  pr={"2%"}  >
+                    <Popover>
+                            <PopoverTrigger>
+                            <EllipsisOutlined style={{ fontSize: '20px' }}/>
+                            </PopoverTrigger>
+                            <Portal>
+                                <PopoverContent>
+                                <PopoverArrow />
+                                <PopoverCloseButton />
+                                <PopoverBody>
+                                    <Button colorScheme='red' variant='link' onClick={deletePost}  >
+                                        Delete
+                                    </Button>
+                                </PopoverBody>
+                                </PopoverContent>
+                            </Portal>
+                        </Popover>
+                        </Box>}
                     </Box>
                     <Box pr={"2%"} pl={"2%"} borderBottomWidth={"2px"} h={"530px"} overflowY="scroll">
                         <CommentsPublication 
