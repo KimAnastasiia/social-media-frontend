@@ -32,11 +32,11 @@ export default function CommentsPublication (props){
     const [modifiedComment, setModifiedComment]=useState("")
     let selectedCommentId = useRef(-1)
     const [listOfCountLikes, setListOfCountLikes]=useState([])
-
+    const [allCommentsAndUsers, setAllCommentsAndUsers]=useState([])
     useEffect (()=>{ 
         props.getComments()
         coutLikes()
- 
+        getCommentsAndUsers()
     },[])
 
     let changeComment=(e)=>{
@@ -106,9 +106,19 @@ export default function CommentsPublication (props){
         props.getComments()
         coutLikes()
     }
+    let getCommentsAndUsers=async()=>{
+        let response = await fetch(Commons.baseUrl+"/public/comments/"+props.postId)
+        if(response.ok){
+            let data = await response.json()
+            if(!data.error){
+                setAllCommentsAndUsers(data)
+            }
+        }
+    }
 return(
     <Box>
-        {props.commentsUsers.sort((a,b)=>b.date-a.date)
+        {cookieObjectApiKey.apiKey &&
+        props.commentsUsers.sort((a,b)=>b.date-a.date)
         .map((commentUser)=>
         <Box >
             <Box mb={"10px"} minH={["7vh"]} display={"flex"} justifyContent={"space-between"} >
@@ -180,16 +190,6 @@ return(
                                     return <Text>{d.totalLikes}</Text>
                                 }
                             })}
-                         
-                            {!cookieObjectApiKey.apiKey && 
-                                <Icon component={HeartSvg} style={{
-                                        fontSize: "20px"
-                                    }} />
-                            }
-                            
-    
-
-                            {cookieObjectApiKey.apiKey && 
                                 <Box onClick={()=>{addLike(commentUser.id)}} >
 
                                     { commentUser.likeOfMyUser == true && 
@@ -202,15 +202,42 @@ return(
                                             fontSize: "20px",
                                         }} />                         
                                     }
-
                               </Box>
-                            }
-          
                         </Box>
                     </Box>
                 </Box>
             </Box>
         </Box>
+        )}
+        {!cookieObjectApiKey.apiKey && 
+        allCommentsAndUsers.map((commentUser)=>
+        <Box >
+        <Box mb={"10px"} minH={["7vh"]} display={"flex"} justifyContent={"space-between"} >
+            <Box  m={"10px"} w={"100%"} flexDirection={"column"} display={"flex"} justifyContent={"space-around"}>
+                <Box display={"flex"}   >
+                    <Avatar size={"xs"} name={commentUser.uniqueName}></Avatar>
+                    <Text mr={"20px"} fontWeight={"bold"} ml={"10px"} >{commentUser.uniqueName}</Text>
+                    {(selectedCommentId.current != commentUser.id ) && <Text>{commentUser.comment}</Text>}
+
+                </Box>
+                <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"} >
+                    <Box display={"flex"} alignItems={"center"}>
+                    <Text mr={"20px"} fontSize={"14px"} >{FormatDate(commentUser.date)}</Text>
+                    </Box>
+                    <Box display={"flex"} alignItems={"center"}>
+                        {listOfCountLikes.map((d)=>{
+                            if(d.id==commentUser.id){
+                                return <Text>{d.totalLikes}</Text>
+                            }
+                        })}
+                        <Icon component={HeartSvg} style={{
+                                fontSize: "20px"
+                        }} />
+                    </Box>
+                </Box>
+            </Box>
+        </Box>
+    </Box>
         )}
     </Box>
 )
