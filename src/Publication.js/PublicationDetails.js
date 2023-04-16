@@ -77,7 +77,7 @@ export default function PublicationDetails (props){
 
     let dataOfpublication=async()=>{
 
-        let response = await fetch(Commons.baseUrl+"/mediaPost/"+id)
+        let response = await fetch(Commons.baseUrl+"/public/mediaPost/"+id)
         if(response.ok){
             let data = await response.json()
             if(!data.error){
@@ -128,6 +128,20 @@ export default function PublicationDetails (props){
             navigate("/users/"+cookieObjectApiKey.uniqueName)
         }
     }
+    let likePost=async()=>{
+        let response = await fetch (Commons.baseUrl+"/mediaPost/like?apiKey="+cookieObjectApiKey.apiKey,{
+
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+
+            body:
+                JSON.stringify({ 
+                    postId:id
+                })
+        })
+    }
     return(
         <div>
         <Hide below="md" >
@@ -176,7 +190,7 @@ export default function PublicationDetails (props){
                     <Box zIndex={"sticky"} pl={"2%"} pr={"2%"}  justifyContent={"flex-start"} h={"15%"} >
                         <Box  h={"40%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                             <Box w={"18%"} justifyContent={"space-around"} display={"flex"}>
-                                <HeartOutlined style={{ fontSize: '25px' }} />
+                                <HeartOutlined  onClick={likePost} style={{ fontSize: '25px' }} />
                                 <SendOutlined style={{ fontSize: '25px' }}/>
                             </Box>
                             <Box   w={"70%"} display={"flex"} justifyContent={"end"}>
