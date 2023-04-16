@@ -37,10 +37,12 @@ export default function PublicationDetails (props){
     const [comment, setComment]=useState("")
     const [commentsUsers, setCommentsUsers]=useState([])
     const [showComments, setShowComments]=useState(false)
+    const [postLikes, setPostLikes]=useState(0)
     let userIdOfPublication=useRef(0)
 
     useEffect (()=>{ 
         dataOfpublication()
+        numberOfLikes()
     },[])
 
 
@@ -129,7 +131,7 @@ export default function PublicationDetails (props){
         }
     }
     let likePost=async()=>{
-        let response = await fetch (Commons.baseUrl+"/mediaPost/like?apiKey="+cookieObjectApiKey.apiKey,{
+        let response = await fetch (Commons.baseUrl+"/postLikes?apiKey="+cookieObjectApiKey.apiKey,{
 
             method: 'POST',
             headers: {
@@ -141,6 +143,16 @@ export default function PublicationDetails (props){
                     postId:id
                 })
         })
+        numberOfLikes()
+    }
+    let numberOfLikes=async()=>{
+        let response = await fetch(Commons.baseUrl+"/public/postLikes/"+id)
+        if(response.ok){
+            let data = await response.json()
+            if(!data.error){
+                setPostLikes(data[0].totalLikes)
+            }
+        }
     }
     return(
         <div>
@@ -189,7 +201,8 @@ export default function PublicationDetails (props){
                     </Box>
                     <Box zIndex={"sticky"} pl={"2%"} pr={"2%"}  justifyContent={"flex-start"} h={"15%"} >
                         <Box  h={"40%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-                            <Box w={"18%"} justifyContent={"space-around"} display={"flex"}>
+                            <Box w={"18%"} justifyContent={"space-around"} display={"flex"} alignItems={"center"}>
+                                <Text fontSize={"21px"}fontWeight={"bold"} >{postLikes}</Text>
                                 <HeartOutlined  onClick={likePost} style={{ fontSize: '25px' }} />
                                 <SendOutlined style={{ fontSize: '25px' }}/>
                             </Box>
@@ -234,7 +247,8 @@ export default function PublicationDetails (props){
                     </Box>
                     <Box pb={"10px"} borderBottomWidth={"2px"} pl={"2%"} pr={"2%"}  justifyContent={"flex-start"} h={"15%"} >
                         <Box mb={"10px"}  h={"40%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-                            <Box  w={"18%"} justifyContent={"space-between"} display={"flex"}>
+                            <Box alignItems={"center"}  w={"18%"} justifyContent={"space-between"} display={"flex"}>
+                                <Text fontSize={"21px"}fontWeight={"bold"} >{postLikes}</Text>
                                 <HeartOutlined style={{ fontSize: '25px' }} />
                                 <MessageOutlined onClick={onClickCommentsButton} style={{ fontSize: '25px' }}/>
                                 <SendOutlined style={{ fontSize: '25px' }}/>
