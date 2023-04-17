@@ -193,7 +193,7 @@ export default function PublicationDetails (props){
                         <Box  pl={"2%"} w={"100%"} display={"flex"} justifyContent={"start"} alignItems={"center"} >
                             <Avatar onClick={()=>{navigate("/users/"+name)}} size={"md"}></Avatar>
                         <Box ml={"4%"}>
-                            <Text>{name}</Text>
+                            <Button  variant='link' color={"black"} onClick={()=>{navigate("/users/"+name)}}>{name}</Button>
                             <Text fontSize={"xs"} fontWeight={"bold"} >{publication.comment} b</Text>
                         </Box>
                         </Box>
@@ -298,8 +298,8 @@ export default function PublicationDetails (props){
             <Box w={"100%"} >
                     <Box borderTopWidth={"2px"}pt={"10px"} pb={"10px"} borderBottomWidth={"2px"} h={"10%"} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
                         <Box  pl={"2%"} w={"100%"} display={"flex"} justifyContent={"start"} alignItems={"center"} >
-                            <Avatar size={"md"}></Avatar>
-                            <Text ml={"4%"}>{name}</Text>
+                            <Avatar size={"md"}  onClick={()=>{navigate("/users/"+name)}}></Avatar>
+                            <Button  variant='link' color={"black"} onClick={()=>{navigate("/users/"+name)}} ml={"4%"}>{name}</Button>
                         </Box>
                         <Box  pr={"2%"}  >
                             <EllipsisOutlined style={{ fontSize: '25px' }}/>
