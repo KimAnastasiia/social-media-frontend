@@ -61,7 +61,7 @@ export default function PasswordUser(props){
     }
 
     return (
-        <Box  pl={["5%","5%","10%","15%","25%"]} pr={["5%","5%","10%","15%","25%"]}>
+        <Box display={"flex"} alignItems={"center"} minH={["89vh"]} justifyContent={"center"}>
         <Box  border={"1px"} borderColor="lightgray" borderRadius={"lg"} display={"flex"} flexDirection={["column","column","row","row","row"]} >
             <Box p={"50px"}w={["100%","100%","50%","50%", "50%"]}  bg={"#F9F9F9"}>
                 <Box m="10px" display={"flex"}>
