@@ -109,7 +109,7 @@ export default function RegistrationUser(props){
 
     let makeAccount=async()=>{
 
-        let response = await fetch (Commons.baseUrl+"/users",{
+        let response = await fetch (Commons.baseUrl+"/public/users",{
 
             method: 'POST',
             headers: {

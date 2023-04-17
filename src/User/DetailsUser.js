@@ -40,7 +40,7 @@ export default function DetailsUser(props){
 
 
     let getUser=async()=>{
-        let response = await fetch(Commons.baseUrl+"/users/"+uniqueName)
+        let response = await fetch(Commons.baseUrl+"/public/users/"+uniqueName)
         if(response.ok){
             let data = await response.json()
             setUser(data[0])
@@ -99,7 +99,7 @@ export default function DetailsUser(props){
 
                         <Box display={"flex"} alignItems={"center"} justifyContent={"space-around"}>
                             <Text fontSize={"24px"}>{user.uniqueName}</Text>
-                            {cookieObjectApiKey.id==user.id &&<Button >Edit profile</Button>}
+                            {cookieObjectApiKey.id==user.id &&<Button onClick={()=>{navigate('/users/edit')}} >Edit profile</Button>}
                         </Box>
 
                         <Box  mb={"2%"} mt={"2%"} w={["100%"]} display={"flex"} justifyContent={"space-between"} >

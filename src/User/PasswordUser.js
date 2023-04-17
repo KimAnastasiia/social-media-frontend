@@ -27,7 +27,7 @@ export default function PasswordUser(props){
 
     let onClicklogin=async()=>{
 
-        let response = await fetch (Commons.baseUrl+"/users/verification",{
+        let response = await fetch (Commons.baseUrl+"/public/users/verification",{
         
             method: 'POST',
             headers: {

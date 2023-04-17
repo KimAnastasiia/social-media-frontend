@@ -32,7 +32,7 @@ export default function ProfileUser(props){
 
     let signInOnClick=async()=>{
 
-        let response = await fetch(Commons.baseUrl+"/users?email="+props.email)
+        let response = await fetch(Commons.baseUrl+"/public/users?email="+props.email)
         if(response.ok){
             let data = await response.json()
             setName(data[0].name)

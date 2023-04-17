@@ -96,7 +96,7 @@ export default function PublicationDetails (props){
     }
     let getUser=async(p)=>{
 
-        let response = await fetch(Commons.baseUrl+"/users?id="+p)
+        let response = await fetch(Commons.baseUrl+"/public/users?id="+p)
         if(response.ok){
             let data = await response.json()
             if(!data.error){

@@ -29,7 +29,7 @@ export default function LoginUser(props){
 
     let signInOnClick=async()=>{
 
-        let response = await fetch(Commons.baseUrl+"/users?email="+email)
+        let response = await fetch(Commons.baseUrl+"/public/users?email="+email)
         if(response.ok){
             let data = await response.json()
             if(!data.error && data.length > 0){
