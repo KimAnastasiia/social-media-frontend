@@ -13,7 +13,7 @@ import { Upload, Form } from 'antd';
 
 export default function CreatePublication(props){
 
-
+    const navigate  = useNavigate();
     const [comment, setComment]=useState("")
     const [cookieObjectApiKey, setCookieObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email"]);
     const [myFile, setMyFile]=useState()
@@ -28,6 +28,9 @@ export default function CreatePublication(props){
                 method: 'POST',
                 body:formData
             })
+            if(response.ok){
+                navigate("/users/"+cookieObjectApiKey.uniqueName)
+            }
         }
 
         setComment("")

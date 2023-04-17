@@ -42,7 +42,7 @@ export default function ProfileUser(props){
 
     let showImg = async()=>{
 
-        let response = await fetch(Commons.baseUrl+"/mediaPost?userId="+cookieObjectApiKey.id)
+        let response = await fetch(Commons.baseUrl+"/public/mediaPost?userId="+cookieObjectApiKey.id)
         if(response.ok){
             let data = await response.json()
             setIdImg(data)

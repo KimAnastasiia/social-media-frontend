@@ -52,7 +52,7 @@ export default function DetailsUser(props){
    
     let getPosts=async(uid)=>{
 
-        let response = await fetch(Commons.baseUrl+"/mediaPost?userId="+uid)
+        let response = await fetch(Commons.baseUrl+"/public/mediaPost?userId="+uid)
         if(response.ok){
             let data = await response.json()
             setPosts(data)

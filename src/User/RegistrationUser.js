@@ -26,7 +26,7 @@ export default function RegistrationUser(props){
     const [passwordCheckError, setPasswordCheckError]=useState(false)
     const [numberError, setNumberError]=useState(false)
 
-    const [cookieObjectApiKey, setObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email"]);
+    const [cookieObjectApiKey, setObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email","uniqueName"]);
 
 
     useEffect(()=>{
@@ -131,6 +131,7 @@ export default function RegistrationUser(props){
                 setObjectApiKey("apiKey", data.apiKey, { path: '/' } )
                 setObjectApiKey("id", data.userId, { path: '/' } )
                 setObjectApiKey("email", data.email, { path: '/' } )
+                setObjectApiKey("uniqueName", data.uniqueName, { path: '/' } )
                 console.log(cookieObjectApiKey)
             }
             if(data.error){

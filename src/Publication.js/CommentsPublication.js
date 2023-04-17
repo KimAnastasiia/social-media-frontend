@@ -5,7 +5,7 @@ import { Box, Flex, Text, Button, Textarea, Img, HStack,Avatar,Hide,Show ,Input,
     AlertTitle,
     AlertDescription,
  } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import Commons from "../Utility/Commons";
 import {MessageOutlined ,SmileOutlined,SendOutlined,HeartOutlined,EllipsisOutlined,BookOutlined} from '@ant-design/icons';
 import { useCookies } from 'react-cookie'; 
@@ -33,6 +33,7 @@ export default function CommentsPublication (props){
     let selectedCommentId = useRef(-1)
     const [listOfCountLikes, setListOfCountLikes]=useState([])
     const [allCommentsAndUsers, setAllCommentsAndUsers]=useState([])
+    const navigate  = useNavigate();
     useEffect (()=>{ 
         props.getComments()
         coutLikes()
@@ -124,8 +125,8 @@ return(
             <Box mb={"10px"} minH={["7vh"]} display={"flex"} justifyContent={"space-between"} >
                 <Box  m={"10px"} w={"100%"} flexDirection={"column"} display={"flex"} justifyContent={"space-around"}>
                     <Box display={"flex"}   >
-                        <Avatar size={"xs"} name={commentUser.uniqueName}></Avatar>
-                        <Text mr={"20px"} fontWeight={"bold"} ml={"10px"} >{commentUser.uniqueName}</Text>
+                        <Avatar size={"xs"} onClick={()=>{navigate("/users/"+commentUser.uniqueName)}} name={commentUser.uniqueName}></Avatar>
+                        <Button variant='link' color={"black"} onClick={()=>{navigate("/users/"+commentUser.uniqueName)}}  mr={"20px"} fontWeight={"bold"} ml={"10px"} >{commentUser.uniqueName}</Button>
                         {(selectedCommentId.current != commentUser.id ) && <Text>{commentUser.comment}</Text>}
                         {( selectedCommentId.current == commentUser.id) &&
                         <Box display={"flex"} w={"100%"}>
@@ -215,8 +216,8 @@ return(
         <Box mb={"10px"} minH={["7vh"]} display={"flex"} justifyContent={"space-between"} >
             <Box  m={"10px"} w={"100%"} flexDirection={"column"} display={"flex"} justifyContent={"space-around"}>
                 <Box display={"flex"}   >
-                    <Avatar size={"xs"} name={commentUser.uniqueName}></Avatar>
-                    <Text mr={"20px"} fontWeight={"bold"} ml={"10px"} >{commentUser.uniqueName}</Text>
+                    <Avatar onClick={()=>{navigate("/users/"+commentUser.uniqueName)}}  size={"xs"} name={commentUser.uniqueName}></Avatar>
+                    <Button variant={"link"} color={"black"} onClick={()=>{navigate("/users/"+commentUser.uniqueName)}}   mr={"20px"} fontWeight={"bold"} ml={"10px"} >{commentUser.uniqueName}</Button>
                     {(selectedCommentId.current != commentUser.id ) && <Text>{commentUser.comment}</Text>}
 
                 </Box>
