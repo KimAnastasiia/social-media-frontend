@@ -12,7 +12,7 @@ export default function EditInformationUser(props){
 
     const [user, setUser]=useState({})
     const [cookieObjectApiKey, setObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email", "uniqueName"]);
-    const [presentation, setPresentation]=useState("")
+
    
     useEffect (()=>{ 
         getUser()

@@ -128,7 +128,7 @@ export default function DetailsUser(props){
                 {posts.sort((a,b)=>b.id-a.id)
                 .map((post)=>
                     <Box h={"100%"}  display={"flex"} alignItems={"center"}  flexDirection={"column"} m={"0.3%"} justifyContent={"center"}>
-                        <Image h="100%" onClick={()=>{navigate("/mediaPost/"+post.id)}} w={["100%"]} src={Commons.baseUrl+"/images/"+user.id+user.email+post.id+"mini.png"} />
+                        <Image h="100%" onClick={()=>{navigate("/mediaPost/"+post.id)}} w={["100%"]} src={Commons.baseUrl+"/images/"+user.id+post.id+"mini.png"} />
                     </Box>
                 )}
             </Box>

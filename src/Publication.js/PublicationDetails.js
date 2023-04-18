@@ -186,7 +186,7 @@ export default function PublicationDetails (props){
         <Hide below="md" >
         <Box  justifyContent={"center"} display={["flex"]}  >
             <Box w={"30%"} bg={"black"} justifyContent={"center"} display={"flex"}> 
-                <Image src={Commons.baseUrl+"/images/"+ publication.userId+userEmail+id+"big.png"} />
+                <Image src={Commons.baseUrl+"/images/"+ publication.userId+id+"big.png"} />
             </Box>
             <Box borderWidth={"3px"} borderColor={"black"} w={"30%"} >
                     <Box borderBottomWidth={"2px"} h={"10%"} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
