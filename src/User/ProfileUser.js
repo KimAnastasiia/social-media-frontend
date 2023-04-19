@@ -60,7 +60,7 @@ export default function ProfileUser(props){
                 
                     <Box  display={"flex"} w={["20%","20%","30%","30%","30%"]} alignItems={"flex-start"} >
                         <Stack direction='row' >
-                            <Avatar size={["xl","xl","2xl","2xl","2xl"]} src='https://bit.ly/broken-link' />
+                            <Avatar  size={["xl","xl","2xl","2xl","2xl"]} src={Commons.baseUrl+"/images/"+cookieObjectApiKey.id+"avatar.png"} />
                         </Stack>
                     </Box>
 

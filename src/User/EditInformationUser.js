@@ -7,11 +7,12 @@ import { Box, Flex, Text, Button, Textarea, Img, HStack,Avatar,Hide,Show ,Input,
 import Commons from "../Utility/Commons";
 import React,{useState, useEffect,useRef} from "react"
 import { useCookies } from 'react-cookie'; 
-
+import { Upload, Form } from 'antd';
 export default function EditInformationUser(props){
 
     const [user, setUser]=useState({})
     const [cookieObjectApiKey, setObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email", "uniqueName"]);
+    const [myFile, setMyFile]=useState()
 
    
     useEffect (()=>{ 
@@ -48,33 +49,44 @@ export default function EditInformationUser(props){
         }
     }
     let updateData = async()=>{
+        const formData = new FormData();
+        formData.append('myImage', myFile);
+        formData.append('name', user.name);
+        formData.append('surname', user.surname);
+        formData.append('phoneNumber', user.phoneNumber);
+        formData.append('email', user.email);
+        formData.append('presentation', user.presentation);
+        formData.append('uniqueName', user.uniqueName);
+        
         let response = await fetch (Commons.baseUrl+"/users?apiKey="+cookieObjectApiKey.apiKey,{
             method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ 
-                name:user.name,
-                surname:user.surname,
-                phoneNumber:user.phoneNumber,
-                email:user.email,
-                uniqueName:user.uniqueName,
-                presentation:user.presentation
-            })
+            body: formData
         })
+
+    }
+    let chageValueImage =(file)=>{
+        setMyFile(file)
     }
 
-
+    let userId = user.id
 return(
     <Box  minH={["90vh"]} display={"flex"} justifyContent={"center"} alignItems={"center"}>
         <Box borderRadius={"2xl"} p={"50px"}w={"30%"} minH={["70vh"]}  borderWidth={"1px"} >
             <Box mb={"30px"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
                 <Box w={"50%"}>
-                    <Avatar/>
+                <Form.Item  name="image">
+                    <Upload  action={ (file) => {chageValueImage(file)} }  listType="picture">
+                        <Avatar src={Commons.baseUrl+"/images/"+userId+"avatar.png"} />
+                    </Upload>
+                </Form.Item>
                 </Box>
                 <Box w={"50%"}>
                     <Text >{user.uniqueName}</Text>
-                    <Button variant='link' color={"#0077FF"}>change photo profile</Button>
+                    <Form.Item name="image">
+                        <Upload  action={ (file) => {chageValueImage(file)} }  listType="picture">
+                            <Button variant='link' color={"#0077FF"}>change photo profile</Button>
+                        </Upload>
+                    </Form.Item>
                 </Box>
             </Box>
             <Box  mb={"30px"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
