@@ -29,11 +29,22 @@ export default function EditPasswordUser(props){
 
 
     let updatePassword=async()=>{
-        let response = await fetch(Commons.baseUrl+"/users/checkPassword?apiKey="+cookieObjectApiKey.apiKey+"&password="+previousPassword)
+        let response = await fetch(Commons.baseUrl+"/users/checkPassword?apiKey="+cookieObjectApiKey.apiKey,{
+
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+
+            body:
+                JSON.stringify({ 
+                    password:previousPassword
+                })
+        })
         if(response.ok){
             let data = await response.json()
             if(!data.error){
-                if(data.messege=="right"){
+                if(data.message=="right"){
                     if(errorNewPassword==false && errorPassword==false){
                         let response = await fetch (Commons.baseUrl+"/users/password?apiKey="+cookieObjectApiKey.apiKey,{
                             method: 'PUT',
@@ -54,10 +65,10 @@ export default function EditPasswordUser(props){
                             }
                         }
                     }
-                }else{
-                    setErrorPassword(true)
-                    setDone(false)
                 }
+            } else{
+                setErrorPassword(true)
+                setDone(false)
             }
         }
 
