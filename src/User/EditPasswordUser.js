@@ -12,13 +12,57 @@ export default function EditPasswordUser(props){
     const [newPasswordRepit, setNewPasswordRepit]=useState("")
     const [errorNewPassword, setErrorNewPassword]=useState(false)
     const [errorPassword, setErrorPassword]=useState(false)
-
+    const [user, setUser]=useState({})
+    const [cookieObjectApiKey, setObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email"]);
+    const [done, setDone]=useState(false)
     useEffect (()=>{ 
        if(newPasswordRepit.length==0){
         setErrorNewPassword(false)
        }
     },[newPasswordRepit])
 
+    useEffect (()=>{ 
+
+       setErrorPassword(false)
+     
+    },[previousPassword])
+
+
+    let updatePassword=async()=>{
+        let response = await fetch(Commons.baseUrl+"/users/checkPassword?apiKey="+cookieObjectApiKey.apiKey+"&password="+previousPassword)
+        if(response.ok){
+            let data = await response.json()
+            if(!data.error){
+                if(data.messege=="right"){
+                    if(errorNewPassword==false && errorPassword==false){
+                        let response = await fetch (Commons.baseUrl+"/users/password?apiKey="+cookieObjectApiKey.apiKey,{
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ 
+                                password:newPassword
+                            })
+                        })
+                        if(response.ok){
+                            let data = await response.json()
+                            if(data.message=="done"){
+                                setDone(true)
+                                setNewPassword("")
+                                setNewPasswordRepit("")
+                                setPreviousPassword("")
+                            }
+                        }
+                    }
+                }else{
+                    setErrorPassword(true)
+                    setDone(false)
+                }
+            }
+        }
+
+
+    }
     let repitNewPasswordCheck=(e)=>{
         setNewPasswordRepit(e.target.value)
         if(e.target.value!=newPassword){
@@ -29,26 +73,26 @@ export default function EditPasswordUser(props){
     }
     return(
         <Box  minH={["80vh"]} display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
-            <Box w={"100%"} mb={"30px"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
+            {done && <Box w={"100%"} mb={"30px"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
                 <Alert w={"15%"}  status="success"  borderRadius="3xl" >
                     <AlertIcon />
                     <AlertTitle>Password changed successfully</AlertTitle>
                 </Alert>
-            </Box>
+            </Box>}
             <Box borderRadius={"2xl"} p={"50px"}w={["90%","90%","70%","60%","30%"]} minH={["30vh"]}  borderWidth={"1px"} >
                 {errorPassword && <Box display={"flex"} justifyContent={"end"} alignItems={"center"}>
-                    <Alert w={"50%"}  status='error'  borderRadius="3xl" >
+                    <Alert w={"55%"}  status='error'  borderRadius="3xl" >
                         <AlertIcon />
-                        <AlertTitle>{errorPassword}</AlertTitle>
+                        <AlertTitle>Previous password is wrong</AlertTitle>
                     </Alert>
                 </Box>}
                 <Box  mb={"30px"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
                     <Text  w={"50%"}>Previous password</Text>
-                    <Input type="password" onChange={(e)=>{setPreviousPassword(e.target.value)}} w={"50%"}></Input>
+                    <Input value={previousPassword} type="password" onChange={(e)=>{setPreviousPassword(e.target.value)}} w={"50%"}></Input>
                 </Box>
                 <Box  mb={"30px"}  display={"flex"} justifyContent={"center"} alignItems={"center"}>
                     <Text  w={"50%"}>New password</Text>
-                    <Input type="password" onChange={(e)=>{setNewPassword(e.target.value)}}  w={"50%"}></Input>
+                    <Input value={newPassword} type="password" onChange={(e)=>{setNewPassword(e.target.value)}}  w={"50%"}></Input>
                 </Box>
                 {errorNewPassword && <Box  display={"flex"} justifyContent={"end"} alignItems={"center"}>
                     <Alert w={"50%"}  status='error'  borderRadius="3xl" >
@@ -58,11 +102,11 @@ export default function EditPasswordUser(props){
                 </Box>}
                 <Box  mb={"30px"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
                     <Text w={"50%"}>Repit new password</Text>
-                    <Input type="password"  onChange={repitNewPasswordCheck} w={"50%"}></Input>
+                    <Input value={newPasswordRepit} type="password"  onChange={repitNewPasswordCheck} w={"50%"}></Input>
                 </Box>
                 
                 <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
-                    <Button  bg={"#0077FF"} color="white">Save</Button>
+                    <Button onClick={updatePassword}  bg={"#0077FF"} color="white">Save</Button>
                 </Box>
     
             </Box>
