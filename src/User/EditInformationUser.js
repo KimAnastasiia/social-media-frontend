@@ -68,15 +68,15 @@ export default function EditInformationUser(props){
         setMyFile(file)
     }
 
-    let userId = user.id
+
 return(
     <Box  minH={["90vh"]} display={"flex"} justifyContent={"center"} alignItems={"center"}>
-        <Box borderRadius={"2xl"} p={"50px"}w={"30%"} minH={["70vh"]}  borderWidth={"1px"} >
+        <Box borderRadius={"2xl"} p={"50px"}w={["90%","90%","70%","60%","30%"]} minH={["70vh"]}  borderWidth={"1px"} >
             <Box mb={"30px"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
                 <Box w={"50%"}>
                 <Form.Item  name="image">
                     <Upload  action={ (file) => {chageValueImage(file)} }  listType="picture">
-                        <Avatar src={Commons.baseUrl+"/images/"+userId+"avatar.png"} />
+                        <Avatar src={Commons.baseUrl+"/images/"+user.id+"avatar.png"} />
                     </Upload>
                 </Form.Item>
                 </Box>

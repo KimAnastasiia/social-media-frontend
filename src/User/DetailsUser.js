@@ -8,7 +8,7 @@ import { Box, Flex, Text, Button, Stack, Img, HStack,Avatar,Hide,Show ,Input,Inp
 import { Link } from "react-router-dom";
 
 import Commons from "../Utility/Commons";
-import {MessageOutlined ,SmileOutlined,SendOutlined,HeartOutlined,EllipsisOutlined,BookOutlined} from '@ant-design/icons';
+import {SettingOutlined ,SmileOutlined,SendOutlined,HeartOutlined,EllipsisOutlined,BookOutlined} from '@ant-design/icons';
 import { useCookies } from 'react-cookie'; 
 import { useNavigate   } from "react-router-dom";
 import { useParams } from "react-router-dom";
@@ -98,8 +98,13 @@ export default function DetailsUser(props){
                     <Box w={["80%","80%","70%","70%","70%"]}  ml={"6%"}  >
 
                         <Box display={"flex"} alignItems={"center"} justifyContent={"space-around"}>
-                            <Text fontSize={"24px"}>{user.uniqueName}</Text>
-                            {cookieObjectApiKey.id==user.id &&<Button onClick={()=>{navigate('/users/edit')}} >Edit profile</Button>}
+                            <Text w={"50%"} fontSize={"24px"}>{user.uniqueName}</Text>
+                            <Box w={"50%"}  display={"flex"} alignItems={"center"} justifyContent={"space-around"} >
+                                {cookieObjectApiKey.id==user.id &&<Button onClick={()=>{navigate('/users/edit')}} >Edit profile</Button>}
+                                <Box  onClick={()=>{navigate("/users/editPassword")}}>
+                                    <SettingOutlined style={{ fontSize: '23px' }} />
+                                </Box>
+                            </Box>
                         </Box>
 
                         <Box  mb={"2%"} mt={"2%"} w={["100%"]} display={"flex"} justifyContent={"space-between"} >
