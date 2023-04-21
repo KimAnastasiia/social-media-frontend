@@ -28,7 +28,7 @@ import {
 
 export default function CommentsPublication (props){
 
-    const [cookieObjectApiKey, setObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email"]);
+    const [cookieObjectApiKey, setCookieObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email"]);
     const [modifiedComment, setModifiedComment]=useState("")
     let selectedCommentId = useRef(-1)
     const [listOfCountLikes, setListOfCountLikes]=useState([])

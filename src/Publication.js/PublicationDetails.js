@@ -33,7 +33,7 @@ export default function PublicationDetails (props){
     const [name, setName]=useState("")
     const [userEmail, setUserEmail]=useState("")
     const navigate  = useNavigate();
-    const [cookieObjectApiKey, setObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email", "uniqueName"]);
+    const [cookieObjectApiKey, setCookieObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email", "uniqueName"]);
     const [publication, setPublication]=useState({})
     const [comment, setComment]=useState("")
     const [commentsUsers, setCommentsUsers]=useState([])
@@ -194,7 +194,7 @@ export default function PublicationDetails (props){
                             <Avatar onClick={()=>{navigate("/users/"+name)}} size={"md"}></Avatar>
                         <Box ml={"4%"}>
                             <Button  variant='link' color={"black"} onClick={()=>{navigate("/users/"+name)}}>{name}</Button>
-                            <Text fontSize={"xs"} fontWeight={"bold"} >{publication.comment} b</Text>
+                            <Text fontSize={"xs"} fontWeight={"bold"} >{publication.comment} </Text>
                         </Box>
                         </Box>
 

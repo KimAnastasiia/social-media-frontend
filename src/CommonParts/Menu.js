@@ -18,7 +18,7 @@ export default function Menu(props){
         if( e.length < 1){
             setUsers([])
         }else{
-            let response = await fetch(Commons.baseUrl+"/users?name="+e)
+            let response = await fetch(Commons.baseUrl+"/public/users?name="+e)
             if(response.ok){
                 let data = await response.json()
                 setUsers(data)

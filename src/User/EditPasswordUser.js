@@ -13,7 +13,7 @@ export default function EditPasswordUser(props){
     const [errorNewPassword, setErrorNewPassword]=useState(false)
     const [errorPassword, setErrorPassword]=useState(false)
     const [user, setUser]=useState({})
-    const [cookieObjectApiKey, setObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email"]);
+    const [cookieObjectApiKey, setCookieObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email"]);
     const [done, setDone]=useState(false)
     useEffect (()=>{ 
        if(newPasswordRepit.length==0){

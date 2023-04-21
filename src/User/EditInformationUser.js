@@ -11,7 +11,7 @@ import { Upload, Form } from 'antd';
 export default function EditInformationUser(props){
 
     const [user, setUser]=useState({})
-    const [cookieObjectApiKey, setObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email", "uniqueName"]);
+    const [cookieObjectApiKey, setCookieObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email", "uniqueName"]);
     const [myFile, setMyFile]=useState()
 
    
@@ -49,23 +49,37 @@ export default function EditInformationUser(props){
         }
     }
     let updateData = async()=>{
-        const formData = new FormData();
-        formData.append('myImage', myFile);
-        formData.append('name', user.name);
-        formData.append('surname', user.surname);
-        formData.append('phoneNumber', user.phoneNumber);
-        formData.append('email', user.email);
-        formData.append('presentation', user.presentation);
-        formData.append('uniqueName', user.uniqueName);
         
         let response = await fetch (Commons.baseUrl+"/users?apiKey="+cookieObjectApiKey.apiKey,{
             method: 'PUT',
-            body: formData
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 
+                name: user.name,
+                surname: user.surname,
+                phoneNumber: user.phoneNumber,
+                email: user.email,
+                presentation: user.presentation,
+                uniqueName:user.uniqueName
+            })
         })
+        if(response.ok){
+            setCookieObjectApiKey("uniqueName",user.uniqueName, { path: '/' } )
+        }
 
     }
     let chageValueImage =(file)=>{
         setMyFile(file)
+    }
+
+    let changePhoto=async()=>{
+        const formData = new FormData();
+        formData.append('myImage', myFile);
+        let response = await fetch (Commons.baseUrl+"/users/photo?apiKey="+cookieObjectApiKey.apiKey,{
+            method: 'PUT',
+            body: formData
+        })
     }
 
 
@@ -75,7 +89,7 @@ return(
             <Box mb={"30px"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
                 <Box w={"50%"}>
                 <Form.Item  name="image">
-                    <Upload  action={ (file) => {chageValueImage(file)} }  listType="picture">
+                    <Upload action={ (file) => {chageValueImage(file)} }  listType="picture">
                         <Avatar src={Commons.baseUrl+"/images/"+user.id+"avatar.png"} />
                     </Upload>
                 </Form.Item>
@@ -87,6 +101,7 @@ return(
                             <Button variant='link' color={"#0077FF"}>change photo profile</Button>
                         </Upload>
                     </Form.Item>
+                    <Button  bg={"#0077FF"} color="white" onClick={changePhoto} >Update photo</Button>
                 </Box>
             </Box>
             <Box  mb={"30px"} display={"flex"} justifyContent={"center"} alignItems={"center"}>

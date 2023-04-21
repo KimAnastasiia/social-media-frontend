@@ -35,7 +35,7 @@ export default function DetailsUser(props){
 
     const img = useRef(null)
     const [selectedFile, setSelectedFile] = useState(null);
-    const [cookieObjectApiKey, setObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email", "uniqueName"]);
+    const [cookieObjectApiKey, setCookieObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email", "uniqueName"]);
     const [comment, setComment]=useState("")
     const { isOpen, onOpen, onClose } = useDisclosure()
     const cancelRef = React.useRef()
@@ -116,8 +116,9 @@ export default function DetailsUser(props){
 
                         <Box display={"flex"} alignItems={"center"} justifyContent={"space-around"}>
                             <Text w={"50%"} fontSize={"24px"}>{user.uniqueName}</Text>
+                            {cookieObjectApiKey.id==user.id &&
                             <Box w={"50%"}  display={"flex"} alignItems={"center"} justifyContent={"space-around"} >
-                                {cookieObjectApiKey.id==user.id &&<Button onClick={()=>{navigate('/users/edit')}} >Edit profile</Button>}
+                                <Button onClick={()=>{navigate('/users/edit')}} >Edit profile</Button>
                                 <Box  onClick={onOpen}>
                                     <SettingOutlined style={{ fontSize: '23px' }} />
                                 </Box>
@@ -143,7 +144,7 @@ export default function DetailsUser(props){
                                         </AlertDialogFooter>
                                     </AlertDialogContent>
                                 </AlertDialog>
-                            </Box>
+                            </Box>}
                         </Box>
 
                         <Box  mb={"2%"} mt={"2%"} w={["100%"]} display={"flex"} justifyContent={"space-between"} >
