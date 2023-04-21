@@ -13,7 +13,14 @@ import { useCookies } from 'react-cookie';
 import { useNavigate   } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import FormatDate from "../Utility/FormatDate";
-
+import {
+    AlertDialog,
+    AlertDialogBody,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogContent,
+    AlertDialogOverlay,AlertDialogCloseButton,useDisclosure
+  } from '@chakra-ui/react'
 export default function DetailsUser(props){
 
     const [publicaciones, setPublicaciones]=useState(0)
@@ -28,14 +35,18 @@ export default function DetailsUser(props){
 
     const img = useRef(null)
     const [selectedFile, setSelectedFile] = useState(null);
-    const [cookieObjectApiKey, setObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email"]);
+    const [cookieObjectApiKey, setObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email", "uniqueName"]);
     const [comment, setComment]=useState("")
-
+    const { isOpen, onOpen, onClose } = useDisclosure()
+    const cancelRef = React.useRef()
 
     useEffect(()=>{
         getUser()
     },[uniqueName])
 
+    useEffect(()=>{
+        console.log(cookieObjectApiKey)
+    },[])
 
 
 
@@ -84,7 +95,13 @@ export default function DetailsUser(props){
        
     }
 
-
+    let goOut=()=>{
+        navigate("/")
+        removeCookiObjectApiKey("id",  { path: '/' })
+        removeCookiObjectApiKey("email",  { path: '/' })
+        removeCookiObjectApiKey("apiKey",  { path: '/' })
+        removeCookiObjectApiKey("uniqueName",  { path: '/' })
+    }
     return(
         <Box  display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}  >
             <Box  alignItems={"center"} w={["90%","90%","60%","50%","37%"]}  justifyContent={"center"}   display={"flex"}>
@@ -101,9 +118,31 @@ export default function DetailsUser(props){
                             <Text w={"50%"} fontSize={"24px"}>{user.uniqueName}</Text>
                             <Box w={"50%"}  display={"flex"} alignItems={"center"} justifyContent={"space-around"} >
                                 {cookieObjectApiKey.id==user.id &&<Button onClick={()=>{navigate('/users/edit')}} >Edit profile</Button>}
-                                <Box  onClick={()=>{navigate("/users/editPassword")}}>
+                                <Box  onClick={onOpen}>
                                     <SettingOutlined style={{ fontSize: '23px' }} />
                                 </Box>
+                                <AlertDialog
+                                    motionPreset='slideInBottom'
+                                    leastDestructiveRef={cancelRef}
+                                    onClose={onClose}
+                                    isOpen={isOpen}
+                                    isCentered
+                                >
+                                    <AlertDialogOverlay />
+                                    <AlertDialogContent>
+                                        <AlertDialogCloseButton/>
+                                        <AlertDialogBody>
+                                        </AlertDialogBody>
+                                        <AlertDialogFooter display={"block"} >
+                                            <Button mt={"3"} mb={"3"} w={"100%"} onClick={()=>{navigate("/users/editPassword")}} >
+                                                change password
+                                            </Button>
+                                            <Button onClick={goOut} w={"100%"}>
+                                                go out
+                                            </Button>
+                                        </AlertDialogFooter>
+                                    </AlertDialogContent>
+                                </AlertDialog>
                             </Box>
                         </Box>
 
