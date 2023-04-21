@@ -1,5 +1,5 @@
 
-import { Box, Flex, Text, Button, Textarea, Img, HStack,Avatar,Hide,Show ,Input,InputGroup,InputLeftElement,Alert,
+import { Box, Flex, Text, Button, AlertIcon, Textarea, Img, HStack,Avatar,Hide,Show ,Input,InputGroup,InputLeftElement,Alert,
     Image,
     AlertTitle,
     AlertDescription,
@@ -13,7 +13,7 @@ export default function EditInformationUser(props){
     const [user, setUser]=useState({})
     const [cookieObjectApiKey, setCookieObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email", "uniqueName"]);
     const [myFile, setMyFile]=useState()
-
+    const [alertDonePhoto, setAlertDonePhoto]=useState(false)
    
     useEffect (()=>{ 
         getUser()
@@ -80,12 +80,24 @@ export default function EditInformationUser(props){
             method: 'PUT',
             body: formData
         })
+        if(response.ok){
+            let data = await response.json()
+            if(data.message=="done"){
+                setAlertDonePhoto(true)
+            }
+        }
     }
 
 
 return(
     <Box  minH={["90vh"]} display={"flex"} justifyContent={"center"} alignItems={"center"}>
         <Box borderRadius={"2xl"} p={"50px"}w={["90%","90%","70%","60%","30%"]} minH={["70vh"]}  borderWidth={"1px"} >
+            {alertDonePhoto&&
+                <Alert w={"100%"} justifyContent={"center"} alignItems={"center"} display={"flex"} status="success"  borderRadius="3xl" >
+                    <AlertIcon />
+                    <AlertTitle>Photo updated successfully</AlertTitle>
+                </Alert>
+            }
             <Box mb={"30px"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
                 <Box w={"50%"}>
                 <Form.Item  name="image">
