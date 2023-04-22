@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import Commons from "../Utility/Commons";
 import {QqOutlined ,UserOutlined,LoginOutlined,LockOutlined} from '@ant-design/icons';
 import { useCookies } from 'react-cookie'; 
-
+import { useNavigate   } from "react-router-dom";
 export default function RegistrationUser(props){
 
     const [disabledButton , setDisabledButton]=useState(true)
@@ -28,7 +28,7 @@ export default function RegistrationUser(props){
     const [numberError, setNumberError]=useState(false)
     const [uniqueNameError, setUniqueNameError]=useState(false)
     const [cookieObjectApiKey, setCookieObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email","uniqueName"]);
-
+    const navigate  = useNavigate();
 
     useEffect(()=>{
 
@@ -139,6 +139,7 @@ export default function RegistrationUser(props){
                 setCookieObjectApiKey("email", data.email, { path: '/' } )
                 setCookieObjectApiKey("uniqueName", data.uniqueName, { path: '/' } )
                 console.log(cookieObjectApiKey)
+                navigate("/users/"+data.uniqueName)
             }
             if(data.error=="error in email"){
                 setEmailAlreadyInUse(data.messege)
