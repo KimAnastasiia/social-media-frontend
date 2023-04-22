@@ -30,6 +30,7 @@ export default function DetailsUser(props){
 
     const [posts, setPosts]=useState([])
     const [user, setUser]=useState({})
+    const [avatarExist, setAvatarExist]=useState(false)
     const {uniqueName} = useParams()
     const navigate  = useNavigate();
 
@@ -44,11 +45,21 @@ export default function DetailsUser(props){
         getUser()
     },[uniqueName])
 
-    useEffect(()=>{
-        console.log(cookieObjectApiKey)
-    },[])
+ 
 
-
+    let checkImage=async(id)=>{
+        let response = await fetch(Commons.baseUrl+"/public/users/avatar?id="+id)
+        if(response.ok){
+            let data = await response.json()
+            if(data.message){
+                setAvatarExist(true)
+            }else{
+                setAvatarExist(false)
+            }
+        }else{
+            setAvatarExist(false)
+        }
+    }
 
     let getUser=async()=>{
         let response = await fetch(Commons.baseUrl+"/public/users/"+uniqueName)
@@ -56,6 +67,7 @@ export default function DetailsUser(props){
             let data = await response.json()
             setUser(data[0])
             getPosts(data[0].id)
+            checkImage(data[0].id)
         }
 
     }
@@ -108,7 +120,8 @@ export default function DetailsUser(props){
                 
                     <Box w={["20%","20%","30%","30%","30%"]} display={"flex"} alignItems={"flex-start"}>
                         <Stack direction='row' >
-                            <Avatar size={["xl","xl","2xl","2xl","2xl"]}  src={Commons.baseUrl+"/images/"+cookieObjectApiKey.id+"avatar.png"} />
+                           {avatarExist && <Avatar size={["xl","xl","2xl","2xl","2xl"]}  src={Commons.baseUrl+"/images/"+user.id+"avatar.png"} />}
+                           {!avatarExist && <Avatar size={["xl","xl","2xl","2xl","2xl"]}   />}
                         </Stack>
                     </Box>
 
