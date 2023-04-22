@@ -145,7 +145,7 @@ export default function RegistrationUser(props){
                 setEmailAlreadyInUse(data.messege)
             }
             else if(data.error=="error in unique name"){
-                setUniqueNameError(data.messege)
+                setUniqueNameError(true)
             }
             else{
                 setEmailAlreadyInUse(false)
@@ -153,6 +153,18 @@ export default function RegistrationUser(props){
             }
         }
       
+    }
+    let onBlurUniqueName=async()=>{
+        let response = await fetch(Commons.baseUrl+"/public/users/uniqueName?uniqueName="+uniqueName)
+        if(response.ok){
+            let data = await response.json()
+            if(data.errorUniqueName){
+                setUniqueNameError(true)
+            }
+            if(!data.error && !data.errorUniqueName){
+                setUniqueNameError(false)
+            }
+        }
     }
 return(
     <Box display={"flex"} alignItems={"center"} minH={["89vh"]} justifyContent={"center"}>
@@ -185,7 +197,7 @@ return(
                     <AlertIcon />
                     <AlertTitle>Such a unique username already exists</AlertTitle>
                 </Alert>}
-                <Input color={"black"} onChange={(e)=>setUniqueName(e.target.value)} value={uniqueName} mb={"20px"} w={"80%"}  placeholder="Unique name"></Input>
+                <Input color={"black"} onChange={(e)=>setUniqueName(e.target.value)} onBlur={onBlurUniqueName}  value={uniqueName} mb={"20px"} w={"80%"}  placeholder="Unique name"></Input>
                 <Input color={"black"} onChange={(e)=>setSurname(e.target.value)} value={surname} mb={"20px"} w={"80%"}  placeholder="Surname"></Input>
                 {passwordError && <Alert status='error' w={"80%"} borderRadius="3xl" >
                     <AlertIcon />
