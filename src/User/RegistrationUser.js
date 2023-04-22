@@ -166,6 +166,18 @@ export default function RegistrationUser(props){
             }
         }
     }
+    let onBlurEmail =async()=>{
+        let response = await fetch(Commons.baseUrl+"/public/users/email?email="+email)
+        if(response.ok){
+            let data = await response.json()
+            if(data.errorEmail){
+                setEmailAlreadyInUse(true)
+            }
+            if(!data.error && !data.errorEmail){
+                setEmailAlreadyInUse(false)
+            }
+        }
+    }
 return(
     <Box display={"flex"} alignItems={"center"} minH={["89vh"]} justifyContent={"center"}>
         <Box display={"flex"} flexDirection={["column","column","row","row","row"]}  border={"1px"} borderColor="lightgray" borderRadius={"lg"} >
@@ -222,7 +234,7 @@ return(
                     <AlertIcon />
                     <AlertTitle>Email already in use</AlertTitle>
                 </Alert>}
-                <Input color={"black"} onChange={putEmail} value={email} mb={"20px"} w={"80%"}  placeholder="Email"></Input>
+                <Input color={"black"} onChange={putEmail}  onBlur={onBlurEmail} value={email} mb={"20px"} w={"80%"}  placeholder="Email"></Input>
 
                 <Box  mb={"20px"} w={"80%"} display={"flex"} justifyContent={"flex-start"} alignItems="flex-start" >
                     <Checkbox color={"#99A2AD"} defaultChecked onChange={()=>setSaveUser(!saveUser)} >Save user</Checkbox>
