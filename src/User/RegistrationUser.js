@@ -20,12 +20,13 @@ export default function RegistrationUser(props){
     const [passwordCheck, setPasswordCheck ]=useState("")
     const [name , setName]=useState("")
     const [surname , setSurname]=useState("")
+    const [uniqueName , setUniqueName]=useState("")
     const [emailAlreadyInUse, setEmailAlreadyInUse]=useState(false)
     const [emailError, setEmailError]=useState(false)
     const [passwordError, setPasswordError]=useState(false)
     const [passwordCheckError, setPasswordCheckError]=useState(false)
     const [numberError, setNumberError]=useState(false)
-
+    const [uniqueNameError, setUniqueNameError]=useState(false)
     const [cookieObjectApiKey, setCookieObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email","uniqueName"]);
 
 
@@ -64,6 +65,10 @@ export default function RegistrationUser(props){
 
     },[passwordCheck])
 
+    useEffect(()=>{
+        setUniqueNameError(false)
+
+    },[uniqueName])
     let putPhoneNumber=(e)=>{
 
         let myNumber = e.target.value;
@@ -122,7 +127,8 @@ export default function RegistrationUser(props){
                     password:passwordCheck,
                     name: name,
                     surname:surname,
-                    phoneNumber:phoneNumber
+                    phoneNumber:phoneNumber,
+                    uniqueName:uniqueName
                 })
         })
         if(response.ok){
@@ -134,16 +140,21 @@ export default function RegistrationUser(props){
                 setCookieObjectApiKey("uniqueName", data.uniqueName, { path: '/' } )
                 console.log(cookieObjectApiKey)
             }
-            if(data.error){
+            if(data.error=="error in email"){
                 setEmailAlreadyInUse(data.messege)
-            }else{
+            }
+            else if(data.error=="error in unique name"){
+                setUniqueNameError(data.messege)
+            }
+            else{
                 setEmailAlreadyInUse(false)
+                setUniqueNameError(false)
             }
         }
       
     }
 return(
-    <Box pt={["20%","20%","16%","16%","16%"]} pl={["5%","5%","10%","15%","25%"]} pr={["5%","5%","10%","15%","25%"]} >
+    <Box display={"flex"} alignItems={"center"} minH={["89vh"]} justifyContent={"center"}>
         <Box display={"flex"} flexDirection={["column","column","row","row","row"]}  border={"1px"} borderColor="lightgray" borderRadius={"lg"} >
             <Box p={"50px"}  bg={"#F9F9F9"}  w={["100%","100%","50%","50%", "50%"]}>
                 <Box m="10px" display={"flex"}>
@@ -169,6 +180,11 @@ return(
                 <Text  mt={"20px"} mb={"20px"} fontSize="20px" color={"black"}>Enter phone number</Text>
                 <Text  color={"#99A2AD"} mb={"20px"}>You'll use your phone number to sign in to your account</Text>
                 <Input color={"black"} onChange={(e)=>setName(e.target.value)} value={name} mb={"20px"} w={"80%"}  placeholder="Name"></Input>
+                {uniqueNameError && <Alert status='error' w={"80%"} borderRadius="3xl" >
+                    <AlertIcon />
+                    <AlertTitle>Such a unique username already exists</AlertTitle>
+                </Alert>}
+                <Input color={"black"} onChange={(e)=>setUniqueName(e.target.value)} value={uniqueName} mb={"20px"} w={"80%"}  placeholder="Unique name"></Input>
                 <Input color={"black"} onChange={(e)=>setSurname(e.target.value)} value={surname} mb={"20px"} w={"80%"}  placeholder="Surname"></Input>
                 {passwordError && <Alert status='error' w={"80%"} borderRadius="3xl" >
                     <AlertIcon />

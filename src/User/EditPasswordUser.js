@@ -13,7 +13,7 @@ export default function EditPasswordUser(props){
     const [errorNewPassword, setErrorNewPassword]=useState(false)
     const [errorPassword, setErrorPassword]=useState(false)
     const [user, setUser]=useState({})
-    const [cookieObjectApiKey, setCookieObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email"]);
+    const [cookieObjectApiKey, setCookieObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email", "uniqueName"]);
     const [done, setDone]=useState(false)
     useEffect (()=>{ 
        if(newPasswordRepit.length==0){
@@ -98,11 +98,17 @@ export default function EditPasswordUser(props){
                     </Alert>
                 </Box>}
                 <Box  mb={"30px"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
-                    <Text  w={"50%"}>Previous password</Text>
+                    <Box w={"50%"}>
+                        <Avatar src={Commons.baseUrl+"/images/"+cookieObjectApiKey.id+"avatar.png"}/>
+                    </Box>
+                    <Text >{cookieObjectApiKey.uniqueName}</Text>
+                </Box>
+                <Box  mb={"30px"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
+                    <Text fontWeight={"bold"} w={"50%"}>Previous password</Text>
                     <Input value={previousPassword} type="password" onChange={(e)=>{setPreviousPassword(e.target.value)}} w={"50%"}></Input>
                 </Box>
                 <Box  mb={"30px"}  display={"flex"} justifyContent={"center"} alignItems={"center"}>
-                    <Text  w={"50%"}>New password</Text>
+                    <Text fontWeight={"bold"} w={"50%"}>New password</Text>
                     <Input value={newPassword} type="password" onChange={(e)=>{setNewPassword(e.target.value)}}  w={"50%"}></Input>
                 </Box>
                 {errorNewPassword && <Box  display={"flex"} justifyContent={"end"} alignItems={"center"}>
@@ -112,7 +118,7 @@ export default function EditPasswordUser(props){
                     </Alert>
                 </Box>}
                 <Box  mb={"30px"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
-                    <Text w={"50%"}>Repit new password</Text>
+                    <Text fontWeight={"bold"} w={"50%"}>Repit new password</Text>
                     <Input value={newPasswordRepit} type="password"  onChange={repitNewPasswordCheck} w={"50%"}></Input>
                 </Box>
                 
