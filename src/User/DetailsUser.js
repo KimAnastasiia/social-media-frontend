@@ -115,7 +115,26 @@ export default function DetailsUser(props){
         removeCookiObjectApiKey("apiKey",  { path: '/' })
         removeCookiObjectApiKey("uniqueName",  { path: '/' })
     }
+    let addFriend=async()=>{
+        let response = await fetch (Commons.baseUrl+"/friends?apiKey="+cookieObjectApiKey.apiKey,{
 
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+
+            body:
+                JSON.stringify({ 
+                    friendId:user.id
+                })
+        })
+        if(response.ok){
+            let data = await response.json()
+            if(data.message=="done"){
+                setFollow(true)
+            }
+        }
+    }
     let checkIfYouFollow=async(friendId)=>{
 
         let response = await fetch(Commons.baseUrl+"/friends?apiKey="+cookieObjectApiKey.apiKey+"&friendId="+friendId)
@@ -198,8 +217,8 @@ export default function DetailsUser(props){
                         </Box>}
                         {(cookieObjectApiKey.apiKey && cookieObjectApiKey.id!=user.id) &&
                             <Box  display={"flex"} justifyContent={"center"}>
-                            {!follow && <Button  bg={"#0077FF"} color="white" >Follow</Button>}
-                            {follow &&<Button  >Unfollow</Button>}
+                            {!follow && <Button onClick={addFriend} bg={"#0077FF"} color="white" >Follow</Button>}
+                            {follow &&<Button >Unfollow</Button>}
                             </Box>
                         }
                     </Box>
