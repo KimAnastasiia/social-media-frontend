@@ -23,10 +23,10 @@ import {
   } from '@chakra-ui/react'
 export default function DetailsUser(props){
 
-    const [publicaciones, setPublicaciones]=useState(0)
-    const [seguidores, setSeguidores]=useState(0)
-    const [seguidos, setSeguidos]=useState(0)
-
+    const [publications, setPublications]=useState(0)
+    const [followers, setFollowers]=useState(0)
+    const [following, setFollowing]=useState(0)
+    const [follow, setFollow]=useState()
 
     const [posts, setPosts]=useState([])
     const [user, setUser]=useState({})
@@ -68,6 +68,7 @@ export default function DetailsUser(props){
             setUser(data[0])
             getPosts(data[0].id)
             checkImage(data[0].id)
+            checkIfYouFollow(data[0].id)
         }
 
     }
@@ -79,7 +80,7 @@ export default function DetailsUser(props){
         if(response.ok){
             let data = await response.json()
             setPosts(data)
-            setPublicaciones(data.length)
+            setPublications(data.length)
         }
 
     }
@@ -113,6 +114,21 @@ export default function DetailsUser(props){
         removeCookiObjectApiKey("email",  { path: '/' })
         removeCookiObjectApiKey("apiKey",  { path: '/' })
         removeCookiObjectApiKey("uniqueName",  { path: '/' })
+    }
+
+    let checkIfYouFollow=async(friendId)=>{
+
+        let response = await fetch(Commons.baseUrl+"/friends?apiKey="+cookieObjectApiKey.apiKey+"&friendId="+friendId)
+        if(response.ok){
+            let data = await response.json()
+            if(data.message==true){
+                setFollow(true)
+            } 
+            if(data.message==false){
+                setFollow(false)
+            }
+        }
+
     }
     return(
         <Box  display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}  >
@@ -163,16 +179,16 @@ export default function DetailsUser(props){
                         <Box  mb={"2%"} mt={"2%"} w={["100%"]} display={"flex"} justifyContent={"space-between"} >
 
                             <HStack>
-                                <Text fontWeight={"bold"}>{publicaciones}</Text>  
-                                <Text> publicaciones</Text>
+                                <Text fontWeight={"bold"}>{publications}</Text>  
+                                <Text>publications</Text>
                             </HStack>
                             <HStack>
-                                <Text fontWeight={"bold"}>{seguidores}</Text>
-                                <Text>seguidores</Text>
+                                <Text fontWeight={"bold"}>{followers}</Text>
+                                <Text>followers</Text>
                             </HStack>
                             <HStack>
-                                <Text fontWeight={"bold"}>{seguidos}</Text>
-                                <Text>seguidos</Text>
+                                <Text fontWeight={"bold"}>{ following}</Text>
+                                <Text>following</Text>
                             </HStack>
                         </Box>
                         <Text fontWeight={"bold"} >{user.name}</Text>
@@ -180,6 +196,12 @@ export default function DetailsUser(props){
                         <Box  display={"flex"} justifyContent={"center"}>
                            <Button  onClick={()=>navigate("/users/publication")}  >Add new publication</Button>
                         </Box>}
+                        {(cookieObjectApiKey.apiKey && cookieObjectApiKey.id!=user.id) &&
+                            <Box  display={"flex"} justifyContent={"center"}>
+                            {!follow && <Button  bg={"#0077FF"} color="white" >Follow</Button>}
+                            {follow &&<Button  >Unfollow</Button>}
+                            </Box>
+                        }
                     </Box>
             </Box>
             <Box mt={"60px"} h={"309px"} w={["90%","90%","100%","90%","60%"]} display={"flex"} justifyContent={["center"]} flexWrap={"wrap"}>
