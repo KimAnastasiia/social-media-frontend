@@ -244,7 +244,7 @@ export default function PublicationDetails (props){
                                     </Box>
                                 }
 
-                                { myLike.length==0 &&    
+                                { (myLike.length==0 && cookieObjectApiKey.apiKey) &&    
                                     <Box onClick={likePost} >
                                         <Icon component={HeartSvg} style={{
                                                     fontSize: "30px",
@@ -281,6 +281,8 @@ export default function PublicationDetails (props){
                             <Text fontSize={"12px"}>{FormatDate (publication.date)}</Text>
                         </Box>
                     </Box>
+
+                {cookieObjectApiKey.apiKey &&    
                     <Box borderTopWidth={"2px"} display={"flex"} alignItems={"center"} h={"5%"} >
                         <Box w={"10%"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
                             <SmileOutlined style={{ fontSize: '25px' }}/>
@@ -289,7 +291,12 @@ export default function PublicationDetails (props){
                         <Input  variant='unstyled'  value={comment} onChange={(e)=>{setComment(e.target.value)}} border={"none"} placeholder="Add a comment"></Input>
                         <Button onClick={addComment} colorScheme='teal' variant='link' >sent</Button>
                     </Box>
-             
+                }
+                {!cookieObjectApiKey.apiKey && 
+                    <Box borderTopWidth={"2px"} display={"flex"} justifyContent={"center"} alignItems={"center"} h={"5%"} >
+                        <Button bg={"#0077FF"} onClick={()=>{navigate("/")}} color="white" fontWeight={"bold"}>Log in to write a comment</Button>
+                    </Box>
+                }
             </Box>
         </Box>
         </Hide>
