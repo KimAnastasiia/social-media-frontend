@@ -61,7 +61,14 @@ export default function DetailsUser(props){
             setAvatarExist(false)
         }
     }
-
+    let friends =async(id)=>{
+        let response = await fetch(Commons.baseUrl+"/public/friends?id="+id)
+        if(response.ok){
+            let data = await response.json()
+            setFollowing(data.following[0].following)
+            setFollowers(data.followers[0].followers)
+        }
+    }
     let getUser=async()=>{
         let response = await fetch(Commons.baseUrl+"/public/users/"+uniqueName)
         if(response.ok){
@@ -71,6 +78,7 @@ export default function DetailsUser(props){
             checkImage(data[0].id)
             checkIfYouFollow(data[0].id)
             setFriendId(data[0].id)
+            friends(data[0].id)
         }
 
     }
@@ -217,7 +225,7 @@ export default function DetailsUser(props){
                                 <Text>followers</Text>
                             </HStack>
                             <HStack>
-                                <Text fontWeight={"bold"}>{ following}</Text>
+                                <Text fontWeight={"bold"}>{following}</Text>
                                 <Text>following</Text>
                             </HStack>
                         </Box>
