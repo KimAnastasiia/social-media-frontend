@@ -21,27 +21,25 @@ import {
     AlertDialogContent,
     AlertDialogOverlay,AlertDialogCloseButton,useDisclosure
   } from '@chakra-ui/react'
+import ListPublicationsUser from "./ListPublicationsUser";
 export default function DetailsUser(props){
 
     const [publications, setPublications]=useState(0)
     const [followers, setFollowers]=useState(0)
     const [following, setFollowing]=useState(0)
     const [follow, setFollow]=useState()
-
-    const [posts, setPosts]=useState([])
     const [user, setUser]=useState({})
     const [avatarExist, setAvatarExist]=useState(false)
-    const {uniqueName} = useParams()
-    const navigate  = useNavigate();
-
-    const img = useRef(null)
     const [selectedFile, setSelectedFile] = useState(null);
+    const [friendId, setFriendId ]=useState("")
     const [cookieObjectApiKey, setCookieObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email", "uniqueName"]);
     const [comment, setComment]=useState("")
+    const {uniqueName} = useParams()
+    const navigate  = useNavigate();
+    const img = useRef(null)
     const { isOpen, onOpen, onClose } = useDisclosure()
     const cancelRef = React.useRef()
-    const [friendId, setFriendId ]=useState("")
-
+   
     useEffect(()=>{
         getUser()
     },[uniqueName])
@@ -74,48 +72,12 @@ export default function DetailsUser(props){
         if(response.ok){
             let data = await response.json()
             setUser(data[0])
-            getPosts(data[0].id)
             checkImage(data[0].id)
             checkIfYouFollow(data[0].id)
             setFriendId(data[0].id)
             friends(data[0].id)
         }
 
-    }
-
-   
-    let getPosts=async(uid)=>{
-
-        let response = await fetch(Commons.baseUrl+"/public/mediaPost?userId="+uid)
-        if(response.ok){
-            let data = await response.json()
-            setPosts(data)
-            setPublications(data.length)
-        }
-
-    }
-    
-    const onChangeFile = (event) => {
-        setSelectedFile(event.target.files[0]);
-    };
-
-
-    let publishPublication=async()=>{
-        const formData = new FormData();
-        formData.append('myImage', selectedFile);
-        formData.append('comment', comment);
-        if(selectedFile!==null){
-            let response = await fetch (Commons.baseUrl+"/mediaPost?apiKey="+cookieObjectApiKey.apiKey,{
-                method: 'POST',
-                body:formData
-            })
-        }
-        img.current.value=""
-        setComment("")
-        console.log(cookieObjectApiKey.apiKey)
-        console.log(cookieObjectApiKey.id)
-        getUser()
-       
     }
 
     let goOut=()=>{
@@ -242,14 +204,7 @@ export default function DetailsUser(props){
                         }
                     </Box>
             </Box>
-            <Box mt={"60px"} h={"309px"} w={["90%","90%","100%","90%","60%"]} display={"flex"} justifyContent={["center"]} flexWrap={"wrap"}>
-                {posts.sort((a,b)=>b.id-a.id)
-                .map((post)=>
-                    <Box h={"100%"}  display={"flex"} alignItems={"center"}  flexDirection={"column"} m={"0.3%"} justifyContent={"center"}>
-                        <Image h="100%" onClick={()=>{navigate("/mediaPost/"+post.id)}} w={["100%"]} src={Commons.baseUrl+"/images/"+user.id+post.id+"mini.png"} />
-                    </Box>
-                )}
-            </Box>
+            <ListPublicationsUser  uniqueName={uniqueName} />
         </Box>
     )
 }
