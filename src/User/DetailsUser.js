@@ -40,6 +40,7 @@ export default function DetailsUser(props){
     const [comment, setComment]=useState("")
     const { isOpen, onOpen, onClose } = useDisclosure()
     const cancelRef = React.useRef()
+    const [friendId, setFriendId ]=useState("")
 
     useEffect(()=>{
         getUser()
@@ -69,6 +70,7 @@ export default function DetailsUser(props){
             getPosts(data[0].id)
             checkImage(data[0].id)
             checkIfYouFollow(data[0].id)
+            setFriendId(data[0].id)
         }
 
     }
@@ -135,9 +137,9 @@ export default function DetailsUser(props){
             }
         }
     }
-    let checkIfYouFollow=async(friendId)=>{
+    let checkIfYouFollow=async(frId)=>{
 
-        let response = await fetch(Commons.baseUrl+"/friends?apiKey="+cookieObjectApiKey.apiKey+"&friendId="+friendId)
+        let response = await fetch(Commons.baseUrl+"/friends?apiKey="+cookieObjectApiKey.apiKey+"&friendId="+frId)
         if(response.ok){
             let data = await response.json()
             if(data.message==true){
@@ -148,6 +150,15 @@ export default function DetailsUser(props){
             }
         }
 
+    }
+    let unfollow=async()=>{
+        let response = await fetch (Commons.baseUrl+"/friends/"+friendId+"?apiKey="+cookieObjectApiKey.apiKey,{
+            method: 'DELETE' 
+        })
+        if(response.ok){
+            setFollow(true)
+        }
+        getUser()
     }
     return(
         <Box  display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}  >
@@ -218,7 +229,7 @@ export default function DetailsUser(props){
                         {(cookieObjectApiKey.apiKey && cookieObjectApiKey.id!=user.id) &&
                             <Box  display={"flex"} justifyContent={"center"}>
                             {!follow && <Button onClick={addFriend} bg={"#0077FF"} color="white" >Follow</Button>}
-                            {follow &&<Button >Unfollow</Button>}
+                            {follow &&<Button onClick={unfollow}>Unfollow</Button>}
                             </Box>
                         }
                     </Box>
