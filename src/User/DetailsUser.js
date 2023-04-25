@@ -22,6 +22,7 @@ import {
     AlertDialogOverlay,AlertDialogCloseButton,useDisclosure
   } from '@chakra-ui/react'
 import ListPublicationsUser from "./ListPublicationsUser";
+import ListFollowersUser from "./ListFollowersUser";
 export default function DetailsUser(props){
 
     const [publications, setPublications]=useState(0)
