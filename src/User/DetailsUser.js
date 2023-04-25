@@ -206,6 +206,7 @@ export default function DetailsUser(props){
                     </Box>
             </Box>
             <ListPublicationsUser  uniqueName={uniqueName} />
+            <ListFollowersUser  uniqueName={uniqueName} />
         </Box>
     )
 }
