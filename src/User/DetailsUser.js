@@ -23,6 +23,7 @@ import {
   } from '@chakra-ui/react'
 import ListPublicationsUser from "./ListPublicationsUser";
 import ListFollowersUser from "./ListFollowersUser";
+import ListFollowingUser from "./ListFollowingUser";
 export default function DetailsUser(props){
 
     const [publications, setPublications]=useState(0)
@@ -207,6 +208,7 @@ export default function DetailsUser(props){
             </Box>
             <ListPublicationsUser  uniqueName={uniqueName} />
             <ListFollowersUser  uniqueName={uniqueName} />
+            <ListFollowingUser uniqueName={uniqueName}/>
         </Box>
     )
 }
