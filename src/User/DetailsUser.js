@@ -41,6 +41,9 @@ export default function DetailsUser(props){
     const img = useRef(null)
     const { isOpen, onOpen, onClose } = useDisclosure()
     const cancelRef = React.useRef()
+    const [publicationShow, setPublicationShow]=useState(true)
+    const [followersShow, setFollowersShow]=useState(false)
+    const [followingShow, setFollowingShow]=useState(false)
    
     useEffect(()=>{
         getUser()
@@ -132,6 +135,30 @@ export default function DetailsUser(props){
         }
         getUser()
     }
+    let componentShow=(c)=>{
+        switch(c){
+            case "following":
+                setFollowingShow(true)
+                setFollowersShow(false)
+                setPublicationShow(false)
+            break
+            case "followers":
+                setFollowersShow(true)
+                setFollowingShow(false)
+                setPublicationShow(false)
+            break
+            case "publication":
+                setPublicationShow(true)
+                setFollowersShow(false)
+                setFollowingShow(false)
+                
+            break
+            default:
+                setPublicationShow(true)
+                setFollowersShow(false)
+                setFollowingShow(false)
+        }
+    }
     return(
         <Box  display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}  >
             <Box  alignItems={"center"} w={["90%","90%","60%","50%","37%"]}  justifyContent={"center"}   display={"flex"}>
@@ -178,20 +205,20 @@ export default function DetailsUser(props){
                             </Box>}
                         </Box>
 
-                        <Box  mb={"2%"} mt={"2%"} w={["100%"]} display={"flex"} justifyContent={"space-between"} >
+                        <Box mb={"2%"} mt={"2%"} w={["100%"]} display={"flex"} justifyContent={"space-between"} >
 
-                            <HStack>
+                            <Button color={"black"} variant='link'  onClick={()=>{componentShow("publication")}}>
                                 <Text fontWeight={"bold"}>{publications}</Text>  
-                                <Text>publications</Text>
-                            </HStack>
-                            <HStack>
+                                <Text  ml={"2px"} >publications</Text>
+                            </Button>
+                            <Button variant='link' color={"black"} onClick={()=>{componentShow("followers")}}>
                                 <Text fontWeight={"bold"}>{followers}</Text>
-                                <Text>followers</Text>
-                            </HStack>
-                            <HStack>
+                                <Text ml={"2px"}>followers</Text>
+                            </Button>
+                            <Button  variant='link'  color={"black"} onClick={()=>{componentShow("following")}}>
                                 <Text fontWeight={"bold"}>{following}</Text>
-                                <Text>following</Text>
-                            </HStack>
+                                <Text ml={"2px"}>following</Text>
+                            </Button>
                         </Box>
                         <Text fontWeight={"bold"} >{user.name}</Text>
                         {cookieObjectApiKey.id==user.id &&
@@ -206,9 +233,9 @@ export default function DetailsUser(props){
                         }
                     </Box>
             </Box>
-            <ListPublicationsUser  uniqueName={uniqueName} />
-            <ListFollowersUser  uniqueName={uniqueName} />
-            <ListFollowingUser uniqueName={uniqueName}/>
+            {publicationShow &&  <ListPublicationsUser  uniqueName={uniqueName} />}
+            {followersShow && <ListFollowersUser  uniqueName={uniqueName} />}
+            {followingShow&& <ListFollowingUser uniqueName={uniqueName}/>}
         </Box>
     )
 }
