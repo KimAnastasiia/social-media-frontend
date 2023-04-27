@@ -81,6 +81,7 @@ export default function DetailsUser(props){
             checkIfYouFollow(data[0].id)
             setFriendId(data[0].id)
             friends(data[0].id)
+            getPosts(data[0].id)
         }
 
     }
@@ -158,6 +159,15 @@ export default function DetailsUser(props){
                 setFollowersShow(false)
                 setFollowingShow(false)
         }
+    }
+    let getPosts=async(uid)=>{
+
+        let response = await fetch(Commons.baseUrl+"/public/mediaPost?userId="+uid)
+        if(response.ok){
+            let data = await response.json()
+            setPublications(data.length)
+        }
+
     }
     return(
         <Box  display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}  >
