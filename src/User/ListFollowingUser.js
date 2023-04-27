@@ -1,6 +1,6 @@
 import React,{useState, useEffect,useRef} from "react"
 import { useNavigate   } from "react-router-dom";
-import { Box, Flex, Text, Button, Stack, Img, HStack,Avatar,Hide,Show ,Input,InputGroup,InputLeftElement,Alert,
+import { Box, Flex, Text, Button, Stack, Img, HStack,Avatar,Hide,Show ,InputGroup,InputLeftElement,Alert,
     Image,
     AlertTitle,
     AlertDescription,
@@ -17,11 +17,17 @@ import {
     PopoverCloseButton,
     PopoverAnchor,Portal,useDisclosure
   } from '@chakra-ui/react'
+  import { useCookies } from 'react-cookie'; 
   import {MessageOutlined ,SmileOutlined,SendOutlined,HeartOutlined,EllipsisOutlined,BookOutlined} from '@ant-design/icons';
-export default function ListFollowingUser(props){
+  import { Input, Space } from 'antd';
+
+
+  export default function ListFollowingUser(props){
 
     const [listOfFollowing, setListOfFollowing]=useState([])
-
+    const [cookieObjectApiKey, setCookieObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email", "uniqueName"]);
+    const [searchFollowing, setSearchFollowing]=useState("")
+    const { Search } = Input;
     useEffect(()=>{
         getUser()
     },[props.uniqueName])
@@ -46,16 +52,27 @@ export default function ListFollowingUser(props){
 
     } 
     return(
-        <Box p={"20px"} borderRadius={"lg"} borderWidth={"1px"} mt={"100px"} w={"30%"} >
+        <Box p={"20px"} borderRadius={"lg"} borderWidth={"1px"} mt={"100px"} w={["90%", "90%","60%","50%","30%"]} >
             <Text mb={"20px"} textAlign={"center"} fontWeight={"bold"} >Your following</Text>
-            {listOfFollowing.map((follower)=>
+            <Box mb={"20px"}>
+                <Search
+                    placeholder="Search your follower"
+                    onChange={(e)=>{setSearchFollowing(e.target.value)}}
+                    style={{
+                        width: "100%"
+                    }}    
+                />
+            </Box>
+            {listOfFollowing.filter((follower)=>{
+                return follower.uniqueName.includes(searchFollowing)
+            }).map((follower)=>
                 <Box borderBottomWidth={"1px"} display={"flex"} justifyContent={"space-between"}>
                     
                     <Box mb={"20px"} w={"80%"} display={"flex"}> 
                         <Avatar size={"lg"} src={Commons.baseUrl+"/images/"+follower.friendId+"avatar.png"} ></Avatar>
                         <Text fontWeight={"bold"} ml={"20px"}>{follower.uniqueName}</Text>
                     </Box>
-                    <Box display={"flex"}  justifyContent={"end"} w={"20%"}>
+                    { ( cookieObjectApiKey.uniqueName==props.uniqueName) && <Box display={"flex"}  justifyContent={"end"} w={"20%"}>
                         <Popover>
                                 <PopoverTrigger>
                                 <EllipsisOutlined style={{ fontSize: '20px' }}/>
@@ -69,7 +86,7 @@ export default function ListFollowingUser(props){
                                     </PopoverContent>
                                 </Portal>
                             </Popover>
-                    </Box>
+                    </Box>}
                 </Box>
             )}
         </Box>
