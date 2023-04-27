@@ -53,7 +53,7 @@ import {
     } 
     return(
         <Box p={"20px"} borderRadius={"lg"} borderWidth={"1px"} mt={"100px"} w={["90%", "90%","60%","50%","30%"]} >
-            <Text mb={"20px"} textAlign={"center"} fontWeight={"bold"} >Your following</Text>
+            <Text mb={"20px"} textAlign={"center"} fontWeight={"bold"} >Following</Text>
             <Box mb={"20px"}>
                 <Search
                     placeholder="Search your follower"
