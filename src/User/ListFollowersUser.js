@@ -1,6 +1,6 @@
 import React,{useState, useEffect,useRef} from "react"
 import { useNavigate   } from "react-router-dom";
-import { Box, Flex, Text, Button, Stack, Img, HStack,Avatar,Hide,Show ,Input,InputGroup,InputLeftElement,Alert,
+import { Box, Flex, Text, Button, Stack, Img, HStack,Avatar,Hide,Show ,InputGroup,InputLeftElement,Alert,
     Image,
     AlertTitle,
     AlertDescription,
@@ -17,12 +17,17 @@ import {
     PopoverCloseButton,
     PopoverAnchor,Portal,useDisclosure
   } from '@chakra-ui/react'
+  import { useCookies } from 'react-cookie'; 
   import {MessageOutlined ,SmileOutlined,SendOutlined,HeartOutlined,EllipsisOutlined,BookOutlined} from '@ant-design/icons';
-export default function ListFollowersUser(props){
+  import { Input, Space } from 'antd';
+  const { Search } = Input;
+
+
+  export default function ListFollowersUser(props){
 
     const [listOfFollowers, setListOfFollowers]=useState([])
-
-
+    const [cookieObjectApiKey, setCookieObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email", "uniqueName"]);
+    const [search, setSearch]=useState("")
     useEffect(()=>{
         getUser()
     },[props.uniqueName])
@@ -47,14 +52,28 @@ export default function ListFollowersUser(props){
 
     } 
     return(
-        <Box p={"20px"} borderRadius={"lg"} borderWidth={"1px"} mt={"100px"} w={"30%"} >
-            {listOfFollowers.map((follower)=>
+        <Box p={"20px"} borderRadius={"lg"} borderWidth={"1px"} mt={"100px"} w={["90%", "90%","60%","50%","30%"]} >
+            <Text mb={"20px"} textAlign={"center"} fontWeight={"bold"} >Your followers</Text>
+            <Box mb={"20px"}>
+                <Search
+                    placeholder="Search your follower"
+                    onChange={(e)=>{setSearch(e.target.value)}}
+                    style={{
+                        width: "100%"
+                    }}    
+                />
+            </Box>
+            {listOfFollowers.filter((follower)=>{
+                return follower.uniqueName.includes(search)
+            })
+            .map((follower)=>
                 <Box borderBottomWidth={"1px"} display={"flex"} justifyContent={"space-between"}>
                     
                     <Box mb={"20px"} w={"80%"} display={"flex"}> 
                         <Avatar size={"lg"} src={Commons.baseUrl+"/images/"+follower.userId+"avatar.png"} ></Avatar>
                         <Text fontWeight={"bold"} ml={"20px"}>{follower.uniqueName}</Text>
                     </Box>
+                  { ( cookieObjectApiKey.uniqueName==props.uniqueName) &&
                     <Box display={"flex"}  justifyContent={"end"} w={"20%"}>
                         <Popover>
                                 <PopoverTrigger>
@@ -69,7 +88,7 @@ export default function ListFollowersUser(props){
                                     </PopoverContent>
                                 </Portal>
                             </Popover>
-                    </Box>
+                    </Box>}
                 </Box>
             )}
         </Box>
