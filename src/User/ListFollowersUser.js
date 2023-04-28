@@ -38,6 +38,7 @@ import {
         if(response.ok){
             let data = await response.json()
             getFollowers(data[0])
+            
         }
 
     } 
@@ -51,6 +52,13 @@ import {
         }
 
     } 
+    let deleteFollower=async(id)=>{
+        let response = await fetch (Commons.baseUrl+"/friends/followers?followersId="+id+"&apiKey="+cookieObjectApiKey.apiKey,{
+            method: 'DELETE' 
+        })
+        props.countFollowers(props.id)
+        getUser()
+    }
     return(
         <Box p={"20px"} borderRadius={"lg"} borderWidth={"1px"} mt={"100px"} w={["90%", "90%","60%","50%","30%"]} >
             <Text mb={"20px"} textAlign={"center"} fontWeight={"bold"} >Followers</Text>
@@ -84,6 +92,7 @@ import {
                                     <PopoverArrow />
                                     <PopoverCloseButton />
                                     <PopoverBody>
+                                        <Button onClick={()=>{deleteFollower(follower.id)}}>Delete</Button>
                                     </PopoverBody>
                                     </PopoverContent>
                                 </Portal>

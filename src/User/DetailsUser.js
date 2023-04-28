@@ -32,15 +32,12 @@ export default function DetailsUser(props){
     const [follow, setFollow]=useState()
     const [user, setUser]=useState({})
     const [avatarExist, setAvatarExist]=useState(false)
-    const [selectedFile, setSelectedFile] = useState(null);
-    const [friendId, setFriendId ]=useState("")
-    const [cookieObjectApiKey, setCookieObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email", "uniqueName"]);
-    const [comment, setComment]=useState("")
+    const [cookieObjectApiKey, setCookieObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email", "uniqueName"])
     const {uniqueName} = useParams()
     const navigate  = useNavigate();
-    const img = useRef(null)
     const { isOpen, onOpen, onClose } = useDisclosure()
     const cancelRef = React.useRef()
+    const id = React.useRef()
     const [publicationShow, setPublicationShow]=useState(true)
     const [followersShow, setFollowersShow]=useState(false)
     const [followingShow, setFollowingShow]=useState(false)
@@ -79,9 +76,9 @@ export default function DetailsUser(props){
             setUser(data[0])
             checkImage(data[0].id)
             checkIfYouFollow(data[0].id)
-            setFriendId(data[0].id)
             friends(data[0].id)
             getPosts(data[0].id)
+            id.current=data[0].id
         }
 
     }
@@ -103,7 +100,7 @@ export default function DetailsUser(props){
 
             body:
                 JSON.stringify({ 
-                    friendId:user.id
+                    followingId:user.id
                 })
         })
         if(response.ok){
@@ -112,10 +109,11 @@ export default function DetailsUser(props){
                 setFollow(true)
             }
         }
+        friends(id.current)
     }
     let checkIfYouFollow=async(frId)=>{
 
-        let response = await fetch(Commons.baseUrl+"/friends?apiKey="+cookieObjectApiKey.apiKey+"&friendId="+frId)
+        let response = await fetch(Commons.baseUrl+"/friends?apiKey="+cookieObjectApiKey.apiKey+"&followingId="+frId)
         if(response.ok){
             let data = await response.json()
             if(data.message==true){
@@ -128,13 +126,13 @@ export default function DetailsUser(props){
 
     }
     let unfollow=async()=>{
-        let response = await fetch (Commons.baseUrl+"/friends/"+friendId+"?apiKey="+cookieObjectApiKey.apiKey,{
+        let response = await fetch (Commons.baseUrl+"/friends?followingId="+id.current+"&apiKey="+cookieObjectApiKey.apiKey,{
             method: 'DELETE' 
         })
         if(response.ok){
             setFollow(true)
         }
-        getUser()
+       
     }
     let componentShow=(c)=>{
         switch(c){
@@ -244,7 +242,7 @@ export default function DetailsUser(props){
                     </Box>
             </Box>
             {publicationShow &&  <ListPublicationsUser  uniqueName={uniqueName} />}
-            {followersShow && <ListFollowersUser  uniqueName={uniqueName} />}
+            {followersShow && <ListFollowersUser id={id.current} countFollowers={friends} uniqueName={uniqueName} />}
             {followingShow&& <ListFollowingUser uniqueName={uniqueName}/>}
         </Box>
     )
