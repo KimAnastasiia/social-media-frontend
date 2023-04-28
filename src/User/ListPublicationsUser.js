@@ -46,13 +46,13 @@ export default function ListPublicationsUser(props){
                 numberOfRows = data[0].number 
             }
         }
-        let numberOfPages = numberOfRows/4 
+        let numberOfPages = numberOfRows/6 
         numberOfPages = Math.ceil(numberOfPages) 
 
         for(let i=0; i<numberOfPages; i++){
             listOfButtons.push(<Button bg="lightblue"  w={"1%"} m={"5px"} onClick={e=>getPosts( userIdRef.current,(i+1))} key={i} >{i+1}</Button>)
         }
-
+        console.log(listOfButtons)
         setListOfButtons(listOfButtons) 
     }
     return(
@@ -67,7 +67,7 @@ export default function ListPublicationsUser(props){
             
             </Box>
             <Box mt={"20px"} w="100%" display={"flex"} justifyContent={"center"}>
-                {listOfButtons}
+                {listOfButtons.length>1 &&  listOfButtons}
             </Box>
             
         </Box>
