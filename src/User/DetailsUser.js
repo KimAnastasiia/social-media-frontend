@@ -243,7 +243,7 @@ export default function DetailsUser(props){
             </Box>
             {publicationShow &&  <ListPublicationsUser  uniqueName={uniqueName} />}
             {followersShow && <ListFollowersUser id={id.current} countFollowers={friends} uniqueName={uniqueName} />}
-            {followingShow&& <ListFollowingUser uniqueName={uniqueName}/>}
+            {followingShow&& <ListFollowingUser id={id.current} countFollowers={friends} uniqueName={uniqueName}/>}
         </Box>
     )
 }

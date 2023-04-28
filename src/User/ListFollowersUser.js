@@ -64,7 +64,7 @@ import {
             <Text mb={"20px"} textAlign={"center"} fontWeight={"bold"} >Followers</Text>
             <Box mb={"20px"}>
                 <Search
-                    placeholder="Search your follower"
+                    placeholder="search follower"
                     onChange={(e)=>{setSearch(e.target.value)}}
                     style={{
                         width: "100%"
@@ -78,7 +78,7 @@ import {
                 <Box borderBottomWidth={"1px"} display={"flex"} justifyContent={"space-between"}>
                     
                     <Box mb={"20px"} w={"80%"} display={"flex"}> 
-                        <Avatar size={"lg"} src={Commons.baseUrl+"/images/"+follower.userId+"avatar.png"} ></Avatar>
+                        <Avatar size={"lg"} src={Commons.baseUrl+"/images/"+follower.id+"avatar.png"} ></Avatar>
                         <Text fontWeight={"bold"} ml={"20px"}>{follower.uniqueName}</Text>
                     </Box>
                   { ( cookieObjectApiKey.uniqueName==props.uniqueName) &&

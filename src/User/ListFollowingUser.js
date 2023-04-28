@@ -51,12 +51,19 @@ import {
         }
 
     } 
+    let deleteFollowing=async(id)=>{
+        let response = await fetch (Commons.baseUrl+"/friends/following?followingId="+id+"&apiKey="+cookieObjectApiKey.apiKey,{
+            method: 'DELETE' 
+        })
+        props.countFollowers(props.id)
+        getUser()
+    }
     return(
         <Box p={"20px"} borderRadius={"lg"} borderWidth={"1px"} mt={"100px"} w={["90%", "90%","60%","50%","30%"]} >
             <Text mb={"20px"} textAlign={"center"} fontWeight={"bold"} >Following</Text>
             <Box mb={"20px"}>
                 <Search
-                    placeholder="Search your follower"
+                    placeholder="search following"
                     onChange={(e)=>{setSearchFollowing(e.target.value)}}
                     style={{
                         width: "100%"
@@ -69,7 +76,7 @@ import {
                 <Box borderBottomWidth={"1px"} display={"flex"} justifyContent={"space-between"}>
                     
                     <Box mb={"20px"} w={"80%"} display={"flex"}> 
-                        <Avatar size={"lg"} src={Commons.baseUrl+"/images/"+follower.friendId+"avatar.png"} ></Avatar>
+                        <Avatar size={"lg"} src={Commons.baseUrl+"/images/"+follower.following+"avatar.png"} ></Avatar>
                         <Text fontWeight={"bold"} ml={"20px"}>{follower.uniqueName}</Text>
                     </Box>
                     { ( cookieObjectApiKey.uniqueName==props.uniqueName) && <Box display={"flex"}  justifyContent={"end"} w={"20%"}>
@@ -82,6 +89,7 @@ import {
                                     <PopoverArrow />
                                     <PopoverCloseButton />
                                     <PopoverBody>
+                                        <Button onClick={()=>{deleteFollowing(follower.following)}}>Delete</Button>
                                     </PopoverBody>
                                     </PopoverContent>
                                 </Portal>
