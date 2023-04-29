@@ -13,8 +13,11 @@ export default function ListPublicationsUser(props){
     const [posts, setPosts]=useState([])
     const [listOfButtons,setListOfButtons]=useState([])
     let userIdRef = useRef()
+    const [i, setI]=useState(0)
+
 
     useEffect(()=>{
+        setPosts([])
         getUser()
     },[props.uniqueName])
 
@@ -22,19 +25,26 @@ export default function ListPublicationsUser(props){
         let response = await fetch(Commons.baseUrl+"/public/users/"+props.uniqueName)
         if(response.ok){
             let data = await response.json()
-            getPosts(data[0].id,1)
+            getPostsInitial(data[0].id,1)
             createListOfButtons(data[0].id)
             userIdRef.current=data[0].id
         }
-
     } 
-    let getPosts=async(uId, p)=>{
+    let getPostsInitial=async(uId, p)=>{
         let response = await fetch(Commons.baseUrl+"/public/mediaPost/postes?userId="+uId+"&p="+p)
         if(response.ok){
             let data = await response.json()
             setPosts(data)
         }
-
+    }
+    let getPosts=async(uId, p)=>{
+        let response = await fetch(Commons.baseUrl+"/public/mediaPost/postes?userId="+uId+"&p="+p)
+        if(response.ok){
+            let data = await response.json()
+            let newList = [...posts, ...data]
+            setPosts(newList)
+        }
+        setI(i+1)
     }
     let createListOfButtons=async(id)=>{
         let listOfButtons=[]
@@ -57,19 +67,18 @@ export default function ListPublicationsUser(props){
     }
     return(
         <Box mt={"60px"} w={["90%","90%","100%","90%","60%"]} flexDirection={"column"} display={"flex"} justifyContent={"center"} >
-            <Box  display={"flex"} justifyContent={["center"]} flexWrap={"wrap"}>
-            {posts.sort((a,b)=>b.id-a.id)
-                .map((post)=>
-                    <Box m={"0.3%"} >
-                        <Image  onClick={()=>{navigate("/mediaPost/"+post.id)}} src={Commons.baseUrl+"/images/"+ userIdRef.current+post.id+"mini.png"} />
-                    </Box>
-                )}
-            
-            </Box>
-            <Box mt={"20px"} w="100%" display={"flex"} justifyContent={"center"}>
-                {listOfButtons.length>1 &&  listOfButtons}
-            </Box>
-            
+                <Box  display={"flex"} justifyContent={["center"]} flexWrap={"wrap"}>
+                {posts
+                    .map((post)=>
+                        <Box m={"0.3%"} >
+                            <Image  onClick={()=>{navigate("/mediaPost/"+post.id)}} src={Commons.baseUrl+"/images/"+ userIdRef.current+post.id+"mini.png"} />
+                        </Box>
+                    )}
+                </Box>
+                <Box mt={"20px"} w="100%" display={"flex"} justifyContent={"center"}>
+                    {(listOfButtons.length>1 && i<=(listOfButtons.length-1)) && <Button bg="lightblue"  w={"10%"} m={"5px"} onClick={e=>{getPosts( userIdRef.current,(i+1))}} >Show more</Button>}
+
+                </Box>
         </Box>
     )
 }
