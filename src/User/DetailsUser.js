@@ -21,6 +21,7 @@ import {
     AlertDialogContent,
     AlertDialogOverlay,AlertDialogCloseButton,useDisclosure
   } from '@chakra-ui/react'
+import { Switch } from '@chakra-ui/react'
 import ListPublicationsUser from "./ListPublicationsUser";
 import ListFollowersUser from "./ListFollowersUser";
 import ListFollowingUser from "./ListFollowingUser";
@@ -41,7 +42,8 @@ export default function DetailsUser(props){
     const [publicationShow, setPublicationShow]=useState(true)
     const [followersShow, setFollowersShow]=useState(false)
     const [followingShow, setFollowingShow]=useState(false)
-   
+    const [privateStatus, setPrivateStatus]=useState(false)
+
     useEffect(()=>{
         getUser()
     },[uniqueName])
@@ -79,6 +81,12 @@ export default function DetailsUser(props){
             friends(data[0].id)
             getPosts(data[0].id)
             id.current=data[0].id
+            if(data[0].close==0){
+                setPrivateStatus(false)
+            }
+            if(data[0].close==1){
+                setPrivateStatus(true)
+            }
         }
 
     }
@@ -167,6 +175,19 @@ export default function DetailsUser(props){
         }
 
     }
+    let updateAccount=async(value)=>{
+
+        let response = await fetch (Commons.baseUrl+"/users/private?apiKey="+cookieObjectApiKey.apiKey,{
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 
+                private:value
+            })
+        })
+        getUser()
+    }
     return(
         <Box  display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}  >
             <Box  alignItems={"center"} w={["90%","90%","60%","50%","37%"]}  justifyContent={"center"}   display={"flex"}>
@@ -207,6 +228,14 @@ export default function DetailsUser(props){
                                             <Button onClick={goOut} w={"100%"}>
                                                 go out
                                             </Button>
+                                            <Box alignItems={"center"} mt={"3"} mb={"3"} w={"100%"} display={"flex"} justifyContent={"space-between"}>
+                                             
+                                                <Box alignItems={"center"} mt={"3"} mb={"3"} w={"100%"} display={"flex"} justifyContent={"space-between"}>
+                                                    <Text fontSize={"20px"} w={"80%"}>Private account</Text>
+                                                    {!privateStatus && <Switch onChange={()=>{updateAccount(true)}}  w="20%" size='md'/> }
+                                                    {privateStatus && <Switch isChecked onChange={()=>{updateAccount(false)}}   w="20%" size='md'/> }
+                                                </Box>                                                
+                                            </Box>
                                         </AlertDialogFooter>
                                     </AlertDialogContent>
                                 </AlertDialog>
