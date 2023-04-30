@@ -138,7 +138,7 @@ export default function DetailsUser(props){
             method: 'DELETE' 
         })
         if(response.ok){
-            setFollow(true)
+            setFollow(false)
         }
        
     }
@@ -270,7 +270,7 @@ export default function DetailsUser(props){
                         }
                     </Box>
             </Box>
-            {publicationShow &&  <ListPublicationsUser  uniqueName={uniqueName} />}
+            {publicationShow &&  <ListPublicationsUser follow={follow}  uniqueName={uniqueName} />}
             {followersShow && <ListFollowersUser  componentShow={componentShow} id={id.current} countFollowers={friends} uniqueName={uniqueName} />}
             {followingShow && <ListFollowingUser  componentShow={componentShow} id={id.current} countFollowers={friends} uniqueName={uniqueName}/>}
         </Box>

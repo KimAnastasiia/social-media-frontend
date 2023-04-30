@@ -22,6 +22,11 @@ export default function ListPublicationsUser(props){
         getUser()
     },[props.uniqueName])
 
+    useEffect(()=>{
+        setPosts([])
+        getUser()
+    },[props.follow])
+
     let getUser=async()=>{
         let response = await fetch(Commons.baseUrl+"/public/users/"+props.uniqueName)
         if(response.ok){
