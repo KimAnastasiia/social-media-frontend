@@ -17,6 +17,7 @@ import {
     PopoverCloseButton,
     PopoverAnchor,Portal,useDisclosure
   } from '@chakra-ui/react'
+
   import { useCookies } from 'react-cookie'; 
   import {MessageOutlined ,SmileOutlined,SendOutlined,HeartOutlined,EllipsisOutlined,BookOutlined} from '@ant-design/icons';
   import { Input, Space } from 'antd';
@@ -28,6 +29,7 @@ import {
     const [cookieObjectApiKey, setCookieObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email", "uniqueName"]);
     const [searchFollowing, setSearchFollowing]=useState("")
     const { Search } = Input;
+    const navigate  = useNavigate();
     useEffect(()=>{
         getUser()
     },[props.uniqueName])
@@ -58,6 +60,10 @@ import {
         props.countFollowers(props.id)
         getUser()
     }
+    let moveTo=(uniqueName)=>{
+        props.componentShow("publication")
+        navigate("/users/"+uniqueName)
+    }
     return(
         <Box p={"20px"} borderRadius={"lg"} borderWidth={"1px"} mt={"100px"} w={["90%", "90%","60%","50%","30%"]} >
             <Text mb={"20px"} textAlign={"center"} fontWeight={"bold"} >Following</Text>
@@ -75,7 +81,7 @@ import {
             }).map((follower)=>
                 <Box borderBottomWidth={"1px"} display={"flex"} justifyContent={"space-between"}>
                     
-                    <Box mb={"20px"} w={"80%"} display={"flex"}> 
+                    <Box onClick={()=>{moveTo(follower.uniqueName)}} mb={"20px"} w={"80%"} display={"flex"}> 
                         <Avatar size={"lg"} src={Commons.baseUrl+"/images/"+follower.following+"avatar.png"} ></Avatar>
                         <Text fontWeight={"bold"} ml={"20px"}>{follower.uniqueName}</Text>
                     </Box>
