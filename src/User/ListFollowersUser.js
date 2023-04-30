@@ -24,7 +24,7 @@ import {
 
 
   export default function ListFollowersUser(props){
-
+    const navigate  = useNavigate();
     const [listOfFollowers, setListOfFollowers]=useState([])
     const [cookieObjectApiKey, setCookieObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email", "uniqueName"]);
     const [search, setSearch]=useState("")
@@ -59,6 +59,10 @@ import {
         props.countFollowers(props.id)
         getUser()
     }
+    let moveTo=(uniqueName)=>{
+        props.componentShow("publication")
+        navigate("/users/"+uniqueName)
+    }
     return(
         <Box p={"20px"} borderRadius={"lg"} borderWidth={"1px"} mt={"100px"} w={["90%", "90%","60%","50%","30%"]} >
             <Text mb={"20px"} textAlign={"center"} fontWeight={"bold"} >Followers</Text>
@@ -77,7 +81,7 @@ import {
             .map((follower)=>
                 <Box borderBottomWidth={"1px"} display={"flex"} justifyContent={"space-between"}>
                     
-                    <Box mb={"20px"} w={"80%"} display={"flex"}> 
+                    <Box onClick={()=>{moveTo(follower.uniqueName)}} mb={"20px"} w={"80%"} display={"flex"}> 
                         <Avatar size={"lg"} src={Commons.baseUrl+"/images/"+follower.id+"avatar.png"} ></Avatar>
                         <Text fontWeight={"bold"} ml={"20px"}>{follower.uniqueName}</Text>
                     </Box>
