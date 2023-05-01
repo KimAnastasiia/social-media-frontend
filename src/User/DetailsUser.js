@@ -26,6 +26,9 @@ import ListPublicationsUser from "./ListPublicationsUser";
 import ListFollowersUser from "./ListFollowersUser";
 import ListFollowingUser from "./ListFollowingUser";
 export default function DetailsUser(props){
+    const STATE_PRIVATE_ACCOUNT = 1
+    const STATE_WAITING_FOR_RESPONSE = 2
+    const STATE_YOU_ARE_FRIEND = 3
 
     const [publications, setPublications]=useState(0)
     const [followers, setFollowers]=useState(0)
@@ -43,6 +46,7 @@ export default function DetailsUser(props){
     const [followersShow, setFollowersShow]=useState(false)
     const [followingShow, setFollowingShow]=useState(false)
     const [privateStatus, setPrivateStatus]=useState(false)
+    const [stateOfUser, setStateOfUser]=useState(0)
 
     useEffect(()=>{
         getUser()
@@ -80,6 +84,7 @@ export default function DetailsUser(props){
             checkIfYouFollow(data[0].id)
             friends(data[0].id)
             getPosts(data[0].id)
+            subscriptionCheck(data[0].id,1)
             id.current=data[0].id
             if(data[0].close==0){
                 setPrivateStatus(false)
@@ -116,6 +121,7 @@ export default function DetailsUser(props){
             if(data.message=="done"){
                 setFollow(true)
             }
+            getUser()
         }
         friends(id.current)
     }
@@ -139,6 +145,7 @@ export default function DetailsUser(props){
         })
         if(response.ok){
             setFollow(false)
+            getUser()
         }
        
     }
@@ -187,6 +194,22 @@ export default function DetailsUser(props){
             })
         })
         getUser()
+    }
+    let subscriptionCheck=async(uId, p)=>{
+        let response = await fetch(Commons.baseUrl+"/mediaPost?userId="+uId+"&p="+p+"&apiKey="+cookieObjectApiKey.apiKey)
+        if(response.ok){
+            let data = await response.json()
+            switch(data.code){
+                case STATE_PRIVATE_ACCOUNT:
+                    setStateOfUser(STATE_PRIVATE_ACCOUNT)
+                break
+                case STATE_WAITING_FOR_RESPONSE:
+                    setStateOfUser(STATE_WAITING_FOR_RESPONSE)
+                break
+                default:
+                    setStateOfUser(STATE_YOU_ARE_FRIEND)
+            }
+        }
     }
     return(
         <Box  display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}  >
@@ -262,10 +285,17 @@ export default function DetailsUser(props){
                         <Box  display={"flex"} justifyContent={"center"}>
                            <Button  onClick={()=>navigate("/users/publication")}  >Add new publication</Button>
                         </Box>}
-                        {(cookieObjectApiKey.apiKey && cookieObjectApiKey.id!=user.id) &&
+                        {(cookieObjectApiKey.apiKey && cookieObjectApiKey.id!=user.id && user.close==0) &&
                             <Box  display={"flex"} justifyContent={"center"}>
                             {!follow && <Button onClick={addFriend} bg={"#0077FF"} color="white" >Follow</Button>}
                             {follow &&<Button onClick={unfollow}>Unfollow</Button>}
+                            </Box>
+                        }
+                        {(cookieObjectApiKey.apiKey && cookieObjectApiKey.id!=user.id && user.close==1) &&
+                            <Box  display={"flex"} justifyContent={"center"}>
+                            {(stateOfUser==STATE_PRIVATE_ACCOUNT) &&  <Button bg={"#0077FF"} onClick={addFriend} color="white" >Send a subscription request</Button>}
+                            {(stateOfUser==STATE_WAITING_FOR_RESPONSE) && <Button onClick={unfollow} bg={"#0077FF"} color="white" >Cancel the subscription request</Button>}
+                            {(stateOfUser==STATE_YOU_ARE_FRIEND) && <Button  onClick={unfollow}>Unfollow</Button>}
                             </Box>
                         }
                     </Box>

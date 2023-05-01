@@ -31,10 +31,14 @@ export default function ListPublicationsUser(props){
         let response = await fetch(Commons.baseUrl+"/public/users/"+props.uniqueName)
         if(response.ok){
             let data = await response.json()
-            getPostsInitial(data[0].id,1)
+            if(!cookieObjectApiKey.apiKey){
+                getPostsInitial(data[0].id,1)
+            }
             createListOfButtons(data[0].id)
             userIdRef.current=data[0].id
-            getPostsInitialPrivet(data[0].id,1)
+            if(cookieObjectApiKey.apiKey){
+                getPostsInitialPrivet(data[0].id,1)
+            }
         }
     } 
     let getPostsInitial=async(uId, p)=>{
@@ -63,13 +67,9 @@ export default function ListPublicationsUser(props){
         let response = await fetch(Commons.baseUrl+"/mediaPost?userId="+uId+"&p="+p+"&apiKey="+cookieObjectApiKey.apiKey)
         if(response.ok){
             let data = await response.json()
-            if(data.message){
-                setMessage(data.message)
-                setPostsInCloseAccount([])
-            }else{
             let newList = [...postsInCloseAccount, ...data]
             setPostsInCloseAccount(newList)
-            setMessage(false)}
+            setMessage(false)
         }
         setI(i+1)
     }
@@ -112,8 +112,8 @@ export default function ListPublicationsUser(props){
                         </Box>
                     )}
 
-                  {cookieObjectApiKey.apiKey && postsInCloseAccount
-                    .map((post)=>
+                  {(cookieObjectApiKey.apiKey && postsInCloseAccount.length>0) && 
+                  postsInCloseAccount.map((post)=>
                         <Box m={"0.3%"} >
                             <Image  onClick={()=>{navigate("/mediaPost/"+post.id)}} src={Commons.baseUrl+"/images/"+ userIdRef.current+post.id+"mini.png"} />
                         </Box>
