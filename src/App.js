@@ -13,6 +13,7 @@ import CreatePublication from './Publication.js/CreatePublication';
 import CommentsPublication from './Publication.js/CommentsPublication';
 import EditInformationUser from './User/EditInformationUser';
 import EditPasswordUser from './User/EditPasswordUser';
+import ListSubscriptionRequestsUser from './User/ListSubscriptionRequestsUser';
 function App() {
 
   const [email, setEmail]=useState("")
@@ -33,6 +34,7 @@ function App() {
           <Route  path='/users/publication' element={<CreatePublication/>} />
           <Route  path='/users/edit' element={<EditInformationUser/>} />
           <Route  path='/users/editPassword' element={<EditPasswordUser/>} />
+          <Route  path='/users/subscriptionRequests' element={<ListSubscriptionRequestsUser/>} />
         </Routes>
       </Box>
    </Box>
