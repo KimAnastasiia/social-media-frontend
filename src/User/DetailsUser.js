@@ -78,6 +78,14 @@ export default function DetailsUser(props){
         }
 
     } 
+    let getFolloving=async(user)=>{
+        let response = await fetch(Commons.baseUrl+"/public/friends/following?id="+user.id)
+        if(response.ok){
+            let data = await response.json()
+            setFollowing(data.following.length)
+        }
+
+    } 
     let getUser=async()=>{
         let response = await fetch(Commons.baseUrl+"/public/users/"+uniqueName)
         if(response.ok){
@@ -86,6 +94,7 @@ export default function DetailsUser(props){
             checkImage(data[0].id)
             checkIfYouFollow(data[0].id)
             getFollowers(data[0])
+            getFolloving(data[0])
             getPosts(data[0].id)
             subscriptionCheck(data[0].id,1)
             id.current=data[0].id
@@ -299,7 +308,7 @@ export default function DetailsUser(props){
                         <Box  display={"flex"} justifyContent={"center"}>
                            <Button  onClick={()=>navigate("/users/publication")}  >Add new publication</Button>
                         </Box>}
-                        {(cookieObjectApiKey.apiKey && cookieObjectApiKey.id!=user.id && user.close==0) &&
+                        {(cookieObjectApiKey.apiKey && (cookieObjectApiKey.id!=user.id) && user.close==0) &&
                             <Box  display={"flex"} justifyContent={"center"}>
                             {!follow && <Button onClick={addFriend} bg={"#0077FF"} color="white" >Follow</Button>}
                             {follow &&<Button onClick={unfollow}>Unfollow</Button>}
