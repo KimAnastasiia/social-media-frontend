@@ -25,6 +25,7 @@ import { Switch } from '@chakra-ui/react'
 import ListPublicationsUser from "./ListPublicationsUser";
 import ListFollowersUser from "./ListFollowersUser";
 import ListFollowingUser from "./ListFollowingUser";
+import { Badge } from 'antd';
 export default function DetailsUser(props){
     const STATE_PRIVATE_ACCOUNT = 1
     const STATE_WAITING_FOR_RESPONSE = 2
@@ -47,8 +48,9 @@ export default function DetailsUser(props){
     const [followingShow, setFollowingShow]=useState(false)
     const [privateStatus, setPrivateStatus]=useState(false)
     const [stateOfUser, setStateOfUser]=useState(0)
-
+    const [numberOfAlerts, setNumberOfAlerts]=useState(0)
     useEffect(()=>{
+        getListSubscriptionRequestsUser()
         getUser()
     },[uniqueName])
 
@@ -211,6 +213,15 @@ export default function DetailsUser(props){
             }
         }
     }
+    let getListSubscriptionRequestsUser=async()=>{
+        let response = await fetch(Commons.baseUrl+"/friends/subscriptionRequests?apiKey="+cookieObjectApiKey.apiKey)
+        if(response.ok){
+            let data = await response.json()
+            if(!data.error){
+                setNumberOfAlerts(data.length)
+            }
+        }
+    }
     return(
         <Box  display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}  >
             <Box  alignItems={"center"} w={["90%","90%","60%","50%","37%"]}  justifyContent={"center"}   display={"flex"}>
@@ -228,6 +239,9 @@ export default function DetailsUser(props){
                             <Text w={"50%"} fontSize={"24px"}>{user.uniqueName}</Text>
                             {cookieObjectApiKey.id==user.id &&
                             <Box w={"50%"}  display={"flex"} alignItems={"center"} justifyContent={"space-around"} >
+                                <Badge count={numberOfAlerts}>
+                                    <Button onClick={()=>{navigate("/users/subscriptionRequests")}} >Alerts</Button>
+                                </Badge>
                                 <Button onClick={()=>{navigate('/users/edit')}} >Edit profile</Button>
                                 <Box  onClick={onOpen}>
                                     <SettingOutlined style={{ fontSize: '23px' }} />
