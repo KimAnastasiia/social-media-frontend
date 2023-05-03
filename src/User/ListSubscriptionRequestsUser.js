@@ -48,6 +48,19 @@ export default function ListSubscriptionRequestsUser(props){
 
         getListSubscriptionRequestsUser()
     }
+    let accept=async(id)=>{
+
+        let response = await fetch (Commons.baseUrl+"/friends/?apiKey="+cookieObjectApiKey.apiKey,{
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 
+                followerId:id
+            })
+        })
+        getListSubscriptionRequestsUser()
+    }
     return(
         <Box minH={["90vh"]} display={"flex"} alignItems={"center"} justifyContent={"center"} flexDirection={"column"}>
             <Box borderRadius={"lg"} borderWidth={"1px"}  w={["90%","90%","70%","60%","30%"]}>
@@ -60,7 +73,7 @@ export default function ListSubscriptionRequestsUser(props){
                             <Text>{follower.name}</Text>
                         </Box>
                         <Box display={"flex"}  w={"40%"} justifyContent={"space-around"}>
-                            <Button  bg={"#0077FF"} color="white">Approve</Button>
+                            <Button onClick={()=>{accept(follower.id)}} bg={"#0077FF"} color="white">Approve</Button>
                             <Button onClick={()=>{declineSubscriptionRequest(follower.id)}}>Cancel</Button>
                         </Box>
                     </Box>
