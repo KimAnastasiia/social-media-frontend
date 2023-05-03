@@ -57,7 +57,6 @@ import {
         let response = await fetch (Commons.baseUrl+"/friends/following?followingId="+id+"&apiKey="+cookieObjectApiKey.apiKey,{
             method: 'DELETE' 
         })
-        props.countFollowers(props.id)
         getUser()
     }
     let moveTo=(uniqueName)=>{

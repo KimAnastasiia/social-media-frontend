@@ -69,14 +69,15 @@ export default function DetailsUser(props){
             setAvatarExist(false)
         }
     }
-    let friends =async(id)=>{
-        let response = await fetch(Commons.baseUrl+"/public/friends?id="+id)
+    let getFollowers=async(user)=>{
+        let response = await fetch(Commons.baseUrl+"/public/friends/followers?id="+user.id)
         if(response.ok){
             let data = await response.json()
-            setFollowing(data.following[0].following)
-            setFollowers(data.followers[0].followers)
+            setFollowers(data.followers.length)
+          
         }
-    }
+
+    } 
     let getUser=async()=>{
         let response = await fetch(Commons.baseUrl+"/public/users/"+uniqueName)
         if(response.ok){
@@ -84,7 +85,7 @@ export default function DetailsUser(props){
             setUser(data[0])
             checkImage(data[0].id)
             checkIfYouFollow(data[0].id)
-            friends(data[0].id)
+            getFollowers(data[0])
             getPosts(data[0].id)
             subscriptionCheck(data[0].id,1)
             id.current=data[0].id
@@ -125,7 +126,6 @@ export default function DetailsUser(props){
             }
             getUser()
         }
-        friends(id.current)
     }
     let checkIfYouFollow=async(frId)=>{
 
@@ -236,10 +236,10 @@ export default function DetailsUser(props){
                     <Box w={["80%","80%","70%","70%","70%"]}  ml={"6%"}  >
 
                         <Box display={"flex"} alignItems={"center"} justifyContent={"space-around"}>
-                            <Text w={"50%"} fontSize={"24px"}>{user.uniqueName}</Text>
+                            <Text w={"10%"} fontSize={"24px"}>{user.uniqueName}</Text>
                             {cookieObjectApiKey.id==user.id &&
-                            <Box w={"50%"}  display={"flex"} alignItems={"center"} justifyContent={"space-around"} >
-                                <Badge count={numberOfAlerts}>
+                            <Box w={"100%"}  display={"flex"} alignItems={"center"} justifyContent={"space-around"} >
+                                <Badge mr="20px" count={numberOfAlerts}>
                                     <Button onClick={()=>{navigate("/users/subscriptionRequests")}} >Alerts</Button>
                                 </Badge>
                                 <Button onClick={()=>{navigate('/users/edit')}} >Edit profile</Button>
@@ -315,8 +315,8 @@ export default function DetailsUser(props){
                     </Box>
             </Box>
             {publicationShow &&  <ListPublicationsUser follow={follow}  uniqueName={uniqueName} />}
-            {followersShow && <ListFollowersUser  componentShow={componentShow} id={id.current} countFollowers={friends} uniqueName={uniqueName} />}
-            {followingShow && <ListFollowingUser  componentShow={componentShow} id={id.current} countFollowers={friends} uniqueName={uniqueName}/>}
+            {followersShow && <ListFollowersUser  componentShow={componentShow} id={id.current} uniqueName={uniqueName} />}
+            {followingShow && <ListFollowingUser  componentShow={componentShow} id={id.current} uniqueName={uniqueName}/>}
         </Box>
     )
 }

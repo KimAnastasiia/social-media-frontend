@@ -26,7 +26,7 @@ import ListPublicationsUser from "./ListPublicationsUser";
 import ListFollowersUser from "./ListFollowersUser";
 import ListFollowingUser from "./ListFollowingUser";
 export default function ListSubscriptionRequestsUser(props){
-
+    const navigate  = useNavigate();
     const [cookieObjectApiKey, setCookieObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email", "uniqueName"])
     const [listSubscriptionRequests, setListSubscriptionRequests]=useState([])
     useEffect(()=>{
@@ -62,15 +62,18 @@ export default function ListSubscriptionRequestsUser(props){
         getListSubscriptionRequestsUser()
     }
     return(
-        <Box minH={["90vh"]} display={"flex"} alignItems={"center"} justifyContent={"center"} flexDirection={"column"}>
+        <Box minH={["30vh"]} display={"flex"} alignItems={"center"} justifyContent={"center"} flexDirection={"column"}>
             <Box borderRadius={"lg"} borderWidth={"1px"}  w={["90%","90%","70%","60%","30%"]}>
                 <Text mt="30px" mb="30px" fontSize={"30px"} textAlign={"center"}>Yours subscription requests</Text>
                 {listSubscriptionRequests.map((follower)=>
             
                     <Box  w={"80%"} m={"20px"} alignItems={"center"} display={"flex"} justifyContent={"space-between"}>
-                        <Box alignItems={"center"}  w={"20%"} display={"flex"} justifyContent={"space-around"} >
+                        <Box onClick={()=>{navigate("/users/"+follower.uniqueName)}} alignItems={"center"}  w={"60%"} display={"flex"} justifyContent={"space-around"} >
                             <Avatar src={Commons.baseUrl+"/images/"+follower.id+"avatar.png"} ></Avatar>
-                            <Text>{follower.name}</Text>
+                            <Box w={"79%"}>
+                                <Text>{follower.uniqueName}</Text>
+                                <Text>{FormatDate(follower.date)}</Text>
+                            </Box>
                         </Box>
                         <Box display={"flex"}  w={"40%"} justifyContent={"space-around"}>
                             <Button onClick={()=>{accept(follower.id)}} bg={"#0077FF"} color="white">Approve</Button>
