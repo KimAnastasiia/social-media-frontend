@@ -41,22 +41,31 @@ export default function ListSubscriptionRequestsUser(props){
             }
         }
     }
+    let declineSubscriptionRequest=async(id)=>{
+        let response = await fetch (Commons.baseUrl+"/friends/followers?followersId="+id+"&apiKey="+cookieObjectApiKey.apiKey,{
+            method: 'DELETE' 
+        })
+
+        getListSubscriptionRequestsUser()
+    }
     return(
-        <Box borderRadius={"lg"} borderWidth={"1px"} ml={"700px"} mr={"700px"} mt={"200px"} display={"flex"} justifyContent={"center"} flexDirection={"column"}>
-        <Text mt="30px" mb="30px" fontSize={"30px"} textAlign={"center"}>Yours subscription requests</Text>
-        {listSubscriptionRequests.map((follower)=>
-       
-            <Box w={"80%"} m={"20px"} alignItems={"center"} display={"flex"} justifyContent={"space-between"}>
-                <Box alignItems={"center"}  w={"20%"} display={"flex"} justifyContent={"space-around"} >
-                    <Avatar src={Commons.baseUrl+"/images/"+follower.id+"avatar.png"} ></Avatar>
-                    <Text>{follower.name}</Text>
-                </Box>
-                <Box display={"flex"}  w={"40%"} justifyContent={"space-around"}>
-                    <Button>Approve</Button>
-                    <Button>Cancel</Button>
-                </Box>
+        <Box minH={["90vh"]} display={"flex"} alignItems={"center"} justifyContent={"center"} flexDirection={"column"}>
+            <Box borderRadius={"lg"} borderWidth={"1px"}  w={["90%","90%","70%","60%","30%"]}>
+                <Text mt="30px" mb="30px" fontSize={"30px"} textAlign={"center"}>Yours subscription requests</Text>
+                {listSubscriptionRequests.map((follower)=>
+            
+                    <Box  w={"80%"} m={"20px"} alignItems={"center"} display={"flex"} justifyContent={"space-between"}>
+                        <Box alignItems={"center"}  w={"20%"} display={"flex"} justifyContent={"space-around"} >
+                            <Avatar src={Commons.baseUrl+"/images/"+follower.id+"avatar.png"} ></Avatar>
+                            <Text>{follower.name}</Text>
+                        </Box>
+                        <Box display={"flex"}  w={"40%"} justifyContent={"space-around"}>
+                            <Button  bg={"#0077FF"} color="white">Approve</Button>
+                            <Button onClick={()=>{declineSubscriptionRequest(follower.id)}}>Cancel</Button>
+                        </Box>
+                    </Box>
+                )}
             </Box>
-        )}
         </Box>
     )
 }
