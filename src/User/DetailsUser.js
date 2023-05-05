@@ -1,14 +1,12 @@
-
 import React,{useState, useEffect,useRef} from "react"
 import { Box, Flex, Text, Button, Stack, Img, HStack,Avatar,Hide,Show ,Input,InputGroup,InputLeftElement,Alert,
-    Image,
     AlertTitle,
     AlertDescription,
+    Textarea,
  } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-
 import Commons from "../Utility/Commons";
-import {SettingOutlined ,SmileOutlined,SendOutlined,HeartOutlined,EllipsisOutlined,BookOutlined} from '@ant-design/icons';
+import {SettingOutlined ,SmileOutlined,SendOutlined,HeartOutlined,EllipsisOutlined,CameraOutlined} from '@ant-design/icons';
 import { useCookies } from 'react-cookie'; 
 import { useNavigate   } from "react-router-dom";
 import { useParams } from "react-router-dom";
@@ -26,6 +24,7 @@ import ListPublicationsUser from "./ListPublicationsUser";
 import ListFollowersUser from "./ListFollowersUser";
 import ListFollowingUser from "./ListFollowingUser";
 import { Badge } from 'antd';
+
 export default function DetailsUser(props){
     const STATE_PRIVATE_ACCOUNT = 1
     const STATE_WAITING_FOR_RESPONSE = 2
@@ -49,7 +48,8 @@ export default function DetailsUser(props){
     const [privateStatus, setPrivateStatus]=useState(false)
     const [stateOfUser, setStateOfUser]=useState(0)
     const [numberOfAlerts, setNumberOfAlerts]=useState(0)
-    useEffect(()=>{
+    const [message, setMessage]=useState("")
+   useEffect(()=>{
         getListSubscriptionRequestsUser()
         getUser()
     },[uniqueName])
@@ -231,6 +231,22 @@ export default function DetailsUser(props){
             }
         }
     }
+    let sendMessage=async()=>{
+        let response = await fetch (Commons.baseUrl+"/messages?apiKey="+cookieObjectApiKey.apiKey,{
+
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+
+            body:
+                JSON.stringify({ 
+                    idReceiver:user.id,
+                    message:message
+                })
+        })
+    }
+
     return(
         <Box  display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}  >
             <Box  alignItems={"center"} w={["90%","90%","60%","50%","37%"]}  justifyContent={"center"}   display={"flex"}>
@@ -310,8 +326,8 @@ export default function DetailsUser(props){
                         </Box>}
                         {(cookieObjectApiKey.apiKey && (cookieObjectApiKey.id!=user.id) && user.close==0) &&
                             <Box  display={"flex"} justifyContent={"center"}>
-                            {!follow && <Button onClick={addFriend} bg={"#0077FF"} color="white" >Follow</Button>}
-                            {follow &&<Button onClick={unfollow}>Unfollow</Button>}
+                                {!follow && <Button onClick={addFriend} bg={"#0077FF"} color="white" >Follow</Button>}
+                                {follow &&<Button onClick={unfollow}>Unfollow</Button>}
                             </Box>
                         }
                         {(cookieObjectApiKey.apiKey && cookieObjectApiKey.id!=user.id && user.close==1) &&
@@ -321,6 +337,46 @@ export default function DetailsUser(props){
                             {(stateOfUser==STATE_YOU_ARE_FRIEND) && <Button  onClick={unfollow}>Unfollow</Button>}
                             </Box>
                         }
+                        {(cookieObjectApiKey.apiKey && cookieObjectApiKey.id!=user.id) &&
+                        <Box>
+                            <Button onClick={onOpen}>Message</Button>
+                                <AlertDialog
+                                    motionPreset='slideInBottom'
+                                
+                                    onClose={onClose}
+                                    isOpen={isOpen}
+                                    isCentered
+                                >
+                                    <AlertDialogOverlay />
+
+                                    <AlertDialogContent>
+                                    <AlertDialogHeader alignItems={"center"} justifyContent={"space-around"} borderBottomWidth={"2px"} display={"flex"}>
+                                        <Text color={"black"}  fontSize={"15px"} >New message</Text>
+                                        <Button color={"black"}  variant='link' fontSize={"15px"}>Go to dialogue with {user.uniqueName}</Button>
+                                        <AlertDialogCloseButton />
+                                    </AlertDialogHeader>
+                                    <AlertDialogBody>
+                                      <Box mb={"10px"} display={"flex"}>
+                                        <Avatar mr={"10px"}></Avatar>
+                                        <Text>{user.name}</Text>
+                                      </Box>
+                                      <Box>
+                                        <Textarea
+                                        onChange={(e)=>{setMessage(e.target.value)}}
+                                        ></Textarea>
+                                      </Box>
+                                    </AlertDialogBody>
+                                    <AlertDialogFooter>
+                                        <CameraOutlined style={{ fontSize: '20px', color:"gray" }}  />
+                                        <Button onClick={() => {sendMessage(); onClose();}} colorScheme='blue' ml={3}>
+                                            send
+                                        </Button>
+                                    </AlertDialogFooter>
+                                    </AlertDialogContent>
+                                </AlertDialog>
+                            </Box>
+                                }
+                        
                     </Box>
             </Box>
             {publicationShow &&  <ListPublicationsUser follow={follow}  uniqueName={uniqueName} />}
