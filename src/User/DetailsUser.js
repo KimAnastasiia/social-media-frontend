@@ -1,5 +1,6 @@
 import React,{useState, useEffect,useRef} from "react"
 import { Box, Flex, Text, Button, Stack, Img, HStack,Avatar,Hide,Show ,Input,InputGroup,InputLeftElement,Alert,
+    useToast ,
     AlertTitle,
     AlertDescription,
     Textarea,
@@ -49,7 +50,9 @@ export default function DetailsUser(props){
     const [stateOfUser, setStateOfUser]=useState(0)
     const [numberOfAlerts, setNumberOfAlerts]=useState(0)
     const [message, setMessage]=useState("")
-   useEffect(()=>{
+    const toast = useToast()
+    const toastIdRef = React.useRef()
+    useEffect(()=>{
         getListSubscriptionRequestsUser()
         getUser()
     },[uniqueName])
@@ -245,8 +248,21 @@ export default function DetailsUser(props){
                     message:message
                 })
         })
+        if(response.ok){
+            let data = await response.json()
+            if(data.message=="done"){
+                success()
+            }else{
+                error()
+            }
+        }
     }
-
+    function success() {
+        toastIdRef.current = toast({ description: 'Message sent successfully',  status:'success'  })
+    }
+    function error() {
+        toastIdRef.current = toast({ description: 'An error occurred while sending the message',  status:'error' })
+    }
     return(
         <Box  display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}  >
             <Box  alignItems={"center"} w={["90%","90%","60%","50%","37%"]}  justifyContent={"center"}   display={"flex"}>
