@@ -14,6 +14,7 @@ import CommentsPublication from './Publication.js/CommentsPublication';
 import EditInformationUser from './User/EditInformationUser';
 import EditPasswordUser from './User/EditPasswordUser';
 import ListSubscriptionRequestsUser from './User/ListSubscriptionRequestsUser';
+import AllDialogues from './Messages/AllDialogues';
 function App() {
 
   const [email, setEmail]=useState("")
@@ -35,6 +36,7 @@ function App() {
           <Route  path='/users/edit' element={<EditInformationUser/>} />
           <Route  path='/users/editPassword' element={<EditPasswordUser/>} />
           <Route  path='/users/subscriptionRequests' element={<ListSubscriptionRequestsUser/>} />
+          <Route  path='/users/yourDialogues' element={<AllDialogues/>} />
         </Routes>
       </Box>
    </Box>

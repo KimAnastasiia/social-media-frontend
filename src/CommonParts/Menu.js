@@ -2,8 +2,8 @@
 import React,{useState, useEffect, useRef} from "react"
 import { Box, Flex, Text, Button, Stack, Img, Badge,Avatar,Hide,Show ,Input,InputGroup,InputLeftElement} from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import { SearchIcon } from '@chakra-ui/icons'
-import {QqOutlined } from '@ant-design/icons';
+import { ChatIcon } from '@chakra-ui/icons'
+import {QqOutlined, WechatOutlined } from '@ant-design/icons';
 import Commons from "../Utility/Commons";
 import { Select } from 'antd';
 import { useNavigate   } from "react-router-dom";
@@ -51,6 +51,7 @@ return (
    
             <Box  w={["50%","50%","50%","40%","30%"]} mt={"10px"} mb={"10px"} display="flex" alignItems={"center"} justifyContent="space-between" >
                     <QqOutlined onClick={navigateTo} style={{fontSize: '30px', color: "#0077FF"} } />
+                    { cookieObjectApiKey.apiKey && <WechatOutlined onClick={()=>{navigate("/users/yourDialogues")}} style={{fontSize: '30px', color: "#0077FF"} }  />}
                     <Select
                         showSearch
                         style={{
