@@ -1,4 +1,3 @@
-
 import Menu from './CommonParts/Menu';
 import { Route, Routes, useHref } from "react-router-dom"
 import LoginUser from './User/LoginUser';
@@ -15,6 +14,7 @@ import EditInformationUser from './User/EditInformationUser';
 import EditPasswordUser from './User/EditPasswordUser';
 import ListSubscriptionRequestsUser from './User/ListSubscriptionRequestsUser';
 import AllDialogues from './Messages/AllDialogues';
+import PrivateChat from './Messages/PrivateChat';
 function App() {
 
   const [email, setEmail]=useState("")
@@ -37,6 +37,7 @@ function App() {
           <Route  path='/users/editPassword' element={<EditPasswordUser/>} />
           <Route  path='/users/subscriptionRequests' element={<ListSubscriptionRequestsUser/>} />
           <Route  path='/users/yourDialogues' element={<AllDialogues/>} />
+          <Route  path='/users/chat/:uniqueName' element={<PrivateChat/>} />
         </Routes>
       </Box>
    </Box>

@@ -13,11 +13,11 @@ import {Search2Icon } from '@chakra-ui/icons'
 import FormatDate from "../Utility/FormatDate";
 
 export default function AllDialogues(props){
-    
+
     const [cookieObjectApiKey, setCookieObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email", "uniqueName", "name"])
     const [dialogues, setDialogues]=useState([])
     const navigate  = useNavigate();
-    
+
     useEffect(()=>{
         getDialogues()
     },[])
@@ -39,13 +39,12 @@ export default function AllDialogues(props){
                 </Box>
                 <Box  h={"90%"} >
                 {dialogues.map((message)=>
-                
-                <Box display={"flex"} m={"20px"}>
 
+                <Box display={"flex"} m={"20px"}>
                     {message.idSender!= cookieObjectApiKey.id && 
                     <Box w={"100%"} display={"flex"}>
                         <Avatar onClick={()=>{navigate('/users/'+message.sender_uniqueName)}} src={Commons.baseUrl+"/images/"+message.idSender +"avatar.png"} ></Avatar>
-                        <Box ml={"10px"} w={"80%"} borderBottomWidth={"2px"}>
+                        <Box onClick={()=>{navigate('/users/chat/'+message.sender_uniqueName)}} ml={"10px"} w={"80%"} borderBottomWidth={"2px"}>
                             <Box display={"flex"} justifyContent={"space-between"}>
                                 {message.sender_uniqueName!=cookieObjectApiKey.uniqueName && <Text>{message.sender_uniqueName}</Text>}
                                 <Text fontSize={"13px"} color="grey">{FormatDate( message.date)}</Text>
@@ -55,10 +54,9 @@ export default function AllDialogues(props){
                    </Box>
                     }
                     { message.idReceiver != cookieObjectApiKey.id  && 
-                   
                     <Box w={"100%"} display={"flex"}>
                         <Avatar onClick={()=>{navigate('/users/'+message.receiver_uniqueName)}} src={Commons.baseUrl+"/images/"+message.idReceiver+"avatar.png"} ></Avatar>
-                        <Box  ml={"10px"} w={"80%"} borderBottomWidth={"2px"}>
+                        <Box onClick={()=>{navigate('/users/chat/'+message.receiver_uniqueName)}} ml={"10px"} w={"80%"} borderBottomWidth={"2px"}>
                             <Box display={"flex"} justifyContent={"space-between"}>
                                 {message.receiver_uniqueName!=cookieObjectApiKey.uniqueName && <Text>{message.receiver_uniqueName}</Text>}
                                 <Text fontSize={"13px"} color="grey">{FormatDate( message.date)}</Text>
