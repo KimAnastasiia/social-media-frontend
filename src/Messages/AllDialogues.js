@@ -17,7 +17,7 @@ export default function AllDialogues(props){
     const [cookieObjectApiKey, setCookieObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email", "uniqueName", "name"])
     const [dialogues, setDialogues]=useState([])
     const navigate  = useNavigate();
-
+    const [search, setSearch]=useState("")
     useEffect(()=>{
         getDialogues()
     },[])
@@ -35,10 +35,18 @@ export default function AllDialogues(props){
             <Box borderRadius={"lg"} minH={"lg"} w={["90%", "90%", "50%", "40%", "30%"]} borderWidth={"2px"}>
                 <Box  justifyContent={"space-between"} pl={"20px"} pr={"20px"} alignItems={"center"} display={"flex"} borderBottomWidth={"1px"} h={"10%"} >
                     <Search2Icon color={"gray"}/>
-                    <Input ml={"20px"}  variant='unstyled' border={"none"} placeholder="Search"></Input>
+                    <Input  onChange={(e)=>{setSearch(e.target.value)}} ml={"20px"}  variant='unstyled' border={"none"} placeholder="Search"></Input>
                 </Box>
                 <Box  h={"90%"} >
-                {dialogues.map((message)=>
+                {dialogues.filter((message)=>{
+                    if(message.receiver_uniqueName.includes(search)){
+                        return message
+                    }
+                    if(message.sender_uniqueName.includes(search)){
+                        return message
+                    }
+                })
+                .map((message)=>
 
                 <Box display={"flex"} m={"20px"}>
                     {message.idSender!= cookieObjectApiKey.id && 

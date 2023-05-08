@@ -75,6 +75,7 @@ export default function PrivateChat(props){
                 )}
                 </Box>
                 <Box  color={"gray"}  alignItems={"center"} display={"flex"} pl={"20px"} pr={"20px"} h={"10%"} >
+
                     <AttachmentIcon fontSize={"20px"}/>
                     <InputGroup  ml={"10px"} mr={"10px"} size="md" >
                         <Input w="100%" placeholder="Write your message..."/>
