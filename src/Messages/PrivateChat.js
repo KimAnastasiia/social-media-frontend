@@ -18,6 +18,7 @@ export default function PrivateChat(props){
     const {uniqueName} = useParams()
     const [cookieObjectApiKey, setCookieObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email", "uniqueName", "name"])
     const [user, setUser]=useState("")
+    const [yourMessage, setYourMessage]=useState("")
     useEffect(()=>{
         getUser()
     },[])
@@ -39,10 +40,33 @@ export default function PrivateChat(props){
         }
     
     } 
+    let sendMessage=async(e)=>{
+        if (e.charCode == 13 && yourMessage!= null){ 
+            let response = await fetch (Commons.baseUrl+"/messages?apiKey="+cookieObjectApiKey.apiKey,{
+
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+    
+                body:
+                    JSON.stringify({ 
+                        idReceiver:user.id,
+                        message:yourMessage
+                    })
+            })
+            if(response.ok){
+               setYourMessage("")
+               getUser()
+            }
+        }
+        
+
+    }
     return(
         <Box display={"flex"} justifyContent={"center"}>
-            <Box borderRadius={"lg"} minH={"lg"} w={["90%", "90%", "50%", "40%", "30%"]} borderWidth={"2px"}>
-                <Box  justifyContent={"space-between"} pl={"20px"} pr={"20px"} alignItems={"center"} display={"flex"} borderBottomWidth={"1px"} h={"10%"} >
+            <Box borderRadius={"lg"} h={["85vh"]} w={["90%", "90%", "50%", "40%", "30%"]} borderWidth={"2px"}>
+                <Box  justifyContent={"space-between"} pl={"20px"} pr={"20px"} alignItems={"center"} display={"flex"} borderBottomWidth={"1px"} h={"6%"} >
                    <Box onClick={()=>{navigate('/users/yourDialogues')}}  w={"20%"} color={"gray"} alignItems={"center"} display={"flex"}>
                         <Button variant='link'>
                             <ChevronLeftIcon/>
@@ -59,7 +83,7 @@ export default function PrivateChat(props){
                         <Avatar   onClick={()=>{navigate('/users/'+user.uniqueName)}}  src={Commons.baseUrl+"/images/"+user.id +"avatar.png"}   size={"sm"}></Avatar>
                    </Box>
                 </Box>
-                <Box overflowY="scroll" p={"10px"} borderBottomWidth={"2px"} h={"80%"} >
+                <Box overflowY="scroll" p={"10px"} borderBottomWidth={"2px"} h={"85%"} >
                 {messages.sort((a,b)=>b.messageId-a.messageId)
                 .map((message)=>
                  <Box mb={"10px"} w={"100%"} display={"flex"}>
@@ -78,7 +102,7 @@ export default function PrivateChat(props){
 
                     <AttachmentIcon fontSize={"20px"}/>
                     <InputGroup  ml={"10px"} mr={"10px"} size="md" >
-                        <Input w="100%" placeholder="Write your message..."/>
+                        <Input value={yourMessage} onChange={(e)=>{setYourMessage(e.target.value)}} onKeyPress={(e)=>sendMessage(e)} w="100%" placeholder="Write your message..."/>
                         <InputRightElement
                             w="13%"
                             h={"100%"}
