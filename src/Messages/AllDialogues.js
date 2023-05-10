@@ -37,45 +37,50 @@ export default function AllDialogues(props){
                     <Search2Icon color={"gray"}/>
                     <Input  onChange={(e)=>{setSearch(e.target.value)}} ml={"20px"}  variant='unstyled' border={"none"} placeholder="Search"></Input>
                 </Box>
-                <Box  h={"90%"} >
-                {dialogues.filter((message)=>{
-                    if(message.receiver_uniqueName.includes(search)){
-                        return message
-                    }
-                    if(message.sender_uniqueName.includes(search)){
-                        return message
-                    }
-                })
-                .map((message)=>
 
-                <Box display={"flex"} m={"20px"}>
-                    {message.idSender!= cookieObjectApiKey.id && 
-                    <Box w={"100%"} display={"flex"}>
-                        <Avatar onClick={()=>{navigate('/users/'+message.sender_uniqueName)}} src={Commons.baseUrl+"/images/"+message.idSender +"avatar.png"} ></Avatar>
-                        <Box onClick={()=>{navigate('/users/chat/'+message.sender_uniqueName)}} ml={"10px"} w={"80%"} borderBottomWidth={"2px"}>
-                            <Box display={"flex"} justifyContent={"space-between"}>
-                                {message.sender_uniqueName!=cookieObjectApiKey.uniqueName && <Text>{message.sender_uniqueName}</Text>}
-                                <Text fontSize={"13px"} color="grey">{FormatDate( message.date)}</Text>
+               {dialogues.length>0 &&
+                <Box  h={"90%"}  overflowY="scroll">
+                    {dialogues.filter((message)=>{
+                        if(message.receiver_uniqueName.includes(search)){
+                            return message
+                        }
+                        if(message.sender_uniqueName.includes(search)){
+                            return message
+                        }
+                    })
+                    .map((message)=>
+
+                    <Box display={"flex"} m={"20px"}>
+                        {message.idSender!= cookieObjectApiKey.id && 
+                        <Box w={"100%"} display={"flex"}>
+                            <Avatar onClick={()=>{navigate('/users/'+message.sender_uniqueName)}} src={Commons.baseUrl+"/images/"+message.idSender +"avatar.png"} ></Avatar>
+                            <Box onClick={()=>{navigate('/users/chat/'+message.sender_uniqueName)}} ml={"10px"} w={"80%"} borderBottomWidth={"2px"}>
+                                <Box display={"flex"} justifyContent={"space-between"}>
+                                    {message.sender_uniqueName!=cookieObjectApiKey.uniqueName && <Text>{message.sender_uniqueName}</Text>}
+                                    
+                                </Box> 
+                                <Text fontSize={"13px"}  color="grey" >{message.message}</Text>
                             </Box> 
-                            <Text fontSize={"13px"}  color="grey" >{message.message}</Text>
-                        </Box> 
-                   </Box>
+                    </Box>
+                        }
+                        { message.idReceiver != cookieObjectApiKey.id  && 
+                        <Box w={"100%"} display={"flex"}>
+                            <Avatar onClick={()=>{navigate('/users/'+message.receiver_uniqueName)}} src={Commons.baseUrl+"/images/"+message.idReceiver+"avatar.png"} ></Avatar>
+                            <Box onClick={()=>{navigate('/users/chat/'+message.receiver_uniqueName)}} ml={"10px"} w={"80%"} borderBottomWidth={"2px"}>
+                                <Box display={"flex"} justifyContent={"space-between"}>
+                                    {message.receiver_uniqueName!=cookieObjectApiKey.uniqueName && <Text>{message.receiver_uniqueName}</Text>}
+                                   
+                                </Box> 
+                                <Text fontSize={"13px"}  color="grey" >{message.message}</Text>
+                            </Box> 
+                    </Box>
                     }
-                    { message.idReceiver != cookieObjectApiKey.id  && 
-                    <Box w={"100%"} display={"flex"}>
-                        <Avatar onClick={()=>{navigate('/users/'+message.receiver_uniqueName)}} src={Commons.baseUrl+"/images/"+message.idReceiver+"avatar.png"} ></Avatar>
-                        <Box onClick={()=>{navigate('/users/chat/'+message.receiver_uniqueName)}} ml={"10px"} w={"80%"} borderBottomWidth={"2px"}>
-                            <Box display={"flex"} justifyContent={"space-between"}>
-                                {message.receiver_uniqueName!=cookieObjectApiKey.uniqueName && <Text>{message.receiver_uniqueName}</Text>}
-                                <Text fontSize={"13px"} color="grey">{FormatDate( message.date)}</Text>
-                            </Box> 
-                            <Text fontSize={"13px"}  color="grey" >{message.message}</Text>
-                        </Box> 
-                   </Box>
-                   }
-                </Box>  
-                )}
-                </Box>
+                    </Box>  
+                    )}
+                </Box>}
+               {dialogues.length==0 && <Box  h="100%" display={"flex"} justifyContent={"center"} alignItems={"center"}>
+                    <Text color={"gray"} fontSize={"30px"}>You dont have any chat yet</Text>
+                </Box>}
             </Box>
         </Box>
     )

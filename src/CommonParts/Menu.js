@@ -1,19 +1,26 @@
 
 import React,{useState, useEffect, useRef} from "react"
-import { Box, Flex, Text, Button, Stack, Img, Badge,Avatar,Hide,Show ,Input,InputGroup,InputLeftElement} from "@chakra-ui/react";
+import { Box, Flex, Text, Button, Stack, Img,Avatar,Hide,Show ,Input,InputGroup,InputLeftElement} from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { ChatIcon } from '@chakra-ui/icons'
-import {QqOutlined, WechatOutlined } from '@ant-design/icons';
+import {QqOutlined, WechatOutlined, BellFilled } from '@ant-design/icons';
 import Commons from "../Utility/Commons";
 import { Select } from 'antd';
 import { useNavigate   } from "react-router-dom";
 import { useCookies } from 'react-cookie'; 
+import { Badge } from 'antd';
+
 export default function Menu(props){
 
     const [users, setUsers]=useState([])
-    const [userAccount, setUserAccoint]=useState("")
+    const [numberOfAlerts, setNumberOfAlerts]=useState(0)
     const navigate  = useNavigate();
     const [cookieObjectApiKey, setCookieObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email","uniqueName"]);
+    
+    useEffect(()=>{
+        getListSubscriptionRequestsUser()
+    },[])
+
     let searchUser=async(e)=>{
         if( e.length < 1){
             setUsers([])
@@ -36,6 +43,15 @@ export default function Menu(props){
             navigate("/")
         }
     }
+    let getListSubscriptionRequestsUser=async()=>{
+        let response = await fetch(Commons.baseUrl+"/friends/subscriptionRequests?apiKey="+cookieObjectApiKey.apiKey)
+        if(response.ok){
+            let data = await response.json()
+            if(!data.error){
+                setNumberOfAlerts(data.length)
+            }
+        }
+    }
 return (
 
    <Flex  w="100%" bg="lightblue"  zIndex="sticky" as="nav" align="center" justify={["space-between" ,"space-between" ,"space-between" ,"space-around" , "space-around"]} position={"fixed"}>
@@ -52,6 +68,9 @@ return (
             <Box  w={["50%","50%","50%","40%","30%"]} mt={"10px"} mb={"10px"} display="flex" alignItems={"center"} justifyContent="space-between" >
                     <QqOutlined onClick={navigateTo} style={{fontSize: '30px', color: "#0077FF"} } />
                     { cookieObjectApiKey.apiKey && <WechatOutlined onClick={()=>{navigate("/users/yourDialogues")}} style={{fontSize: '30px', color: "#0077FF"} }  />}
+                    <Badge mr="20px" count={numberOfAlerts}>
+                        <BellFilled style={{ fontSize: '23px', color:"#0077FF" }} onClick={()=>{navigate("/users/subscriptionRequests")}}/>
+                    </Badge>
                     <Select
                         showSearch
                         style={{

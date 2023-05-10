@@ -67,7 +67,7 @@ export default function CreatePublication(props){
                     </Box>
                     <Input
                         placeholder="Add a comment to your post"
-                        w={["40%"]}
+                        w={["60%","55%","50%","45%","40%" ]}
                         mb={"2%"}
                         onChange={(e)=>setComment(e.target.value)}
                         value={comment}

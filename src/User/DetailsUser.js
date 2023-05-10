@@ -7,7 +7,7 @@ import { Box, Flex, Text, Button, Stack, Img, HStack,Avatar,Hide,Show ,Input,Inp
  } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import Commons from "../Utility/Commons";
-import {SettingOutlined ,SmileOutlined,SendOutlined,HeartOutlined,EllipsisOutlined,CameraOutlined} from '@ant-design/icons';
+import {SettingOutlined ,SmileOutlined,SendOutlined,HeartOutlined,BellOutlined,CameraOutlined} from '@ant-design/icons';
 import { useCookies } from 'react-cookie'; 
 import { useNavigate   } from "react-router-dom";
 import { useParams } from "react-router-dom";
@@ -24,7 +24,6 @@ import { Switch } from '@chakra-ui/react'
 import ListPublicationsUser from "./ListPublicationsUser";
 import ListFollowersUser from "./ListFollowersUser";
 import ListFollowingUser from "./ListFollowingUser";
-import { Badge } from 'antd';
 
 export default function DetailsUser(props){
     const STATE_PRIVATE_ACCOUNT = 1
@@ -48,12 +47,12 @@ export default function DetailsUser(props){
     const [followingShow, setFollowingShow]=useState(false)
     const [privateStatus, setPrivateStatus]=useState(false)
     const [stateOfUser, setStateOfUser]=useState(0)
-    const [numberOfAlerts, setNumberOfAlerts]=useState(0)
+
     const [message, setMessage]=useState("")
     const toast = useToast()
     const toastIdRef = React.useRef()
     useEffect(()=>{
-        getListSubscriptionRequestsUser()
+
         getUser()
     },[uniqueName])
 
@@ -225,15 +224,6 @@ export default function DetailsUser(props){
             }
         }
     }
-    let getListSubscriptionRequestsUser=async()=>{
-        let response = await fetch(Commons.baseUrl+"/friends/subscriptionRequests?apiKey="+cookieObjectApiKey.apiKey)
-        if(response.ok){
-            let data = await response.json()
-            if(!data.error){
-                setNumberOfAlerts(data.length)
-            }
-        }
-    }
     let sendMessage=async()=>{
         let response = await fetch (Commons.baseUrl+"/messages?apiKey="+cookieObjectApiKey.apiKey,{
 
@@ -280,9 +270,7 @@ export default function DetailsUser(props){
                             <Text w={"10%"} fontSize={"24px"}>{user.uniqueName}</Text>
                             {cookieObjectApiKey.id==user.id &&
                             <Box w={"100%"}  display={"flex"} alignItems={"center"} justifyContent={"space-around"} >
-                                <Badge mr="20px" count={numberOfAlerts}>
-                                    <Button onClick={()=>{navigate("/users/subscriptionRequests")}} >Alerts</Button>
-                                </Badge>
+                               
                                 <Button onClick={()=>{navigate('/users/edit')}} >Edit profile</Button>
                                 <Box  onClick={onOpen}>
                                     <SettingOutlined style={{ fontSize: '23px' }} />
@@ -354,7 +342,7 @@ export default function DetailsUser(props){
                             </Box>
                         }
                         {(cookieObjectApiKey.apiKey && cookieObjectApiKey.id!=user.id) &&
-                        <Box>
+                        <Box mt={"10px"}  display={"flex"} justifyContent={"center"}>
                             <Button onClick={onOpen}>Message</Button>
                                 <AlertDialog
                                     motionPreset='slideInBottom'
@@ -368,7 +356,7 @@ export default function DetailsUser(props){
                                     <AlertDialogContent>
                                     <AlertDialogHeader alignItems={"center"} justifyContent={"space-around"} borderBottomWidth={"2px"} display={"flex"}>
                                         <Text color={"black"}  fontSize={"15px"} >New message</Text>
-                                        <Button color={"black"}  variant='link' fontSize={"15px"}>Go to dialogue with {user.uniqueName}</Button>
+                                        <Button  colorScheme='blue' onClick={()=>{navigate("/users/chat/"+user.uniqueName)}} variant='link' fontSize={"15px"}>Go to dialogue with {user.uniqueName}</Button>
                                         <AlertDialogCloseButton />
                                     </AlertDialogHeader>
                                     <AlertDialogBody>
