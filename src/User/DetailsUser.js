@@ -384,7 +384,7 @@ export default function DetailsUser(props){
                                     </AlertDialogBody>
                                     <AlertDialogFooter>
                                         <CameraOutlined style={{ fontSize: '20px', color:"gray" }}  />
-                                        <Button onClick={() => {sendMessage(); onClose();}} colorScheme='blue' ml={3}>
+                                        <Button  onClick={() => {sendMessage(); onClose();}}  colorScheme='blue' ml={3}>
                                             send
                                         </Button>
                                     </AlertDialogFooter>

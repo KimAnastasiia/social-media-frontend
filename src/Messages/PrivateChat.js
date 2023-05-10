@@ -12,6 +12,18 @@ import { useNavigate   } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import {ChevronLeftIcon,AttachmentIcon } from '@chakra-ui/icons'
 import FormatDate from "../Utility/FormatDate";
+import {
+    Popover,
+    PopoverTrigger,
+    PopoverContent,
+    PopoverHeader,
+    PopoverBody,
+    PopoverFooter,
+    PopoverArrow,
+    PopoverCloseButton,
+    PopoverAnchor,Portal,useDisclosure
+  } from '@chakra-ui/react'
+
 export default function PrivateChat(props){
     const navigate  = useNavigate();
     const [messages, setMessages]=useState([])
@@ -19,6 +31,8 @@ export default function PrivateChat(props){
     const [cookieObjectApiKey, setCookieObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email", "uniqueName", "name"])
     const [user, setUser]=useState("")
     const [yourMessage, setYourMessage]=useState("")
+    const { onOpen, onClose, isOpen } = useDisclosure()
+    const firstFieldRef = React.useRef(null)
     useEffect(()=>{
         getUser()
     },[])
@@ -63,6 +77,12 @@ export default function PrivateChat(props){
         
 
     }
+    let deleteChat=async()=>{
+        let response = await fetch (Commons.baseUrl+"/messages?companionId="+user.id+"&apiKey="+cookieObjectApiKey.apiKey,{
+            method: 'DELETE' 
+        })
+        getUser()
+    }
     return(
         <Box display={"flex"} justifyContent={"center"}>
             <Box borderRadius={"lg"} h={["85vh"]} w={["90%", "90%", "50%", "40%", "30%"]} borderWidth={"2px"}>
@@ -79,19 +99,38 @@ export default function PrivateChat(props){
                    </Box>
                    <Box w={"17%"} color={"grey"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                         <PhoneOutlined style={{ fontSize: '20px' }}/>
-                        <EllipsisOutlined style={{ fontSize: '20px' }}/>
+                        <Popover    
+                            isOpen={isOpen}
+                            initialFocusRef={firstFieldRef}
+                            onOpen={onOpen}
+                            onClose={onClose}>
+                            <PopoverTrigger>
+                            <EllipsisOutlined style={{ fontSize: '20px' }}/>
+                            </PopoverTrigger>
+                            <Portal>
+                                <PopoverContent>
+                                <PopoverArrow />
+                                <PopoverCloseButton />
+                                <PopoverBody>
+                                    <Button onClick={() => {deleteChat(); onClose();}} colorScheme='red' variant='link' >
+                                        Delete chat 
+                                    </Button>
+                                </PopoverBody>
+                                </PopoverContent>
+                            </Portal>
+                        </Popover>
                         <Avatar   onClick={()=>{navigate('/users/'+user.uniqueName)}}  src={Commons.baseUrl+"/images/"+user.id +"avatar.png"}   size={"sm"}></Avatar>
                    </Box>
                 </Box>
                 <Box overflowY="scroll" p={"10px"} borderBottomWidth={"2px"} h={"85%"} >
-                {messages.sort((a,b)=>b.messageId-a.messageId)
+                {messages.sort((a,b)=>a.messageId-b.messageId)
                 .map((message)=>
                  <Box mb={"10px"} w={"100%"} display={"flex"}>
                     <Avatar onClick={()=>{navigate('/users/'+message.uniqueName)}} src={Commons.baseUrl+"/images/"+message.userId +"avatar.png"}  ></Avatar>
-                    <Box  ml={"10px"} w={"20%"} >
-                        <Box alignItems={"center"} display={"flex"} justifyContent={"space-between"}>
+                    <Box  ml={"10px"}  >
+                        <Box alignItems={"center"} display={"flex"} >
                             <Text>{message.uniqueName}</Text>
-                            <Text fontSize={"13px"} color="grey">{FormatDate(message.date)}</Text>
+                            <Text ml={"5px"} fontSize={"10px"} color="grey">{FormatDate(message.date)}</Text>
                         </Box> 
                         <Text fontSize={"13px"}  color="grey" >{message.message}</Text>
                     </Box> 
@@ -106,7 +145,6 @@ export default function PrivateChat(props){
                         <InputRightElement
                             w="13%"
                             h={"100%"}
-                            pointerEvents='none'
                             children={
                                 <Box w={"100%"} justifyContent={"space-around"}  display={"flex"}>
                                     <CameraOutlined style={{ fontSize: '20px' }}  />
