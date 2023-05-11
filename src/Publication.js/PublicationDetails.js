@@ -193,7 +193,7 @@ export default function PublicationDetails (props){
                         <Box borderBottomWidth={"2px"} h={"12%"} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
                             <Box  pl={"2%"} w={"100%"} display={"flex"} justifyContent={"start"} alignItems={"center"} >
                                 <Avatar onClick={()=>{navigate("/users/"+name)}} size={"md"}></Avatar>
-                                <Box ml={"4%"}>
+                                <Box ml={"5px"}>
                                     <Button  variant='link' color={"black"} onClick={()=>{navigate("/users/"+name)}}>{name}</Button>
                                     <Text fontSize={"xs"} fontWeight={"bold"} >{publication.comment} </Text>
                                 </Box>
@@ -232,8 +232,8 @@ export default function PublicationDetails (props){
                
                     <Box pt={"20px"} borderTopWidth={"2px"} display={"flex"} h={"15%"}  flexDirection={"column"} >
                         <Box zIndex={"sticky"} pl={"2%"} pr={"2%"} h={"40%"} >
-                            <Box  h={"60%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-                                <Box  w={"18%"} justifyContent={"space-around"} display={"flex"} alignItems={"center"}>
+                            <Box  h={"60%"} display={"flex"} alignItems={"center"} justifyContent={"start"}>
+                                
                                     <Text fontSize={"21px"}fontWeight={"bold"} >{postLikes}</Text>
                                     { !cookieObjectApiKey.apiKey &&
                                         <Icon component={HeartSvg} style={{
@@ -256,11 +256,9 @@ export default function PublicationDetails (props){
                                                     }} />
                                         </Box>
                                     }
-                                    <SendOutlined style={{ fontSize: '25px' }}/>
-                                </Box>
-                                <Box   w={"70%"} display={"flex"} justifyContent={"end"}>
-                                    <BookOutlined style={{ fontSize: '25px' }}/>
-                                </Box>
+                                   
+                         
+                                
                             </Box>
                             <Box h={"30%"} alignItems={"center"} display={"flex"}>
                                 <Text fontSize={"12px"}>{FormatDate (publication.date)}</Text>
@@ -270,10 +268,7 @@ export default function PublicationDetails (props){
                         {cookieObjectApiKey.apiKey &&    
                         <Box display={"flex"} alignItems={"end"} h={"50%"} >
                             <Box  h={"100%"} display={"flex"} alignItems={"center"} w={"100%"}  borderTopWidth={"2px"} >
-                                <Box w={"10%"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
-                                    <SmileOutlined style={{ fontSize: '25px' }}/>
-                                </Box>
-                                <Input  variant='unstyled'  value={comment} onChange={(e)=>{setComment(e.target.value)}} border={"none"} placeholder="Add a comment"></Input>
+                                <Input ml={"10px"} variant='unstyled'  value={comment} onChange={(e)=>{setComment(e.target.value)}} border={"none"} placeholder="Add a comment"></Input>
                                 <Button onClick={addComment} colorScheme='black' variant='link' >sent</Button>
                             </Box>
                         </Box>
@@ -318,8 +313,8 @@ export default function PublicationDetails (props){
                         <Image src={Commons.baseUrl+"/images/"+ publication.userId+id+"big.png"} />
                     </Box>
                     <Box pb={"10px"} borderBottomWidth={"2px"} pl={"2%"} pr={"2%"}  justifyContent={"flex-start"} h={"15%"} >
-                        <Box  mb={"10px"}  h={"75%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-                            <Box  alignItems={"center"}  w={"25%"} justifyContent={"space-between"} display={"flex"}>
+                        <Box w={"20%"} mb={"10px"}  h={"75%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+                            <Box display={"flex"} alignItems={"center"} >
                                 <Text fontSize={"21px"}fontWeight={"bold"} >{postLikes}</Text>
                                 { !cookieObjectApiKey.apiKey &&
                                       <Icon component={HeartSvg} style={{
@@ -342,12 +337,8 @@ export default function PublicationDetails (props){
                                                 }} />
                                     </Box>
                                 }
-                                <MessageOutlined onClick={onClickCommentsButton} style={{ fontSize: '25px' }}/>
-                                <SendOutlined style={{ fontSize: '25px' }}/>
                             </Box>
-                            <Box w={"70%"} display={"flex"} justifyContent={"end"}>
-                                <BookOutlined style={{ fontSize: '25px' }}/>
-                            </Box>
+                            <MessageOutlined onClick={onClickCommentsButton} style={{ fontSize: '25px' }}/>
                         </Box>
                        
                         <Box h={"25%"}>
@@ -374,11 +365,8 @@ export default function PublicationDetails (props){
                         userIdOfPublication={userIdOfPublication.current}
                         />
                 </Box>
-                <Box   display={"flex"} alignItems={"center"} h={"50px"} >
-                    <Box w={"10%"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
-                        <SmileOutlined style={{ fontSize: '25px' }}/>
-                    </Box>
-                    <Input  variant='unstyled' value={comment} onChange={(e)=>{setComment(e.target.value)}} border={"none"} placeholder="Add a comment"></Input>
+                <Box display={"flex"} alignItems={"center"} h={"50px"} >
+                    <Input ml={"10px"} variant='unstyled' value={comment} onChange={(e)=>{setComment(e.target.value)}} border={"none"} placeholder="Add a comment"></Input>
                     <Button colorScheme='black' variant='link' onClick={addComment}>sent</Button>
                 </Box>
             </Box >

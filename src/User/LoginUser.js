@@ -67,12 +67,7 @@ return (
             w={"80%"}
             placeholder="Phone or email">
             </Input>
-            <Box mt={"20px"} mb={"20px"} w="80%" display={"flex"} justifyContent={"flex-start"} alignItems="flex-start" >
-                <Checkbox defaultChecked>Save user</Checkbox>
-            </Box>
-
-            <Button  onClick={signInOnClick} color={"white"}  bg={"#0077FF"} w={"70%"} >Sign in</Button>
-          
+            <Button mt={"20px"} onClick={signInOnClick} color={"white"}  bg={"#0077FF"} w={"70%"} >Sign in</Button>
         </Box>
 
         <Box w={["80%", "80%",  "100%", "100%","100%"]} borderRadius={"lg"}  p={"20px"} bg={"lightblue"} display="flex" flexDirection={"column"} justifyContent="center" alignItems={"center"} >

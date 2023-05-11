@@ -236,9 +236,7 @@ return(
                 </Alert>}
                 <Input color={"black"} onChange={putEmail}  onBlur={onBlurEmail} value={email} mb={"20px"} w={"80%"}  placeholder="Email"></Input>
 
-                <Box  mb={"20px"} w={"80%"} display={"flex"} justifyContent={"flex-start"} alignItems="flex-start" >
-                    <Checkbox color={"#99A2AD"} defaultChecked onChange={()=>setSaveUser(!saveUser)} >Save user</Checkbox>
-                </Box>
+           
 
                 <Button onClick={makeAccount} w={"81%"} color="white" colorScheme={"none"} isDisabled={disabledButton}  _disabled={{ bg: "#79AEEB", colorScheme: "none"}} bg={"#0077FF"}>Continue</Button>
                 

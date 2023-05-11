@@ -123,10 +123,8 @@ export default function PrivateChat(props){
                    </Box>
                    <Box display={"flex"} flexDirection={"column"}  alignItems={"center"} w={"60%"}>
                        <Text color="black" fontSize={"15px"}>{user.uniqueName}</Text>
-                       <Text color="grey" fontSize={"13px"}>was online 32 minutes ago</Text>
                    </Box>
-                   <Box w={"17%"} color={"grey"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-                        <PhoneOutlined style={{ fontSize: '20px' }}/>
+                   <Box w={"15%"} color={"grey"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                         <Popover    
                             isOpen={isOpen}
                             initialFocusRef={firstFieldRef}
@@ -166,22 +164,7 @@ export default function PrivateChat(props){
                 )}
                 </Box>
                 <Box  color={"gray"}  alignItems={"center"} display={"flex"} pl={"20px"} pr={"20px"} h={"10%"} >
-
-                    <AttachmentIcon fontSize={"20px"}/>
-                    <InputGroup  ml={"10px"} mr={"10px"} size="md" >
-                        <Input value={yourMessage} onChange={(e)=>{setYourMessage(e.target.value)}} onKeyPress={(e)=>sendMessage(e)} w="100%" placeholder="Write your message..."/>
-                        <InputRightElement
-                            w="13%"
-                            h={"100%"}
-                            children={
-                                <Box w={"100%"} justifyContent={"space-around"}  display={"flex"}>
-                                    <CameraOutlined style={{ fontSize: '20px' }}  />
-                                    <SmileOutlined style={{ fontSize: '20px' }}  />
-                                 </Box>
-                        }
-                        />
-                    </InputGroup>
-                    <AudioOutlined style={{ fontSize: '20px' }} />
+                    <Input value={yourMessage} onChange={(e)=>{setYourMessage(e.target.value)}} onKeyPress={(e)=>sendMessage(e)} w="100%" placeholder="Write your message..."/>
                 </Box>
             </Box>
         </Box>
