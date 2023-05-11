@@ -37,7 +37,7 @@ export default function PrivateChat(props){
     const { onOpen, onClose, isOpen } = useDisclosure()
     const firstFieldRef = React.useRef(null)
     const time = React.useRef(0)
-
+    const messagesEndRef = React.useRef(null)
     useEffect(()=>{
         getUser()
 
@@ -46,7 +46,9 @@ export default function PrivateChat(props){
         };
         
     },[])
-
+    useEffect(()=>{
+        messagesEndRef.current?.scrollIntoView()
+    },[messages])
 
     let getUser=async()=>{
         let response = await fetch(Commons.baseUrl+"/public/users/"+uniqueName)
@@ -153,18 +155,34 @@ export default function PrivateChat(props){
                 </Box>
                 <Box overflowY="scroll" p={"10px"} borderBottomWidth={"2px"} h={"85%"} >
                 {messages.sort((a,b)=>a.messageId-b.messageId)
-                .map((message)=>
-                 <Box mb={"10px"} w={"100%"} display={"flex"}>
-                    <Avatar onClick={()=>{navigate('/users/'+message.uniqueName)}} src={Commons.baseUrl+"/images/"+message.userId +"avatar.png"}  ></Avatar>
-                    <Box  ml={"10px"}  >
-                        <Box alignItems={"center"} display={"flex"} >
-                            <Text>{message.uniqueName}</Text>
-                            <Text ml={"5px"} fontSize={"10px"} color="grey">{FormatDate(message.date)}</Text>
-                        </Box> 
-                        <Text fontSize={"13px"}  color="grey" >{message.message}</Text>
-                    </Box> 
-                </Box>      
+                .map((message)=>{    
+                    if(message.userId != cookieObjectApiKey.id){
+                        return(
+                        <Box  mb={"10px"} w={"100%"} display={"flex"}>
+                            <Avatar onClick={()=>{navigate('/users/'+message.uniqueName)}} src={Commons.baseUrl+"/images/"+message.userId +"avatar.png"}  ></Avatar>
+                            <Box p={"10px"} borderRadius={"2xl"} borderWidth={"1px"} ml={"10px"}  >
+                                <Text fontSize={"17px"}  >{message.message}</Text>
+                                <Box alignItems={"center"} display={"flex"} >
+                                    <Text ml={"5px"} fontSize={"10px"} color="grey">{FormatDate(message.date)}</Text>
+                                </Box> 
+                            </Box> 
+                        </Box> )
+                    }  
+                    if(message.userId == cookieObjectApiKey.id){
+                        return(
+                            <Box justifyContent={"flex-end"}  mb={"10px"} w={"100%"} display={"flex"}>
+                            
+                            <Box bg={"#EFEFEF"} p={"10px"} borderRadius={"2xl"} borderWidth={"1px"} ml={"10px"}  >
+                                <Text fontSize={"17px"}  >{message.message}</Text>
+                                <Box alignItems={"center"} display={"flex"} >
+                                    <Text ml={"5px"} fontSize={"10px"} color="grey">{FormatDate(message.date)}</Text>
+                                </Box> 
+                            </Box> 
+                        </Box>)
+                    }
+                }    
                 )}
+                <div ref={messagesEndRef}></div>
                 </Box>
                 <Box  color={"gray"}  alignItems={"center"} display={"flex"} pl={"20px"} pr={"20px"} h={"10%"} >
                     <Input value={yourMessage} onChange={(e)=>{setYourMessage(e.target.value)}} onKeyPress={(e)=>sendMessage(e)} w="100%" placeholder="Write your message..."/>
