@@ -54,7 +54,7 @@ export default function DetailsUser(props){
     const toast = useToast()
     const toastIdRef = React.useRef()
     useEffect(()=>{
-
+        props.setLogin(true)
         getUser()
     },[uniqueName])
 
@@ -114,6 +114,7 @@ export default function DetailsUser(props){
 
     let goOut=()=>{
         navigate("/")
+        props.setLogin(false)
         removeCookiObjectApiKey("id",  { path: '/' })
         removeCookiObjectApiKey("email",  { path: '/' })
         removeCookiObjectApiKey("apiKey",  { path: '/' })

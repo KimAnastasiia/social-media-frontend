@@ -18,20 +18,19 @@ import PrivateChat from './Messages/PrivateChat';
 function App() {
 
   const [email, setEmail]=useState("")
-
+  const [login, setLogin]=useState(false)
 
 
   return (
     <Box >
-      <Menu/>
+      <Menu login={login}/>
       <Box pt={"100px"}>
         <Routes>
           <Route  path='/' element={<LoginUser setEmail={setEmail}/>} />
           <Route  path='/registration' element={<RegistrationUser/>} />
-          <Route  path='/profile' element={<ProfileUser email={email}/>} />
           <Route  path='/verification/password' element={<PasswordUser  email={email}/>} />
           <Route  path='/mediaPost/:id' element={<PublicationDetails/>} />
-          <Route  path='/users/:uniqueName' element={<DetailsUser/>} />
+          <Route  path='/users/:uniqueName' element={<DetailsUser setLogin={setLogin}/> }/>
           <Route  path='/users/publication' element={<CreatePublication/>} />
           <Route  path='/users/edit' element={<EditInformationUser/>} />
           <Route  path='/users/editPassword' element={<EditPasswordUser/>} />

@@ -16,10 +16,17 @@ export default function Menu(props){
     const [numberOfAlerts, setNumberOfAlerts]=useState(0)
     const navigate  = useNavigate();
     const [cookieObjectApiKey, setCookieObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email","uniqueName"]);
+    const alertsInterval = useRef()
     
     useEffect(()=>{
+        alertsInterval.current=setInterval( getSubscriptionInterval , 1000)
         getListSubscriptionRequestsUser()
-    },[])
+    },[props.login])
+ 
+    let getSubscriptionInterval = () => {
+        getListSubscriptionRequestsUser()
+    }
+
 
     let colorLightBlue = "#B4DCFF"
     let searchUser=async(e)=>{
@@ -66,13 +73,13 @@ return (
             w={'100%'}
         >
    
-            <Box  w={["50%","50%","50%","40%","30%"]} mt={"10px"} mb={"10px"} display="flex" alignItems={"center"} justifyContent="space-between" >
+            <Box  w={["70%","60%","50%","40%","20%"]} mt={"10px"} mb={"10px"} display="flex" alignItems={"center"} justifyContent="space-between" >
                     <QqOutlined onClick={navigateTo} style={{fontSize: '30px', color: colorLightBlue } } />
                     { cookieObjectApiKey.apiKey && 
                     <WechatOutlined onClick={()=>{navigate("/users/yourDialogues")}} style={{fontSize: '30px', color: colorLightBlue} }  />}
-                    <Badge mr="20px" count={numberOfAlerts}>
+                      { cookieObjectApiKey.apiKey && <Badge mr="20px" count={numberOfAlerts}>
                         <BellFilled style={{ fontSize: '27px', color: colorLightBlue }} onClick={()=>{navigate("/users/subscriptionRequests")}}/>
-                    </Badge>
+                    </Badge>}
                     <Select
                         showSearch
                         style={{

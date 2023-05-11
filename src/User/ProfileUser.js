@@ -28,6 +28,7 @@ export default function ProfileUser(props){
     useEffect(()=>{
         signInOnClick()
         showImg()
+        props.setLogin(true)
     },[])
 
     let signInOnClick=async()=>{
