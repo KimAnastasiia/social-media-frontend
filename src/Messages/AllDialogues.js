@@ -18,11 +18,17 @@ export default function AllDialogues(props){
     const [dialogues, setDialogues]=useState([])
     const navigate  = useNavigate();
     const [search, setSearch]=useState("")
+    const dialoguesInterval = useRef()
     useEffect(()=>{
+        dialoguesInterval.current=setInterval( getDialogues , 1000)
         getDialogues()
+        return () => {
+            clearInterval( dialoguesInterval.current);
+        };
     },[])
 
     let getDialogues=async()=>{
+        console.log("A")
         let response = await fetch(Commons.baseUrl+"/messages/dialogues?apiKey="+cookieObjectApiKey.apiKey)
         if(response.ok){
             let data = await response.json()

@@ -14,7 +14,7 @@ export default function EditInformationUser(props){
     const [cookieObjectApiKey, setCookieObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email", "uniqueName"]);
     const [myFile, setMyFile]=useState()
     const [alertDonePhoto, setAlertDonePhoto]=useState(false)
-    let colorDarkBlue = "#142C8E"
+    let colorLightBlue = "#B4DCFF"
     useEffect (()=>{ 
         getUser()
     },[])
@@ -113,7 +113,7 @@ return(
                             <Button variant='link' color={"#0077FF"}>change photo profile</Button>
                         </Upload>
                     </Form.Item>
-                    <Button  bg={colorDarkBlue} color="white" onClick={changePhoto} >Update photo</Button>
+                    <Button  bg={colorLightBlue}  onClick={changePhoto} color="black" >Update photo</Button>
                 </Box>
             </Box>
             <Box  mb={"30px"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
@@ -145,7 +145,7 @@ You can only change the group name twice within a 14-day period.</Text>
                 <Input  onChange={addEmail}  value={user.email}  w={"50%"}></Input>
             </Box>
             <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
-                <Button onClick={updateData} bg={colorDarkBlue} color="white">Save</Button>
+                <Button onClick={updateData} color="black" bg={colorLightBlue} >Save</Button>
             </Box>
 
         </Box>

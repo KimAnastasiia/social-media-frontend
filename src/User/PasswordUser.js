@@ -9,7 +9,6 @@ import { useNavigate   } from "react-router-dom";
 export default function PasswordUser(props){
 
     const [password, setPassword]=useState("")
-    const [saveUser , setSaveUser]=useState(false)
     const [alert, setAlert] = useState(false)
     const [cookieObjectApiKey, setCookieObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email","uniqueName"]);
     const navigate  = useNavigate();

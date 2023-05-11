@@ -42,7 +42,6 @@ export default function PrivateChat(props){
         getUser()
 
         return () => {
-            console.log("unmount");
             clearInterval( chatInterval.current);
         };
         
@@ -109,7 +108,11 @@ export default function PrivateChat(props){
         let response = await fetch (Commons.baseUrl+"/messages?companionId="+user.id+"&apiKey="+cookieObjectApiKey.apiKey,{
             method: 'DELETE' 
         })
-        getUser()
+        if(response.ok){
+            messagesList.current=[]
+            getUser()
+            setMessages([])
+        }
     }
     return(
         <Box display={"flex"} justifyContent={"center"}>

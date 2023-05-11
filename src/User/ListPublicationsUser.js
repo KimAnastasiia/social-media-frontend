@@ -17,6 +17,7 @@ export default function ListPublicationsUser(props){
     const [postsInCloseAccount, setPostsInCloseAccount]=useState([])
     const [cookieObjectApiKey, setCookieObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email", "uniqueName"]);
     const [message, setMessage]=useState(false)
+    let colorDarkBlue = "#142C8E"
     useEffect(()=>{
         setPosts([])
         getUser()
@@ -137,7 +138,7 @@ export default function ListPublicationsUser(props){
                  {!cookieObjectApiKey.apiKey && 
                 <Box display={"flex"} flexDirection={"column"} alignItems={"center"} justifyContent={"center"}>
                     <Text textAlign={"center"} fontSize={"20px"}>This is a privae account, login and subscribe to see publication</Text>
-                    <Button mt={"20px"} color={"white"}  bg={"#0077FF"}  onClick={()=>navigate("/")}>Login</Button>
+                    <Button mt={"20px"} color={"white"}  bg={colorDarkBlue}  onClick={()=>navigate("/")}>Login</Button>
                 </Box>
                 }
                 </Box>}

@@ -5,11 +5,9 @@ import {Box, Hide, Show, useStatStyles} from '@chakra-ui/react'
 import RegistrationUser from './User/RegistrationUser';
 import React,{useState, useEffect} from "react"
 import PasswordUser from './User/PasswordUser';
-import ProfileUser from './User/ProfileUser';
 import PublicationDetails from './Publication.js/PublicationDetails';
 import DetailsUser from './User/DetailsUser';
 import CreatePublication from './Publication.js/CreatePublication';
-import CommentsPublication from './Publication.js/CommentsPublication';
 import EditInformationUser from './User/EditInformationUser';
 import EditPasswordUser from './User/EditPasswordUser';
 import ListSubscriptionRequestsUser from './User/ListSubscriptionRequestsUser';
@@ -30,7 +28,7 @@ function App() {
           <Route  path='/registration' element={<RegistrationUser/>} />
           <Route  path='/verification/password' element={<PasswordUser  email={email}/>} />
           <Route  path='/mediaPost/:id' element={<PublicationDetails/>} />
-          <Route  path='/users/:uniqueName' element={<DetailsUser setLogin={setLogin}/> }/>
+          <Route  path='/users/:uniqueName' element={<DetailsUser setLogin={setLogin} />}/>
           <Route  path='/users/publication' element={<CreatePublication/>} />
           <Route  path='/users/edit' element={<EditInformationUser/>} />
           <Route  path='/users/editPassword' element={<EditPasswordUser/>} />

@@ -228,25 +228,27 @@ export default function DetailsUser(props){
         }
     }
     let sendMessage=async()=>{
-        let response = await fetch (Commons.baseUrl+"/messages?apiKey="+cookieObjectApiKey.apiKey,{
+        if(message.length!=0){
+            let response = await fetch (Commons.baseUrl+"/messages?apiKey="+cookieObjectApiKey.apiKey,{
 
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
 
-            body:
-                JSON.stringify({ 
-                    idReceiver:user.id,
-                    message:message
-                })
-        })
-        if(response.ok){
-            let data = await response.json()
-            if(data.message=="done"){
-                success()
-            }else{
-                error()
+                body:
+                    JSON.stringify({ 
+                        idReceiver:user.id,
+                        message:message
+                    })
+            })
+            if(response.ok){
+                let data = await response.json()
+                if(data.message=="done"){
+                    success()
+                }else{
+                    error()
+                }
             }
         }
     }
@@ -270,7 +272,7 @@ export default function DetailsUser(props){
                     <Box w={["80%","80%","70%","70%","70%"]}  ml={"6%"}  >
 
                         <Box display={"flex"} alignItems={"center"} justifyContent={"space-around"}>
-                            <Text w={"10%"} fontSize={"24px"}>{user.uniqueName}</Text>
+                            <Text  fontSize={"24px"}>{user.uniqueName}</Text>
                             {cookieObjectApiKey.id==user.id &&
                             <Box w={"100%"}  display={"flex"} alignItems={"center"} justifyContent={"space-around"} >
                                
@@ -340,7 +342,7 @@ export default function DetailsUser(props){
                         {(cookieObjectApiKey.apiKey && cookieObjectApiKey.id!=user.id && user.close==1) &&
                             <Box  display={"flex"} justifyContent={"center"}>
                             {(stateOfUser==STATE_PRIVATE_ACCOUNT) &&  <Button bg={colorDarkBlue} onClick={addFriend} color="white" >Send a subscription request</Button>}
-                            {(stateOfUser==STATE_WAITING_FOR_RESPONSE) && <Button onClick={unfollow} bg={colorDarkBlue} color="white" >Cancel the subscription request</Button>}
+                            {(stateOfUser==STATE_WAITING_FOR_RESPONSE) && <Button onClick={unfollow} bg={colorLightBlue} color="black" >Cancel the subscription request</Button>}
                             {(stateOfUser==STATE_YOU_ARE_FRIEND) && <Button  onClick={unfollow}>Unfollow</Button>}
                             </Box>
                         }
@@ -375,7 +377,7 @@ export default function DetailsUser(props){
                                     </AlertDialogBody>
                                     <AlertDialogFooter>
                                         <CameraOutlined style={{ fontSize: '20px', color:"gray" }}  />
-                                        <Button bg={colorDarkBlue}  onClick={() => {sendMessage(); onClose();}}  colorScheme='blue' ml={3}>
+                                        <Button bg={colorLightBlue} color={"black"} onClick={() => {sendMessage(); onClose();}}  colorScheme='blue' ml={3}>
                                             send
                                         </Button>
                                     </AlertDialogFooter>
