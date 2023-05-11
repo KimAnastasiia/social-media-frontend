@@ -27,15 +27,27 @@ import {
 export default function PrivateChat(props){
     const navigate  = useNavigate();
     const [messages, setMessages]=useState([])
+    const messagesList = useRef([]);
     const {uniqueName} = useParams()
     const [cookieObjectApiKey, setCookieObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email", "uniqueName", "name"])
     const [user, setUser]=useState("")
+    const userChatId = useRef()
+    const chatInterval = useRef()
     const [yourMessage, setYourMessage]=useState("")
     const { onOpen, onClose, isOpen } = useDisclosure()
     const firstFieldRef = React.useRef(null)
+    const time = React.useRef(0)
+
     useEffect(()=>{
         getUser()
+
+        return () => {
+            console.log("unmount");
+            clearInterval( chatInterval.current);
+        };
+        
     },[])
+
 
     let getUser=async()=>{
         let response = await fetch(Commons.baseUrl+"/public/users/"+uniqueName)
@@ -43,14 +55,29 @@ export default function PrivateChat(props){
             let data = await response.json()
             getChat(data[0].id)
             setUser(data[0])
+            userChatId.current = data[0].id
+            chatInterval.current=setInterval( getChatInterval , 1000)
         }
 
     }
+
+    let getChatInterval = () => {
+        getChat(userChatId.current)
+    }
+
     let getChat=async(id)=>{
-        let response = await fetch(Commons.baseUrl+"/messages/"+id+"?apiKey="+cookieObjectApiKey.apiKey)
-        if(response.ok){
-            let data = await response.json()
-            setMessages(data)
+        if(id!=undefined){
+            let response = await fetch(Commons.baseUrl+"/messages/"+id+"?apiKey="+cookieObjectApiKey.apiKey+"&time="+time.current)
+            if(response.ok){
+                let data = await response.json()
+                if(data.length>0){
+                    messagesList.current = [...messagesList.current, ...data]
+                    setMessages(messagesList.current)
+                    time.current=data[data.length-1].date
+                }
+
+               
+            }
         }
     
     } 
@@ -72,6 +99,7 @@ export default function PrivateChat(props){
             if(response.ok){
                setYourMessage("")
                getUser()
+               setMessages([])
             }
         }
         

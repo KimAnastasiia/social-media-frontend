@@ -11,9 +11,9 @@ root.render(
   <BrowserRouter>
     <CookiesProvider>
       <ChakraProvider>
-        <React.StrictMode>
+   
           <App />
-        </React.StrictMode>
+      
       </ChakraProvider>
     </CookiesProvider>
   </BrowserRouter>
