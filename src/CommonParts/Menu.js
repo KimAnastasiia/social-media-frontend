@@ -21,6 +21,7 @@ export default function Menu(props){
         getListSubscriptionRequestsUser()
     },[])
 
+    let colorLightBlue = "#B4DCFF"
     let searchUser=async(e)=>{
         if( e.length < 1){
             setUsers([])
@@ -54,7 +55,7 @@ export default function Menu(props){
     }
 return (
 
-   <Flex  w="100%" bg="lightblue"  zIndex="sticky" as="nav" align="center" justify={["space-between" ,"space-between" ,"space-between" ,"space-around" , "space-around"]} position={"fixed"}>
+   <Flex  w="100%" bg="#142C8E"  zIndex="sticky" as="nav" align="center" justify={["space-between" ,"space-between" ,"space-between" ,"space-around" , "space-around"]} position={"fixed"}>
  
         <Stack
             h={"60px"}
@@ -66,10 +67,11 @@ return (
         >
    
             <Box  w={["50%","50%","50%","40%","30%"]} mt={"10px"} mb={"10px"} display="flex" alignItems={"center"} justifyContent="space-between" >
-                    <QqOutlined onClick={navigateTo} style={{fontSize: '30px', color: "#0077FF"} } />
-                    { cookieObjectApiKey.apiKey && <WechatOutlined onClick={()=>{navigate("/users/yourDialogues")}} style={{fontSize: '30px', color: "#0077FF"} }  />}
+                    <QqOutlined onClick={navigateTo} style={{fontSize: '30px', color: colorLightBlue } } />
+                    { cookieObjectApiKey.apiKey && 
+                    <WechatOutlined onClick={()=>{navigate("/users/yourDialogues")}} style={{fontSize: '30px', color: colorLightBlue} }  />}
                     <Badge mr="20px" count={numberOfAlerts}>
-                        <BellFilled style={{ fontSize: '23px', color:"#0077FF" }} onClick={()=>{navigate("/users/subscriptionRequests")}}/>
+                        <BellFilled style={{ fontSize: '27px', color: colorLightBlue }} onClick={()=>{navigate("/users/subscriptionRequests")}}/>
                     </Badge>
                     <Select
                         showSearch

@@ -74,7 +74,7 @@ export default function CreatePublication(props){
                     />
                
                     <Flex mt={"4%"} w={"100%"} justifyContent={"center"}  >
-                        <Button color={"white"} w={"50%"} bg="#0077FF" onClick={publishPublication} >Post</Button>
+                        <Button color={"white"} w={"50%"} bg="#142C8E" onClick={publishPublication} >Post</Button>
                     </Flex>
                     
                 </Box>

@@ -13,7 +13,6 @@ import { useNavigate   } from "react-router-dom";
 export default function RegistrationUser(props){
 
     const [disabledButton , setDisabledButton]=useState(true)
-    const [saveUser , setSaveUser]=useState(false)
     const [email , setEmail]=useState("")
     const [phoneNumber , setPhoneNumber]=useState("")
     const [password , setPassword]=useState("")
@@ -183,7 +182,7 @@ return(
         <Box display={"flex"} flexDirection={["column","column","row","row","row"]}  border={"1px"} borderColor="lightgray" borderRadius={"lg"} >
             <Box p={"50px"}  bg={"#F9F9F9"}  w={["100%","100%","50%","50%", "50%"]}>
                 <Box m="10px" display={"flex"}>
-                    <QqOutlined style={{fontSize: '30px', color: "#0077FF"} } />
+                    <QqOutlined style={{fontSize: '30px', color: "#142C8E"} } />
                     <Text ml={"5px"} fontWeight={"bold"} fontSize="20px" color={"black"} >ID</Text>  
                 </Box>
                 <Text  mb={"20px"} mt="20px" fontSize="19px"  color={"black"}>Sign in to Penguin with Penguin ID</Text>
@@ -201,7 +200,7 @@ return(
                     </Box>
             </Box>
             <Box p={"50px"} w={["100%","100%","50%","50%", "50%"]} display="flex" flexDirection={"column"} justifyContent="center" alignItems={"center"}>
-                <QqOutlined style={{fontSize: '50px', color: "#0077FF"} } />
+                <QqOutlined style={{fontSize: '50px', color: "#142C8E"} } />
                 <Text  mt={"20px"} mb={"20px"} fontSize="20px" color={"black"}>Enter phone number</Text>
                 <Text  color={"#99A2AD"} mb={"20px"}>You'll use your phone number to sign in to your account</Text>
                 <Input color={"black"} onChange={(e)=>setName(e.target.value)} value={name} mb={"20px"} w={"80%"}  placeholder="Name"></Input>
@@ -235,11 +234,7 @@ return(
                     <AlertTitle>Email already in use</AlertTitle>
                 </Alert>}
                 <Input color={"black"} onChange={putEmail}  onBlur={onBlurEmail} value={email} mb={"20px"} w={"80%"}  placeholder="Email"></Input>
-
-           
-
-                <Button onClick={makeAccount} w={"81%"} color="white" colorScheme={"none"} isDisabled={disabledButton}  _disabled={{ bg: "#79AEEB", colorScheme: "none"}} bg={"#0077FF"}>Continue</Button>
-                
+                <Button onClick={makeAccount} w={"81%"} color="white" colorScheme={"none"} isDisabled={disabledButton}  _disabled={{ bg: "#B4DCFF", colorScheme: "none"}} bg={"#142C8E"}>Continue</Button>
             </Box> 
         </Box>
     </Box>

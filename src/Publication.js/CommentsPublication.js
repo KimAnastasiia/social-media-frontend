@@ -33,6 +33,7 @@ export default function CommentsPublication (props){
     let selectedCommentId = useRef(-1)
     const [listOfCountLikes, setListOfCountLikes]=useState([])
     const [allCommentsAndUsers, setAllCommentsAndUsers]=useState([])
+    let colorDarkBlue = "#142C8E"
     const navigate  = useNavigate();
     useEffect (()=>{ 
         props.getComments()
@@ -151,7 +152,7 @@ return(
                                 <PopoverContent>
                                 <PopoverArrow />
                                 <PopoverHeader>
-                                    <Button onClick={()=>{editComment(commentUser)}} colorScheme='blue' variant='link' >
+                                    <Button onClick={()=>{editComment(commentUser)}} colorScheme={colorDarkBlue} variant='link' >
                                         Edit
                                     </Button>  
                                 </PopoverHeader>

@@ -65,9 +65,8 @@ export default function PasswordUser(props){
         <Box  border={"1px"} borderColor="lightgray" borderRadius={"lg"} display={"flex"} flexDirection={["column","column","row","row","row"]} >
             <Box p={"50px"}w={["100%","100%","50%","50%", "50%"]}  bg={"#F9F9F9"}>
                 <Box m="10px" display={"flex"}>
-                    <QqOutlined style={{fontSize: '30px', color: "#0077FF"} } />
+                    <QqOutlined style={{fontSize: '30px', color: "#142C8E"} } />
                     <Text ml={"5px"} fontWeight={"bold"} fontSize="20px" color={"black"} >ID</Text>
-                    
                 </Box>
                 <Text mb={"20px"} mt="20px" fontSize="19px"  color={"black"}>Sign in to Penguin with Penguin ID</Text>
                     <Box display={"flex"} alignItems={"center"} > 
@@ -84,7 +83,7 @@ export default function PasswordUser(props){
                     </Box>
             </Box>
             <Box p={"50px"} w={["100%","100%","50%","50%", "50%"]} display="flex" flexDirection={"column"} justifyContent="center" alignItems={"center"}>
-                <QqOutlined style={{fontSize: '50px', color: "#0077FF"} } />
+                <QqOutlined style={{fontSize: '50px', color: "#142C8E"} } />
                 <Text  mt={"20px"} mb={"20px"} fontSize="20px" color={"black"}>Enter your password</Text>
                 <Text color={"#99A2AD"} mb={"20px"}>Enter the current password linked to {props.email}</Text>
                 { alert &&  <Alert status='error' w={"80%"} borderRadius="3xl" >
@@ -92,7 +91,7 @@ export default function PasswordUser(props){
                     <AlertTitle>{alert}</AlertTitle>
                 </Alert>}
                 <Input color={"black"} onChange={putPassword} value={password} mb={"20px"} w={"80%"} type={"password"} placeholder="Enter password"></Input>
-                <Button w={"80%"} color="white" colorScheme={"none"} onClick={onClicklogin} bg={"#0077FF"}>Continue</Button>
+                <Button w={"80%"} color="white" colorScheme={"none"} onClick={onClicklogin} bg={"#142C8E"}>Continue</Button>
                
             </Box> 
         </Box>

@@ -29,6 +29,8 @@ export default function ListSubscriptionRequestsUser(props){
     const navigate  = useNavigate();
     const [cookieObjectApiKey, setCookieObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email", "uniqueName"])
     const [listSubscriptionRequests, setListSubscriptionRequests]=useState([])
+    let colorDarkBlue = "#142C8E"
+    let colorGreen = "#4A8F06"
     useEffect(()=>{
         getListSubscriptionRequestsUser()
     },[])
@@ -76,8 +78,8 @@ export default function ListSubscriptionRequestsUser(props){
                             </Box>
                         </Box>
                         <Box display={"flex"}  w={"40%"} justifyContent={"space-around"}>
-                            <Button onClick={()=>{accept(follower.id)}} bg={"#0077FF"} color="white">Approve</Button>
-                            <Button onClick={()=>{declineSubscriptionRequest(follower.id)}}>Cancel</Button>
+                            <Button onClick={()=>{accept(follower.id)}} bg={colorDarkBlue} color="white">Approve</Button>
+                            <Button bg={colorGreen} color="white" onClick={()=>{declineSubscriptionRequest(follower.id)}}>Cancel</Button>
                         </Box>
                     </Box>
                 )}

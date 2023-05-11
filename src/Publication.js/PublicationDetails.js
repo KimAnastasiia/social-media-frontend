@@ -42,7 +42,7 @@ export default function PublicationDetails (props){
     let userIdOfPublication=useRef(0)
     const [myLike, setMyLike]=useState([])
     const [listOfUsersWhoLikedThePost, setListOfUsersWhoLikedThePost ]=useState([])
-
+    let colorDarkBlue = "#142C8E"
     useEffect (()=>{ 
         dataOfpublication()
         numberOfLikes()
@@ -267,9 +267,9 @@ export default function PublicationDetails (props){
 
                         {cookieObjectApiKey.apiKey &&    
                         <Box display={"flex"} alignItems={"end"} h={"50%"} >
-                            <Box  h={"100%"} display={"flex"} alignItems={"center"} w={"100%"}  borderTopWidth={"2px"} >
+                            <Box  h={"100%"} display={"flex"} alignItems={"end"} w={"100%"}  borderTopWidth={"2px"} >
                                 <Input ml={"10px"} variant='unstyled'  value={comment} onChange={(e)=>{setComment(e.target.value)}} border={"none"} placeholder="Add a comment"></Input>
-                                <Button onClick={addComment} colorScheme='black' variant='link' >sent</Button>
+                                <Button bg={colorDarkBlue }  color={"white"} onClick={addComment} >sent</Button>
                             </Box>
                         </Box>
                         }
@@ -367,7 +367,7 @@ export default function PublicationDetails (props){
                 </Box>
                 <Box display={"flex"} alignItems={"center"} h={"50px"} >
                     <Input ml={"10px"} variant='unstyled' value={comment} onChange={(e)=>{setComment(e.target.value)}} border={"none"} placeholder="Add a comment"></Input>
-                    <Button colorScheme='black' variant='link' onClick={addComment}>sent</Button>
+                    <Button bg={colorDarkBlue }  color={"white"} onClick={addComment} >sent</Button>
                 </Box>
             </Box >
             }

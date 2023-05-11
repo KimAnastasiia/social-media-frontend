@@ -47,7 +47,9 @@ export default function DetailsUser(props){
     const [followingShow, setFollowingShow]=useState(false)
     const [privateStatus, setPrivateStatus]=useState(false)
     const [stateOfUser, setStateOfUser]=useState(0)
-
+    let colorLightBlue = "#B4DCFF"
+    let colorDarkBlue = "#142C8E"
+    let colorGreen = "#4A8F06"
     const [message, setMessage]=useState("")
     const toast = useToast()
     const toastIdRef = React.useRef()
@@ -271,7 +273,7 @@ export default function DetailsUser(props){
                             {cookieObjectApiKey.id==user.id &&
                             <Box w={"100%"}  display={"flex"} alignItems={"center"} justifyContent={"space-around"} >
                                
-                                <Button onClick={()=>{navigate('/users/edit')}} >Edit profile</Button>
+                                <Button bg={colorLightBlue} onClick={()=>{navigate('/users/edit')}} >Edit profile</Button>
                                 <Box  onClick={onOpen}>
                                     <SettingOutlined style={{ fontSize: '23px' }} />
                                 </Box>
@@ -288,7 +290,7 @@ export default function DetailsUser(props){
                                         <AlertDialogBody>
                                         </AlertDialogBody>
                                         <AlertDialogFooter display={"block"} >
-                                            <Button mt={"3"} mb={"3"} w={"100%"} onClick={()=>{navigate("/users/editPassword")}} >
+                                            <Button  mt={"3"} mb={"3"} w={"100%"} onClick={()=>{navigate("/users/editPassword")}} >
                                                 change password
                                             </Button>
                                             <Button onClick={goOut} w={"100%"}>
@@ -298,8 +300,8 @@ export default function DetailsUser(props){
                                              
                                                 <Box alignItems={"center"} mt={"3"} mb={"3"} w={"100%"} display={"flex"} justifyContent={"space-between"}>
                                                     <Text fontSize={"20px"} w={"80%"}>Private account</Text>
-                                                    {!privateStatus && <Switch onChange={()=>{updateAccount(true)}}  w="20%" size='md'/> }
-                                                    {privateStatus && <Switch isChecked onChange={()=>{updateAccount(false)}}   w="20%" size='md'/> }
+                                                    {!privateStatus && <Switch onChange={()=>{updateAccount(true)}} bg={colorDarkBlue}  w="20%" size='md'/> }
+                                                    {privateStatus && <Switch isChecked onChange={()=>{updateAccount(false)}} w="20%" size='md'/> }
                                                 </Box>                                                
                                             </Box>
                                         </AlertDialogFooter>
@@ -326,24 +328,24 @@ export default function DetailsUser(props){
                         <Text fontWeight={"bold"} >{user.name}</Text>
                         {cookieObjectApiKey.id==user.id &&
                         <Box  display={"flex"} justifyContent={"center"}>
-                           <Button  onClick={()=>navigate("/users/publication")}  >Add new publication</Button>
+                           <Button bg={colorLightBlue} onClick={()=>navigate("/users/publication")}  >Add new publication</Button>
                         </Box>}
                         {(cookieObjectApiKey.apiKey && (cookieObjectApiKey.id!=user.id) && user.close==0) &&
                             <Box  display={"flex"} justifyContent={"center"}>
-                                {!follow && <Button onClick={addFriend} bg={"#0077FF"} color="white" >Follow</Button>}
-                                {follow &&<Button onClick={unfollow}>Unfollow</Button>}
+                                {!follow && <Button onClick={addFriend} bg={colorDarkBlue} color="white" >Follow</Button>}
+                                {follow &&<Button bg={colorLightBlue} onClick={unfollow}>Unfollow</Button>}
                             </Box>
                         }
                         {(cookieObjectApiKey.apiKey && cookieObjectApiKey.id!=user.id && user.close==1) &&
                             <Box  display={"flex"} justifyContent={"center"}>
-                            {(stateOfUser==STATE_PRIVATE_ACCOUNT) &&  <Button bg={"#0077FF"} onClick={addFriend} color="white" >Send a subscription request</Button>}
-                            {(stateOfUser==STATE_WAITING_FOR_RESPONSE) && <Button onClick={unfollow} bg={"#0077FF"} color="white" >Cancel the subscription request</Button>}
+                            {(stateOfUser==STATE_PRIVATE_ACCOUNT) &&  <Button bg={colorDarkBlue} onClick={addFriend} color="white" >Send a subscription request</Button>}
+                            {(stateOfUser==STATE_WAITING_FOR_RESPONSE) && <Button onClick={unfollow} bg={colorDarkBlue} color="white" >Cancel the subscription request</Button>}
                             {(stateOfUser==STATE_YOU_ARE_FRIEND) && <Button  onClick={unfollow}>Unfollow</Button>}
                             </Box>
                         }
                         {(cookieObjectApiKey.apiKey && cookieObjectApiKey.id!=user.id) &&
                         <Box mt={"10px"}  display={"flex"} justifyContent={"center"}>
-                            <Button onClick={onOpen}>Message</Button>
+                            <Button bg={colorGreen} color={"white"} onClick={onOpen}>Message</Button>
                                 <AlertDialog
                                     motionPreset='slideInBottom'
                                 
@@ -372,7 +374,7 @@ export default function DetailsUser(props){
                                     </AlertDialogBody>
                                     <AlertDialogFooter>
                                         <CameraOutlined style={{ fontSize: '20px', color:"gray" }}  />
-                                        <Button  onClick={() => {sendMessage(); onClose();}}  colorScheme='blue' ml={3}>
+                                        <Button bg={colorDarkBlue}  onClick={() => {sendMessage(); onClose();}}  colorScheme='blue' ml={3}>
                                             send
                                         </Button>
                                     </AlertDialogFooter>

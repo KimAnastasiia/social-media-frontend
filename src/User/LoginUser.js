@@ -54,7 +54,7 @@ return (
         </Box>
     </Box>
     <Box ml={["20px","20px",0,0,"20px"]} mr={["20px","20px",0,"10px",0]} display="flex" alignItems={"center"} flexDirection={"column"} justifyContent={"center"} >
-        <Box w={["80%", "80%", "100%", "100%","100%"]} mb={"30px"} borderRadius={"lg"} bg="lightblue" h="300px" display="flex" flexDirection={"column"} justifyContent="center" alignItems={"center"}>
+        <Box w={["80%", "80%", "100%", "100%","100%"]} mb={"30px"} borderRadius={"lg"} borderWidth={"1px"} h="300px" display="flex" flexDirection={"column"} justifyContent="center" alignItems={"center"}>
             <Text m={"30px"} fontWeight="bold" fontSize="2xl" textAlign={"center"}>Sign in to Penguin</Text>
             { emailError &&  <Alert status='error' w={"80%"} borderRadius="3xl" >
                     <AlertIcon />
@@ -67,12 +67,12 @@ return (
             w={"80%"}
             placeholder="Phone or email">
             </Input>
-            <Button mt={"20px"} onClick={signInOnClick} color={"white"}  bg={"#0077FF"} w={"70%"} >Sign in</Button>
+            <Button mt={"20px"} onClick={signInOnClick} color={"white"} bg={"#142C8E"} w={"70%"} >Sign in</Button>
         </Box>
 
-        <Box w={["80%", "80%",  "100%", "100%","100%"]} borderRadius={"lg"}  p={"20px"} bg={"lightblue"} display="flex" flexDirection={"column"} justifyContent="center" alignItems={"center"} >
+        <Box w={["80%", "80%",  "100%", "100%","100%"]} borderRadius={"lg"}  p={"20px"} borderWidth={"1px"} display="flex" flexDirection={"column"} justifyContent="center" alignItems={"center"} >
             <Link w="100%" to={"/registration"}>
-                <Button color={"white"}  mb={"20px"} w={"80%"}  bg={"#4BB34B"}>Registration</Button>
+                <Button color={"white"}  mb={"20px"} w={"80%"}  bg={"#4A8F06"}>Registration</Button>
             </Link>    
             <Text textAlign={"center"} w={"80%"} color="#555657">After signing up, you'll get access to all of Penguin ID's features</Text>
         </Box>
