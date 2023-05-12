@@ -82,7 +82,7 @@ export default function AllDialogues(props){
                     </Box>  
                     )}
                 </Box>}
-               {dialogues.length==0 && <Box  h="100%" display={"flex"} justifyContent={"center"} alignItems={"center"}>
+               {dialogues.length==0 && <Box  h="90%" display={"flex"} justifyContent={"center"} alignItems={"center"}>
                     <Text color={"gray"} fontSize={"30px"}>You dont have any chat yet</Text>
                 </Box>}
             </Box>

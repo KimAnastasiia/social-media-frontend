@@ -303,7 +303,7 @@ export default function DetailsUser(props){
                                              
                                                 <Box alignItems={"center"} mt={"3"} mb={"3"} w={"100%"} display={"flex"} justifyContent={"space-between"}>
                                                     <Text fontSize={"20px"} w={"80%"}>Private account</Text>
-                                                    {!privateStatus && <Switch onChange={()=>{updateAccount(true)}} bg={colorDarkBlue}  w="20%" size='md'/> }
+                                                    {!privateStatus && <Switch onChange={()=>{updateAccount(true)}}  w="20%" size='md'/> }
                                                     {privateStatus && <Switch isChecked onChange={()=>{updateAccount(false)}} w="20%" size='md'/> }
                                                 </Box>                                                
                                             </Box>

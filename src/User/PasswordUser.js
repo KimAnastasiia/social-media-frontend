@@ -89,9 +89,8 @@ export default function PasswordUser(props){
                     <AlertIcon />
                     <AlertTitle>{alert}</AlertTitle>
                 </Alert>}
-                <Input color={"black"} onChange={putPassword} value={password} mb={"20px"} w={"80%"} type={"password"} placeholder="Enter password"></Input>
-                <Button w={"80%"} color="white" colorScheme={"none"} onClick={onClicklogin} bg={"#142C8E"}>Continue</Button>
-               
+                <Input id="password" color={"black"} onChange={putPassword} value={password} mb={"20px"} w={"80%"} type={"password"} placeholder="Enter password"></Input>
+                <Button id="continue" w={"80%"} color="white" colorScheme={"none"} onClick={onClicklogin} bg={"#142C8E"}>Continue</Button>
             </Box> 
         </Box>
     </Box>

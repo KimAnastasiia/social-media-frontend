@@ -61,13 +61,14 @@ return (
                     <AlertTitle>{emailError}</AlertTitle>
                 </Alert>}
             <Input
+            id="email"
             onChange={putEmail}
             errorBorderColor='crimson'
             bg={"white"}
             w={"80%"}
-            placeholder="Phone or email">
+            placeholder="Email">
             </Input>
-            <Button mt={"20px"} onClick={signInOnClick} color={"white"} bg={"#142C8E"} w={"70%"} >Sign in</Button>
+            <Button  id="login" mt={"20px"} onClick={signInOnClick} color={"white"} bg={"#142C8E"} w={"70%"} >Sign in</Button>
         </Box>
 
         <Box w={["80%", "80%",  "100%", "100%","100%"]} borderRadius={"lg"}  p={"20px"} borderWidth={"1px"} display="flex" flexDirection={"column"} justifyContent="center" alignItems={"center"} >
