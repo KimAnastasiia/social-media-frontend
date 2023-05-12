@@ -38,14 +38,13 @@ export default function AllDialogues(props){
     } 
     return(
         <Box display={"flex"} justifyContent={"center"}>
-            <Box borderRadius={"lg"} minH={"lg"} w={["90%", "90%", "50%", "40%", "30%"]} borderWidth={"2px"}>
-                <Box  justifyContent={"space-between"} pl={"20px"} pr={"20px"} alignItems={"center"} display={"flex"} borderBottomWidth={"1px"} h={"10%"} >
+            <Box borderRadius={"lg"}  minH={["90vh"]}   w={["90%", "90%", "50%", "40%", "30%"]} borderWidth={"2px"}>
+                <Box  justifyContent={"space-between"} pl={"20px"} pr={"20px"} alignItems={"center"} display={"flex"} borderBottomWidth={"1px"} h={"5%"} >
                     <Search2Icon color={"gray"}/>
                     <Input  onChange={(e)=>{setSearch(e.target.value)}} ml={"20px"}  variant='unstyled' border={"none"} placeholder="Search"></Input>
                 </Box>
-
                {dialogues.length>0 &&
-                <Box  h={"90%"}  overflowY="scroll">
+                <Box  h={"95%"}  overflowY="scroll">
                     {dialogues.filter((message)=>{
                         if(message.receiver_uniqueName.includes(search)){
                             return message
@@ -58,28 +57,27 @@ export default function AllDialogues(props){
 
                     <Box display={"flex"} m={"20px"}>
                         {message.idSender!= cookieObjectApiKey.id && 
-                        <Box w={"100%"} display={"flex"}>
-                            <Avatar onClick={()=>{navigate('/users/'+message.sender_uniqueName)}} src={Commons.baseUrl+"/images/"+message.idSender +"avatar.png"} ></Avatar>
-                            <Box onClick={()=>{navigate('/users/chat/'+message.sender_uniqueName)}} ml={"10px"} w={"80%"} borderBottomWidth={"2px"}>
+                        <Box w={"100%"} display={"flex"} onClick={()=>{navigate('/users/chat/'+message.sender_uniqueName)}} >
+                            <Avatar src={Commons.baseUrl+"/images/"+message.idSender +"avatar.png"} ></Avatar>
+                            <Box ml={"10px"} w={"80%"} borderBottomWidth={"2px"}>
                                 <Box display={"flex"} justifyContent={"space-between"}>
                                     {message.sender_uniqueName!=cookieObjectApiKey.uniqueName && <Text>{message.sender_uniqueName}</Text>}
                                     
                                 </Box> 
                                 <Text fontSize={"13px"}  color="grey" >{message.message}</Text>
                             </Box> 
-                    </Box>
-                        }
-                        { message.idReceiver != cookieObjectApiKey.id  && 
-                        <Box w={"100%"} display={"flex"}>
-                            <Avatar onClick={()=>{navigate('/users/'+message.receiver_uniqueName)}} src={Commons.baseUrl+"/images/"+message.idReceiver+"avatar.png"} ></Avatar>
-                            <Box onClick={()=>{navigate('/users/chat/'+message.receiver_uniqueName)}} ml={"10px"} w={"80%"} borderBottomWidth={"2px"}>
+                    </Box>}
+                    {message.idReceiver != cookieObjectApiKey.id  && 
+                        <Box w={"100%"} display={"flex"} onClick={()=>{navigate('/users/chat/'+message.receiver_uniqueName)}}>
+                            <Avatar src={Commons.baseUrl+"/images/"+message.idReceiver+"avatar.png"} ></Avatar>
+                            <Box  ml={"10px"} w={"80%"} borderBottomWidth={"2px"}>
                                 <Box display={"flex"} justifyContent={"space-between"}>
                                     {message.receiver_uniqueName!=cookieObjectApiKey.uniqueName && <Text>{message.receiver_uniqueName}</Text>}
                                    
                                 </Box> 
                                 <Text fontSize={"13px"}  color="grey" >{message.message}</Text>
                             </Box> 
-                    </Box>
+                        </Box>
                     }
                     </Box>  
                     )}

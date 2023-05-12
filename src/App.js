@@ -21,7 +21,7 @@ function App() {
 
   return (
     <Box >
-      <Menu login={login}/>
+      <Menu login={login} setLogin={setLogin}/>
       <Box pt={"100px"}>
         <Routes>
           <Route  path='/' element={<LoginUser setEmail={setEmail}/>} />
