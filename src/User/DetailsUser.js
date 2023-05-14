@@ -24,6 +24,7 @@ import { Switch } from '@chakra-ui/react'
 import ListPublicationsUser from "./ListPublicationsUser";
 import ListFollowersUser from "./ListFollowersUser";
 import ListFollowingUser from "./ListFollowingUser";
+import { AvatarBadge, AvatarGroup } from '@chakra-ui/react'
 
 export default function DetailsUser(props){
     const STATE_PRIVATE_ACCOUNT = 1
@@ -53,12 +54,41 @@ export default function DetailsUser(props){
     const [message, setMessage]=useState("")
     const toast = useToast()
     const toastIdRef = React.useRef()
+    const [online, setOnline ]=useState(false)
+    const onlineInterval = useRef()
+    const [lastTimeOnlime, setLastTimeOnlime]=useState()
+
     useEffect(()=>{
         props.setLogin(true)
         getUser()
+        getTime()
+        return () => {
+            clearInterval( onlineInterval.current);
+        };
     },[uniqueName])
 
- 
+    useEffect(()=>{
+        onlineInterval.current=setInterval( getTime , 8000)
+
+        return () => {
+            clearInterval( onlineInterval.current);
+        };
+    },[])
+
+    let getTime=async()=>{
+        let response = await fetch(Commons.baseUrl+"/public/users/"+uniqueName)
+        if(response.ok){
+            let data = await response.json()
+            const d = Date.now();
+            if(data[0].lastTimeConnected+20000 >= d){
+                setOnline(true)
+            }else{
+                setOnline(false)
+                setLastTimeOnlime(data[0].lastTimeConnected)
+            }
+        }
+
+    }
 
     let checkImage=async(id)=>{
         let response = await fetch(Commons.baseUrl+"/public/users/avatar?id="+id)
@@ -190,7 +220,6 @@ export default function DetailsUser(props){
         }
     }
     let getPosts=async(uid)=>{
-
         let response = await fetch(Commons.baseUrl+"/public/mediaPost?userId="+uid)
         if(response.ok){
             let data = await response.json()
@@ -258,14 +287,37 @@ export default function DetailsUser(props){
     function error() {
         toastIdRef.current = toast({ description: 'An error occurred while sending the message',  status:'error' })
     }
+    let FormatDateStatus = (timestamp) => {
+        let myDate = new Date(Number(timestamp))
+        let mm = myDate.getMonth() + 1; // getMonth() is zero-based
+        let dd = myDate.getDate();
+        let hours = myDate.getHours()
+        let minute = myDate.getMinutes()
+        return `${mm}/${dd}  ${hours}:${minute}`
+    }
+
     return(
         <Box  display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}  >
             <Box  alignItems={"center"} w={["90%","90%","60%","50%","37%"]}  justifyContent={"center"}   display={"flex"}>
                 
                     <Box w={["20%","20%","30%","30%","30%"]} display={"flex"} alignItems={"flex-start"}>
                         <Stack direction='row' >
-                           {avatarExist && <Avatar size={["xl","xl","2xl","2xl","2xl"]}  src={Commons.baseUrl+"/images/"+user.id+"avatar.png"} />}
-                           {!avatarExist && <Avatar size={["xl","xl","2xl","2xl","2xl"]}   />}
+                           {avatarExist && 
+                           <Box>
+                            <Avatar size={["xl","xl","2xl","2xl","2xl"]}  src={Commons.baseUrl+"/images/"+user.id+"avatar.png"}>
+                                {online && <AvatarBadge boxSize='0.9em' bg='green.500'/> }
+                            </Avatar>
+                            {!online && <Text color={"black"} fontSize={"15px"}>Was online {FormatDateStatus( lastTimeOnlime)}</Text>}
+                            </Box>
+                           }
+                           {!avatarExist && 
+                            <Box>
+                                <Avatar size={["xl","xl","2xl","2xl","2xl"]} >
+                                        { online && <AvatarBadge boxSize='0.9em' bg='green.500' />}
+                                </Avatar>
+                                {!online && <Text color={"black"} fontSize={"15px"}>Last time was online {FormatDate( lastTimeOnlime)}</Text>}
+                            </Box>
+                           }
                         </Stack>
                     </Box>
 
@@ -366,7 +418,7 @@ export default function DetailsUser(props){
                                     </AlertDialogHeader>
                                     <AlertDialogBody>
                                       <Box mb={"10px"} display={"flex"}>
-                                        <Avatar mr={"10px"}></Avatar>
+                                        <Avatar mr={"10px"}  src={Commons.baseUrl+"/images/"+user.id+"avatar.png"} ></Avatar>
                                         <Text>{user.name}</Text>
                                       </Box>
                                       <Box>

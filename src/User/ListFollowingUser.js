@@ -3,7 +3,7 @@ import { useNavigate   } from "react-router-dom";
 import { Box, Flex, Text, Button, Stack, Img, HStack,Avatar,Hide,Show ,InputGroup,InputLeftElement,Alert,
     Image,
     AlertTitle,
-    AlertDescription,
+    AlertDescription,AvatarBadge
  } from "@chakra-ui/react";
 import Commons from "../Utility/Commons";
 import {
@@ -29,6 +29,7 @@ import {
     const [cookieObjectApiKey, setCookieObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email", "uniqueName"]);
     const [searchFollowing, setSearchFollowing]=useState("")
     const { Search } = Input;
+    const [online, setOnline]=useState(false)
     const navigate  = useNavigate();
     useEffect(()=>{
         getUser()
@@ -48,8 +49,8 @@ import {
         let response = await fetch(Commons.baseUrl+"/public/friends/following?id="+user.id)
         if(response.ok){
             let data = await response.json()
-            setListOfFollowing(data.following)
-          
+            setListOfFollowing(data.following)//lastTimeConnected
+    
         }
 
     } 
@@ -79,9 +80,10 @@ import {
                 return follower.uniqueName.includes(searchFollowing)
             }).map((follower)=>
                 <Box borderBottomWidth={"1px"} display={"flex"} justifyContent={"space-between"}>
-                    
                     <Box onClick={()=>{moveTo(follower.uniqueName)}} mb={"20px"} w={"80%"} display={"flex"}> 
-                        <Avatar size={"lg"} src={Commons.baseUrl+"/images/"+follower.following+"avatar.png"} ></Avatar>
+                        <Avatar size={"lg"} src={Commons.baseUrl+"/images/"+follower.following+"avatar.png"} >
+                            { follower.lastTimeConnected+60000 > Date.now() && <AvatarBadge boxSize='0.9em' bg='green.500' />}
+                        </Avatar>
                         <Text fontWeight={"bold"} ml={"20px"}>{follower.uniqueName}</Text>
                     </Box>
                     { ( cookieObjectApiKey.uniqueName==props.uniqueName) && <Box display={"flex"}  justifyContent={"end"} w={"20%"}>

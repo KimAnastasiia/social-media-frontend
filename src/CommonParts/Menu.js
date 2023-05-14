@@ -26,6 +26,7 @@ export default function Menu(props){
     const alertsInterval = useRef()
     const cancelRef = React.useRef()
     let colorGreen = "#4A8F06"
+    
     useEffect(()=>{
         alertsInterval.current=setInterval( getSubscriptionInterval , 1000)
         getListSubscriptionRequestsUser()
@@ -95,7 +96,7 @@ return (
                         <QqOutlined style={{fontSize: '30px', color: colorLightBlue } } />
                     </Box>
                     { cookieObjectApiKey.apiKey && 
-                    <WechatOutlined onClick={()=>{navigate("/users/yourDialogues")}} style={{fontSize: '30px', color: colorLightBlue} }  />}
+                    <WechatOutlined id="messages" onClick={()=>{navigate("/users/yourDialogues")}} style={{fontSize: '30px', color: colorLightBlue} }  />}
                       { cookieObjectApiKey.apiKey && 
                     <Badge mr="20px" count={numberOfAlerts}>
                         <BellFilled style={{ fontSize: '27px', color: colorLightBlue }} onClick={()=>{navigate("/users/subscriptionRequests")}}/>

@@ -113,3 +113,81 @@ describe('Test wrong email in login', () => {
   });
 
 });
+describe('Registration', () => {
+  let browser;
+  let page;
+
+  beforeAll(async () => {
+    browser = await puppeteer.launch({
+      headless: false,
+      args:['--start-maximized']
+    });
+    page = await browser.newPage();
+    await page.setViewport({ width: 1920, height: 1080});
+    await page.goto('http://localhost:3000');
+  });
+
+  afterAll(async () => {
+    await browser.close();
+  });
+
+  test('registration with correct data', async () => {
+        // Fill in the name input
+        await page.click('#registration');
+        await new Promise(r => setTimeout(r, 1000))
+        await page.type('#name', 'Ali');
+        await new Promise(r => setTimeout(r, 1000))
+        await page.type('#uniqueName', 'Ali43');
+        await new Promise(r => setTimeout(r, 1000))
+        await page.type('#surname', 'Al');
+        await new Promise(r => setTimeout(r, 1000))
+        await page.type('#password', '12345678');
+        await new Promise(r => setTimeout(r, 1000))
+        await page.type('#passwordCheck', '12345678');
+        await new Promise(r => setTimeout(r, 1000))
+        await page.type('#number', '897676878878787');
+        await new Promise(r => setTimeout(r, 1000))
+        await page.type('#email', 'ghdf32g@gmail.com');
+        await new Promise(r => setTimeout(r, 1000))
+        await page.click('#continue');
+        // Click the submit button
+        await new Promise(r => setTimeout(r, 1000))
+        const uniqueName = await page.$x('//p[contains(text(), "Ali43")]'); //XPATH
+        expect( uniqueName.length!=0).toBe(true);
+  });
+
+});
+
+describe('checking the empty chat page', () => {
+  let browser;
+  let page;
+  beforeAll(async () => {
+    browser = await puppeteer.launch({
+      headless: false,
+      args:['--start-maximized']
+    });
+    page = await browser.newPage();
+    await page.setViewport({ width: 1920, height: 1080});
+    await page.goto('http://localhost:3000');
+  });
+  afterAll(async () => {
+    await browser.close();
+  });
+  test('empty chat page', async () => {
+        await page.type('#email', 'withoutChats');
+        await new Promise(r => setTimeout(r, 1000))
+        await page.click('#login');
+        await new Promise(r => setTimeout(r, 1000))
+        await page.type('#password', '1234567');
+        await new Promise(r => setTimeout(r, 1000))
+        await page.click('#continue');
+        await new Promise(r => setTimeout(r, 1000))
+        await page.click('#message');
+        await new Promise(r => setTimeout(r, 1000))
+        const input = await page.$x('//input[@id="inputChats"]'); //XPATH
+        expect( input.length!=0).toBe(true);
+        const text = await page.$x('//p[contains(text(), "You dont have any chat yet")]'); //XPATH
+        expect( text.length!=0).toBe(true);
+  });
+
+});

@@ -41,7 +41,7 @@ export default function AllDialogues(props){
             <Box borderRadius={"lg"}  minH={["90vh"]}   w={["90%", "90%", "50%", "40%", "30%"]} borderWidth={"2px"}>
                 <Box  justifyContent={"space-between"} pl={"20px"} pr={"20px"} alignItems={"center"} display={"flex"} borderBottomWidth={"1px"} h={"5%"} >
                     <Search2Icon color={"gray"}/>
-                    <Input  onChange={(e)=>{setSearch(e.target.value)}} ml={"20px"}  variant='unstyled' border={"none"} placeholder="Search"></Input>
+                    <Input id="inputChats" onChange={(e)=>{setSearch(e.target.value)}} ml={"20px"}  variant='unstyled' border={"none"} placeholder="Search"></Input>
                 </Box>
                {dialogues.length>0 &&
                 <Box  h={"95%"}  overflowY="scroll">

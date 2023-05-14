@@ -1,6 +1,6 @@
 import React,{useState, useEffect,useRef} from "react"
 import { useNavigate   } from "react-router-dom";
-import { Box, Flex, Text, Button, Stack, Img, HStack,Avatar,Hide,Show ,InputGroup,InputLeftElement,Alert,
+import { Box, Flex, Text, Button, Stack, Img, HStack,Avatar,Hide,Show ,InputGroup,InputLeftElement,Alert,AvatarBadge,
     Image,
     AlertTitle,
     AlertDescription,
@@ -79,9 +79,10 @@ import {
             })
             .map((follower)=>
                 <Box borderBottomWidth={"1px"} display={"flex"} justifyContent={"space-between"}>
-                    
                     <Box onClick={()=>{moveTo(follower.uniqueName)}} mb={"20px"} w={"80%"} display={"flex"}> 
-                        <Avatar size={"lg"} src={Commons.baseUrl+"/images/"+follower.id+"avatar.png"} ></Avatar>
+                        <Avatar size={"lg"} src={Commons.baseUrl+"/images/"+follower.id+"avatar.png"} >
+                        { follower.lastTimeConnected+60000 > Date.now() && <AvatarBadge boxSize='0.9em' bg='green.500' />}
+                        </Avatar>
                         <Text fontWeight={"bold"} ml={"20px"}>{follower.uniqueName}</Text>
                     </Box>
                   { ( cookieObjectApiKey.uniqueName==props.uniqueName) &&

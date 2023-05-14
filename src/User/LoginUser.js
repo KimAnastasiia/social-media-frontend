@@ -1,5 +1,5 @@
 
-import React,{useState, useEffect} from "react"
+import React,{useState, useEffect,useRef} from "react"
 import { Box, Checkbox, Text, Button, Stack, Img, Badge,Avatar,Hide,Show ,Input,InputGroup,InputLeftElement,Alert,
 AlertIcon, AlertTitle} from "@chakra-ui/react";
 import { Link } from "react-router-dom";
@@ -73,7 +73,7 @@ return (
 
         <Box w={["80%", "80%",  "100%", "100%","100%"]} borderRadius={"lg"}  p={"20px"} borderWidth={"1px"} display="flex" flexDirection={"column"} justifyContent="center" alignItems={"center"} >
             <Link w="100%" to={"/registration"}>
-                <Button color={"white"}  mb={"20px"} w={"80%"}  bg={"#4A8F06"}>Registration</Button>
+                <Button id="registration" color={"white"}  mb={"20px"} w={"80%"}  bg={"#4A8F06"}>Registration</Button>
             </Link>    
             <Text textAlign={"center"} w={"80%"} color="#555657">After signing up, you'll get access to all of Penguin ID's features</Text>
         </Box>

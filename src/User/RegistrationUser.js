@@ -203,28 +203,28 @@ return(
                 <QqOutlined style={{fontSize: '50px', color: "#142C8E"} } />
                 <Text  mt={"20px"} mb={"20px"} fontSize="20px" color={"black"}>Enter phone number</Text>
                 <Text  color={"#99A2AD"} mb={"20px"}>You'll use your phone number to sign in to your account</Text>
-                <Input color={"black"} onChange={(e)=>setName(e.target.value)} value={name} mb={"20px"} w={"80%"}  placeholder="Name"></Input>
+                <Input id="name" color={"black"} onChange={(e)=>setName(e.target.value)} value={name} mb={"20px"} w={"80%"}  placeholder="Name"></Input>
                 {uniqueNameError && <Alert status='error' w={"80%"} borderRadius="3xl" >
                     <AlertIcon />
                     <AlertTitle>Such a unique username already exists</AlertTitle>
                 </Alert>}
-                <Input color={"black"} onChange={(e)=>setUniqueName(e.target.value)} onBlur={onBlurUniqueName}  value={uniqueName} mb={"20px"} w={"80%"}  placeholder="Unique name"></Input>
-                <Input color={"black"} onChange={(e)=>setSurname(e.target.value)} value={surname} mb={"20px"} w={"80%"}  placeholder="Surname"></Input>
+                <Input id="uniqueName" color={"black"} onChange={(e)=>setUniqueName(e.target.value)} onBlur={onBlurUniqueName}  value={uniqueName} mb={"20px"} w={"80%"}  placeholder="Unique name"></Input>
+                <Input id="surname"  color={"black"} onChange={(e)=>setSurname(e.target.value)} value={surname} mb={"20px"} w={"80%"}  placeholder="Surname"></Input>
                 {passwordError && <Alert status='error' w={"80%"} borderRadius="3xl" >
                     <AlertIcon />
                     <AlertTitle>Too short password</AlertTitle>
                 </Alert>}
-                <Input color={"black"} onChange={onChangePassword} value={password} mb={"20px"} w={"80%"}  placeholder="Password"></Input>
+                <Input  id="password" color={"black"} onChange={onChangePassword} value={password} mb={"20px"} w={"80%"}  placeholder="Password"></Input>
                 {passwordCheckError && <Alert status='error' w={"80%"} borderRadius="3xl" >
                     <AlertIcon />
                     <AlertTitle>Password mismatch</AlertTitle>
                 </Alert>}
-                <Input color={"black"} onChange={onChangePasswordCheck} value={passwordCheck} mb={"20px"} w={"80%"}  placeholder="Password check"></Input>
+                <Input id="passwordCheck" color={"black"} onChange={onChangePasswordCheck} value={passwordCheck} mb={"20px"} w={"80%"}  placeholder="Password check"></Input>
                 {numberError && <Alert status='error' w={"80%"} borderRadius="3xl" >
                     <AlertIcon />
                     <AlertTitle>{numberError}</AlertTitle>
                 </Alert>}
-                <Input color={"black"}  onChange={putPhoneNumber} value={phoneNumber} mb={"20px"} w={"80%"}  placeholder="Phone number"></Input>
+                <Input id="number" color={"black"}  onChange={putPhoneNumber} value={phoneNumber} mb={"20px"} w={"80%"}  placeholder="Phone number"></Input>
                 {emailError && <Alert status='error' w={"80%"} borderRadius="3xl" >
                     <AlertIcon />
                     <AlertTitle>Wrong email</AlertTitle>
@@ -233,8 +233,8 @@ return(
                     <AlertIcon />
                     <AlertTitle>Email already in use</AlertTitle>
                 </Alert>}
-                <Input color={"black"} onChange={putEmail}  onBlur={onBlurEmail} value={email} mb={"20px"} w={"80%"}  placeholder="Email"></Input>
-                <Button onClick={makeAccount} w={"81%"} color="white" colorScheme={"none"} isDisabled={disabledButton}  _disabled={{ bg: "#B4DCFF", colorScheme: "none"}} bg={"#142C8E"}>Continue</Button>
+                <Input id="email"  color={"black"} onChange={putEmail}  onBlur={onBlurEmail} value={email} mb={"20px"} w={"80%"}  placeholder="Email"></Input>
+                <Button id="continue" onClick={makeAccount} w={"81%"} color="white" colorScheme={"none"} isDisabled={disabledButton}  _disabled={{ bg: "#B4DCFF", colorScheme: "none"}} bg={"#142C8E"}>Continue</Button>
             </Box> 
         </Box>
     </Box>
