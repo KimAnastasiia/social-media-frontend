@@ -10,7 +10,7 @@ import {AudioOutlined ,SmileOutlined,CameraOutlined,PhoneOutlined,EllipsisOutlin
 import { useCookies } from 'react-cookie'; 
 import { useNavigate   } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import {ChevronLeftIcon,AttachmentIcon } from '@chakra-ui/icons'
+import {ChevronLeftIcon,DeleteIcon } from '@chakra-ui/icons'
 import FormatDate from "../Utility/FormatDate";
 import {
     Popover,
@@ -116,6 +116,14 @@ export default function PrivateChat(props){
             setMessages([])
         }
     }
+    let deleteMessage=async(id)=>{
+        let response = await fetch (Commons.baseUrl+"/messages/messages?companionId="+user.id+"&id="+id+"&apiKey="+cookieObjectApiKey.apiKey,{
+            method: 'DELETE' 
+        })
+        if(response.ok){
+            getUser()
+         }
+    }
     return(
         <Box display={"flex"} justifyContent={"center"}>
             <Box borderRadius={"lg"} h={["85vh"]} w={["90%", "90%", "50%", "40%", "30%"]} borderWidth={"2px"}>
@@ -161,7 +169,10 @@ export default function PrivateChat(props){
                         <Box  mb={"10px"} w={"100%"} display={"flex"}>
                             <Avatar onClick={()=>{navigate('/users/'+message.uniqueName)}} src={Commons.baseUrl+"/images/"+message.userId +"avatar.png"}  ></Avatar>
                             <Box p={"10px"} borderRadius={"2xl"} borderWidth={"1px"} ml={"10px"}  >
-                                <Text fontSize={"17px"}  >{message.message}</Text>
+                                <Box display={"flex"} justifyContent={"space-between"}>
+                                    <Text fontSize={"17px"}  >{message.message}</Text>
+                                    <DeleteIcon onClick={()=>{deleteMessage(message.messageId)}}/>
+                                </Box>
                                 <Box alignItems={"center"} display={"flex"} >
                                     <Text ml={"5px"} fontSize={"10px"} color="grey">{FormatDate(message.date)}</Text>
                                 </Box> 
@@ -173,7 +184,10 @@ export default function PrivateChat(props){
                             <Box justifyContent={"flex-end"}  mb={"10px"} w={"100%"} display={"flex"}>
                             
                             <Box bg={"#EFEFEF"} p={"10px"} borderRadius={"2xl"} borderWidth={"1px"} ml={"10px"}  >
-                                <Text fontSize={"17px"}  >{message.message}</Text>
+                                <Box display={"flex"} justifyContent={"space-between"}>
+                                    <Text fontSize={"17px"}  >{message.message}</Text>
+                                    <DeleteIcon onClick={()=>{deleteMessage(message.messageId)}}/>
+                                </Box>
                                 <Box alignItems={"center"} display={"flex"} >
                                     <Text ml={"5px"} fontSize={"10px"} color="grey">{FormatDate(message.date)}</Text>
                                 </Box> 
