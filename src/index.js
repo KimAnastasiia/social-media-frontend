@@ -6,14 +6,17 @@ import reportWebVitals from './reportWebVitals';
 import { ChakraProvider } from '@chakra-ui/react'
 import { BrowserRouter } from "react-router-dom"
 import {CookiesProvider}  from "react-cookie"
+import { Provider } from "react-redux";
+import { configureStore } from "@reduxjs/toolkit";
+import reducer from "./reducers/reducer";
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
     <CookiesProvider>
       <ChakraProvider>
-   
+        <Provider store={configureStore({reducer: reducer})}>
           <App />
-      
+        </Provider>
       </ChakraProvider>
     </CookiesProvider>
   </BrowserRouter>

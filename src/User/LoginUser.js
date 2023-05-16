@@ -7,10 +7,11 @@ import { SearchIcon } from '@chakra-ui/icons'
 import {QqOutlined } from '@ant-design/icons';
 import { useNavigate   } from "react-router-dom";
 import Commons from "../Utility/Commons";
+import { useSelector, useDispatch } from "react-redux";
 
 
 export default function LoginUser(props){
-
+    const dispatch = useDispatch();
 
     const [email , setEmail]=useState("")
     const navigate  = useNavigate();
@@ -24,7 +25,7 @@ export default function LoginUser(props){
 
     const putEmail=(e)=>{
         setEmail(e.target.value)
-        props.setEmail(e.target.value)
+        dispatch({type:"modifyEmail", payload: e.target.value})
     }
 
     let signInOnClick=async()=>{
@@ -44,10 +45,10 @@ export default function LoginUser(props){
 
 return (
 <Box pt="200px" display={"flex"} justifyContent="center"  >
-
     <Box mr={"20px"} display={["none","none","none","block","block"]}>
         <Text textAlign={"center"} fontSize="2xl" fontWeight={"bold"} >Penguin for mobile devices</Text>
         <Text textAlign={"center"} color="#555657" >Install our official mobile app and stay in touch with your friends anytime and anywhere.</Text>
+
         <Box m={"20px"} display={"flex"} justifyContent="center" >
             <img  src="/images/pYORDwKmdDI.png" ></img>
             <img src="/images/VD3VpchXcC8.png" ></img>

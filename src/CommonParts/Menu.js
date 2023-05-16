@@ -17,6 +17,7 @@ import {
     AlertDialogContent,
     AlertDialogOverlay,AlertDialogCloseButton,useDisclosure
   } from '@chakra-ui/react'
+import { useSelector, useDispatch } from "react-redux";
 export default function Menu(props){
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [users, setUsers]=useState([])
@@ -26,12 +27,14 @@ export default function Menu(props){
     const alertsInterval = useRef()
     const cancelRef = React.useRef()
     let colorGreen = "#4A8F06"
+    const login = useSelector(state => state.reducerLogin);
+    const dispatch = useDispatch();
     
     useEffect(()=>{
         alertsInterval.current=setInterval( getSubscriptionInterval , 1000)
         getListSubscriptionRequestsUser()
-    },[props.login])
- 
+    },[login])
+
     let getSubscriptionInterval = () => {
         getListSubscriptionRequestsUser()
     }
@@ -71,7 +74,7 @@ export default function Menu(props){
     }
     let goOut=()=>{
         navigate("/")
-        props.setLogin(false)
+        dispatch({type:"loginFalse"})
         removeCookiObjectApiKey("id",  { path: '/' })
         removeCookiObjectApiKey("email",  { path: '/' })
         removeCookiObjectApiKey("apiKey",  { path: '/' })

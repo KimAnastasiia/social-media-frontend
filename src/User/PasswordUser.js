@@ -5,14 +5,14 @@ import {QqOutlined ,UserOutlined,LoginOutlined,LockOutlined} from '@ant-design/i
 import Commons from "../Utility/Commons";
 import { useCookies } from 'react-cookie'; 
 import { useNavigate   } from "react-router-dom";
-
+import { useSelector } from "react-redux";
 export default function PasswordUser(props){
 
     const [password, setPassword]=useState("")
     const [alert, setAlert] = useState(false)
     const [cookieObjectApiKey, setCookieObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email","uniqueName"]);
     const navigate  = useNavigate();
-
+    const email = useSelector(state => state.reducerEmail);
     useEffect(()=>{
         if(password.length==0){
             setAlert(false)
@@ -33,7 +33,7 @@ export default function PasswordUser(props){
             'Content-Type': 'application/json'
             },
             body: JSON.stringify({ 
-                email : props.email,
+                email : email,
                 password: password
             })
         })
@@ -84,7 +84,7 @@ export default function PasswordUser(props){
             <Box p={"50px"} w={["100%","100%","50%","50%", "50%"]} display="flex" flexDirection={"column"} justifyContent="center" alignItems={"center"}>
                 <QqOutlined style={{fontSize: '50px', color: "#142C8E"} } />
                 <Text  mt={"20px"} mb={"20px"} fontSize="20px" color={"black"}>Enter your password</Text>
-                <Text color={"#99A2AD"} mb={"20px"}>Enter the current password linked to {props.email}</Text>
+                <Text color={"#99A2AD"} mb={"20px"}>Enter the current password linked to {email}</Text>
                 { alert &&  <Alert status='error' w={"80%"} borderRadius="3xl" >
                     <AlertIcon />
                     <AlertTitle>{alert}</AlertTitle>

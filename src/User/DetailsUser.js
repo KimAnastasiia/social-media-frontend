@@ -25,6 +25,7 @@ import ListPublicationsUser from "./ListPublicationsUser";
 import ListFollowersUser from "./ListFollowersUser";
 import ListFollowingUser from "./ListFollowingUser";
 import { AvatarBadge, AvatarGroup } from '@chakra-ui/react'
+import { useSelector, useDispatch } from "react-redux";
 
 export default function DetailsUser(props){
     const STATE_PRIVATE_ACCOUNT = 1
@@ -57,9 +58,10 @@ export default function DetailsUser(props){
     const [online, setOnline ]=useState(false)
     const onlineInterval = useRef()
     const [lastTimeOnlime, setLastTimeOnlime]=useState()
+    const dispatch = useDispatch();
 
     useEffect(()=>{
-        props.setLogin(true)
+        dispatch({type:"loginTrue"})
         getUser()
         getTime()
         return () => {
@@ -144,7 +146,7 @@ export default function DetailsUser(props){
 
     let goOut=()=>{
         navigate("/")
-        props.setLogin(false)
+        dispatch({type:"loginFalse"})
         removeCookiObjectApiKey("id",  { path: '/' })
         removeCookiObjectApiKey("email",  { path: '/' })
         removeCookiObjectApiKey("apiKey",  { path: '/' })
@@ -315,7 +317,7 @@ export default function DetailsUser(props){
                                 <Avatar size={["xl","xl","2xl","2xl","2xl"]} >
                                         { online && <AvatarBadge boxSize='0.9em' bg='green.500' />}
                                 </Avatar>
-                                {!online && <Text color={"black"} fontSize={"15px"}>Last time was online {FormatDate( lastTimeOnlime)}</Text>}
+                                {!online && <Text color={"black"} fontSize={"15px"}>Was online {FormatDate( lastTimeOnlime)}</Text>}
                             </Box>
                            }
                         </Stack>

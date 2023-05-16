@@ -31,7 +31,6 @@ export default function PublicationDetails (props){
   
     const {id} = useParams()
     const [name, setName]=useState("")
-    const [userEmail, setUserEmail]=useState("")
     const navigate  = useNavigate();
     const [cookieObjectApiKey, setCookieObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email", "uniqueName"]);
     const [publication, setPublication]=useState({})
@@ -100,7 +99,6 @@ export default function PublicationDetails (props){
         if(response.ok){
             let data = await response.json()
             if(!data.error){
-                setUserEmail(data[0].email)
                 setName(data[0].uniqueName)
             }
         }
