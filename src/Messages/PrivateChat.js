@@ -37,6 +37,7 @@ export default function PrivateChat(props){
     const { onOpen, onClose, isOpen } = useDisclosure()
     const firstFieldRef = React.useRef(null)
     const time = React.useRef(0)
+    let colorGreen = "#4A8F06"
     const messagesEndRef = React.useRef(null)
     useEffect(()=>{
         getUser()
@@ -84,6 +85,30 @@ export default function PrivateChat(props){
     } 
     let sendMessage=async(e)=>{
         if (e.charCode == 13 && yourMessage!= null){ 
+            let response = await fetch (Commons.baseUrl+"/messages?apiKey="+cookieObjectApiKey.apiKey,{
+
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+    
+                body:
+                    JSON.stringify({ 
+                        idReceiver:user.id,
+                        message:yourMessage
+                    })
+            })
+            if(response.ok){
+               setYourMessage("")
+               getUser()
+               setMessages([])
+            }
+        }
+        
+
+    }
+    let sendMessageButton=async()=>{
+        if (yourMessage!= null){ 
             let response = await fetch (Commons.baseUrl+"/messages?apiKey="+cookieObjectApiKey.apiKey,{
 
                 method: 'POST',
@@ -199,7 +224,14 @@ export default function PrivateChat(props){
                 <div ref={messagesEndRef}></div>
                 </Box>
                 <Box  color={"gray"}  alignItems={"center"} display={"flex"} pl={"20px"} pr={"20px"} h={"10%"} >
-                    <Input value={yourMessage} onChange={(e)=>{setYourMessage(e.target.value)}} onKeyPress={(e)=>sendMessage(e)} w="100%" placeholder="Write your message..."/>
+                <InputGroup size='md'> 
+                    <Input       pr='4.5rem' value={yourMessage} onChange={(e)=>{setYourMessage(e.target.value)}} onKeyPress={(e)=>sendMessage(e)} w="100%" placeholder="Write your message..."/>
+                    <InputRightElement width='4.5rem'>
+                        <Button onClick={sendMessageButton} display={["block","block","block","block","none"]}  color={"white"} bg={colorGreen} h='1.75rem' size='sm' >
+                            sent
+                        </Button>
+                    </InputRightElement>
+                </InputGroup>
                 </Box>
             </Box>
         </Box>

@@ -289,7 +289,7 @@ export default function PublicationDetails (props){
                             <Button  variant='link' color={"black"} onClick={()=>{navigate("/users/"+name)}} ml={"4%"}>{name}</Button>
                         </Box>
                         {(cookieObjectApiKey.id == userIdOfPublication.current) && <Box  pr={"2%"}  >
-                    <Popover>
+                        <Popover>
                             <PopoverTrigger>
                             <EllipsisOutlined style={{ fontSize: '20px' }}/>
                             </PopoverTrigger>

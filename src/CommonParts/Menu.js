@@ -93,7 +93,7 @@ return (
             w={'100%'}
         >
    
-            <Box  w={["70%","90%","70%","80%","35%"]} mt={"10px"} mb={"10px"} display="flex" alignItems={"center"} justifyContent="space-between" >
+            <Box  w={["90%","90%","70%","80%","35%"]} mt={"10px"} mb={"10px"} display="flex" alignItems={"center"} justifyContent="space-between" >
                     <Box display="flex" alignItems={"center"} justifyContent="space-between" onClick={navigateTo} >
                         <Text fontSize={["10px","10px","16px","19px","21px"]} color={colorLightBlue} >{cookieObjectApiKey.uniqueName}</Text>
                         <QqOutlined style={{fontSize: '30px', color: colorLightBlue } } />
@@ -125,7 +125,7 @@ return (
                     />
                         { cookieObjectApiKey.apiKey &&  
                         <Box>
-                        <Box  onClick={onOpen}>
+                        <Box onClick={onOpen}>
                             <LogoutOutlined style={{fontSize: '29px', color: colorLightBlue } }/>
                         </Box>
                     
