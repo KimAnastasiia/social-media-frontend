@@ -15,7 +15,7 @@ import {
     PopoverFooter,
     PopoverArrow,
     PopoverCloseButton,
-    PopoverAnchor,Portal,useDisclosure
+    PopoverAnchor,Portal,useDisclosure,InputRightElement
   } from '@chakra-ui/react'
 import Commons from "../Utility/Commons";
 import {MessageOutlined ,SmileOutlined,SendOutlined,HeartOutlined,EllipsisOutlined,BookOutlined} from '@ant-design/icons';
@@ -42,6 +42,7 @@ export default function PublicationDetails (props){
     const [myLike, setMyLike]=useState([])
     const [listOfUsersWhoLikedThePost, setListOfUsersWhoLikedThePost ]=useState([])
     let colorDarkBlue = "#142C8E"
+    let colorLightBlue = "#B4DCFF"
     useEffect (()=>{ 
         dataOfpublication()
         numberOfLikes()
@@ -104,6 +105,7 @@ export default function PublicationDetails (props){
         }
     }
     let addComment=async()=>{
+       if(comment.length>0)     {        
         let response = await fetch (Commons.baseUrl+"/comments?apiKey="+cookieObjectApiKey.apiKey,{
 
             method: 'POST',
@@ -119,7 +121,7 @@ export default function PublicationDetails (props){
         })
         if(response.ok){
             setComment("")
-        }
+        }}
         getComments();
     }
     let onClickCommentsButton=()=>{
@@ -181,12 +183,12 @@ export default function PublicationDetails (props){
 
     return(
         <div>
-        <Hide below="md" >
-        <Box display={["flex"]} justifyContent={"center"} >
-            <Box w={"30%"} bg={"black"} justifyContent={"center"} display={"flex"}> 
+
+        <Box display={["none","none","flex","flex","flex",]} justifyContent={"center"} >
+            <Box w={["none","none","60%","48%","40%","30%"]} bg={"black"} justifyContent={"center"} display={"flex"}> 
                 <Image src={Commons.baseUrl+"/images/"+ publication.userId+id+"big.png"} />
             </Box>
-            <Box display={"flex"} flexDirection={"column"} justifyContent={"space-between"} borderWidth={"2px"} w={"30%"} >
+            <Box display={"flex"} flexDirection={"column"} justifyContent={"space-between"} borderWidth={"2px"} w={["none","none","40%","52%","60%","30%"]} >
                     <Box w={"100%"} h={"85%"} >
                         <Box borderBottomWidth={"2px"} h={"12%"} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
                             <Box  pl={"2%"} w={"100%"} display={"flex"} justifyContent={"start"} alignItems={"center"} >
@@ -228,9 +230,9 @@ export default function PublicationDetails (props){
                         </Box>
                     </Box>
                
-                    <Box pt={"20px"} borderTopWidth={"2px"} display={"flex"} h={"15%"}  flexDirection={"column"} >
-                        <Box zIndex={"sticky"} pl={"2%"} pr={"2%"} h={"40%"} >
-                            <Box  h={"60%"} display={"flex"} alignItems={"center"} justifyContent={"start"}>
+                    <Box  borderTopWidth={"2px"} display={"flex"} h={"15%"}  flexDirection={"column"} >
+                        <Box zIndex={"sticky"} pl={"2%"} pr={"2%"} h={"70%"} >
+                            <Box h={"60%"} display={"flex"} alignItems={"center"} justifyContent={"start"}>
                                 
                                     <Text fontSize={"21px"}fontWeight={"bold"} >{postLikes}</Text>
                                     { !cookieObjectApiKey.apiKey &&
@@ -239,7 +241,7 @@ export default function PublicationDetails (props){
                                         }} />
                                     }
 
-                                    { myLike.length>0 &&  
+                                    {( myLike.length>0 && cookieObjectApiKey.apiKey) &&  
                                         <Box onClick={likePost} >
                                             <Icon component={HeartSvgRed} style={{
                                                     fontSize: "30px",
@@ -254,36 +256,41 @@ export default function PublicationDetails (props){
                                                     }} />
                                         </Box>
                                     }
-                                   
-                         
-                                
                             </Box>
-                            <Box h={"30%"} alignItems={"center"} display={"flex"}>
+                            <Box  h={"10%"} alignItems={"center"}  display={"flex"}>
                                 <Text fontSize={"12px"}>{FormatDate (publication.date)}</Text>
                             </Box>
                         </Box>
 
-                        {cookieObjectApiKey.apiKey &&    
-                        <Box display={"flex"} alignItems={"end"} h={"50%"} >
-                            <Box  h={"100%"} display={"flex"} alignItems={"end"} w={"100%"}  borderTopWidth={"2px"} >
-                                <Input ml={"10px"} variant='unstyled'  value={comment} onChange={(e)=>{setComment(e.target.value)}} border={"none"} placeholder="Add a comment"></Input>
-                                <Button bg={colorDarkBlue }  color={"white"} onClick={addComment} >sent</Button>
-                            </Box>
+                      
+                        <Box display={"flex"} alignItems={"end"} h={"30%"} >
+                           {cookieObjectApiKey.apiKey &&     
+                           <Box  display={"flex"} alignItems={"end"} w={"100%"}  borderTopWidth={"2px"} >
+                                <InputGroup size='md'> 
+                                    <Input border={"none"} onChange={(e)=>{setComment(e.target.value)}}  value={comment} pr='4.5rem'w="100%" placeholder="Add a comment"/>
+                                    <InputRightElement width='4.5rem'>
+                                        <Button display={["block"]}  bg={colorDarkBlue }  color={"white"} onClick={addComment} h='1.75rem' size='sm' >
+                                            sent
+                                        </Button>
+                                    </InputRightElement>
+                                </InputGroup>
+                            </Box>}
+                            {!cookieObjectApiKey.apiKey && 
+                                <Box  display={"flex"} alignItems={"center"} justifyContent={"center"} w={"100%"}  borderTopWidth={"2px"} >
+                                    <Button bg={colorDarkBlue} size={"xs"}  onClick={()=>{navigate("/")}} color="white" fontWeight={"bold"}>Log in to write a comment</Button>
+                                </Box>
+                            }
                         </Box>
-                        }
-                        {!cookieObjectApiKey.apiKey && 
-                        <Box borderTopWidth={"2px"} display={"flex"} justifyContent={"center"} alignItems={"center"} h={"5%"} >
-                            <Button bg={"#0077FF"} onClick={()=>{navigate("/")}} color="white" fontWeight={"bold"}>Log in to write a comment</Button>
-                        </Box>
-                        }
+                        
+                        
                 </Box>
             </Box>
         </Box>
-        </Hide>
-        <Show below='md'>
+
+  
         {!showComments &&
-            <Box w={"100%"} >
-                    <Box borderTopWidth={"2px"}pt={"10px"} pb={"10px"} borderBottomWidth={"2px"} h={"10%"} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
+            <Box  minH={["89vh"]}  display={["block","block","none","none","none",]} w={"100%"} >
+                    <Box borderTopWidth={"2px"}pt={"10px"} pb={"10px"} h={"10%"} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
                         <Box  pl={"2%"} w={"100%"} display={"flex"} justifyContent={"start"} alignItems={"center"} >
                             <Avatar size={"md"}  onClick={()=>{navigate("/users/"+name)}}></Avatar>
                             <Button  variant='link' color={"black"} onClick={()=>{navigate("/users/"+name)}} ml={"4%"}>{name}</Button>
@@ -307,10 +314,10 @@ export default function PublicationDetails (props){
                         </Popover>
                         </Box>}
                     </Box>
-                    <Box h={"70%"} mb={"10px"}>
+                    <Box h={"73%"} >
                         <Image src={Commons.baseUrl+"/images/"+ publication.userId+id+"big.png"} />
                     </Box>
-                    <Box pb={"10px"} borderBottomWidth={"2px"} pl={"2%"} pr={"2%"}  justifyContent={"flex-start"} h={"15%"} >
+                    <Box  pb={"10px"} pl={"2%"} pr={"2%"}  justifyContent={"flex-start"} h={"8%"} >
                         <Box w={"20%"} mb={"10px"}  h={"75%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                             <Box display={"flex"} alignItems={"center"} >
                                 <Text fontSize={"21px"}fontWeight={"bold"} >{postLikes}</Text>
@@ -320,7 +327,7 @@ export default function PublicationDetails (props){
                                     }} />
                                 }
 
-                                { myLike.length>0 &&  
+                                {( myLike.length>0 && cookieObjectApiKey.apiKey) &&
                                     <Box onClick={likePost} >
                                         <Icon component={HeartSvgRed} style={{
                                                 fontSize: "30px",
@@ -328,7 +335,7 @@ export default function PublicationDetails (props){
                                     </Box>
                                 }
 
-                                { myLike.length==0 &&    
+                                {(cookieObjectApiKey.apiKey && myLike.length==0) &&    
                                     <Box onClick={likePost} >
                                         <Icon component={HeartSvg} style={{
                                                     fontSize: "30px",
@@ -369,8 +376,6 @@ export default function PublicationDetails (props){
                 </Box>
             </Box >
             }
-        
-        </Show>
         </div>
     )
 }

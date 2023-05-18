@@ -29,7 +29,7 @@ export default function Menu(props){
     let colorGreen = "#4A8F06"
     const login = useSelector(state => state.reducerLogin);
     const dispatch = useDispatch();
-    
+    let colorLightBlue = "#B4DCFF"
     useEffect(()=>{
         alertsInterval.current=setInterval( getSubscriptionInterval , 1000)
         getListSubscriptionRequestsUser()
@@ -40,7 +40,6 @@ export default function Menu(props){
     }
 
 
-    let colorLightBlue = "#B4DCFF"
     let searchUser=async(e)=>{
         if( e.length < 1){
             setUsers([])

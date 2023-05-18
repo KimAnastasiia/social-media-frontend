@@ -85,7 +85,7 @@ export default function EditPasswordUser(props){
     return(
         <Box  minH={["80vh"]} display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
             {done && <Box w={"100%"} mb={"30px"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
-                <Alert w={"15%"}  status="success"  borderRadius="3xl" >
+                <Alert w={["50%","50%","35%","30%","20%"]}  status="success"  borderRadius="3xl" >
                     <AlertIcon />
                     <AlertTitle>Password changed successfully</AlertTitle>
                 </Alert>

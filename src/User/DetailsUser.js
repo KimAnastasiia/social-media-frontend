@@ -317,7 +317,7 @@ export default function DetailsUser(props){
                                 <Avatar size={["xl","xl","2xl","2xl","2xl"]} >
                                         { online && <AvatarBadge boxSize='0.9em' bg='green.500' />}
                                 </Avatar>
-                                {!online && <Text color={"black"} fontSize={"15px"}>Was online {FormatDate( lastTimeOnlime)}</Text>}
+                                {!online && <Text color={"black"} fontSize={"15px"}>Was online {FormatDateStatus( lastTimeOnlime)}</Text>}
                             </Box>
                            }
                         </Stack>
@@ -387,6 +387,10 @@ export default function DetailsUser(props){
                         <Box  display={"flex"} justifyContent={"center"}>
                            <Button bg={colorLightBlue} onClick={()=>navigate("/users/publication")}  >Add new publication</Button>
                         </Box>}
+                        {!cookieObjectApiKey.apiKey &&
+                        <Box display={"flex"} justifyContent={"center"}>
+                           <Button onClick={()=>navigate("/")}   bg={colorLightBlue}>Sign in to send a friend request</Button>
+                        </Box>}
                         {(cookieObjectApiKey.apiKey && (cookieObjectApiKey.id!=user.id) && user.close==0) &&
                             <Box  display={"flex"} justifyContent={"center"}>
                                 {!follow && <Button onClick={addFriend} bg={colorDarkBlue} color="white" >Follow</Button>}
@@ -400,6 +404,7 @@ export default function DetailsUser(props){
                             {(stateOfUser==STATE_YOU_ARE_FRIEND) && <Button  onClick={unfollow}>Unfollow</Button>}
                             </Box>
                         }
+                        
                         {(cookieObjectApiKey.apiKey && cookieObjectApiKey.id!=user.id) &&
                         <Box mt={"10px"}  display={"flex"} justifyContent={"center"}>
                             <Button bg={colorGreen} color={"white"} onClick={onOpen}>Message</Button>

@@ -17,6 +17,7 @@ export default function ListPublicationsUser(props){
     const [postsInCloseAccount, setPostsInCloseAccount]=useState([])
     const [cookieObjectApiKey, setCookieObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email", "uniqueName"]);
     const [message, setMessage]=useState(false)
+    const [closeAccout, setCloseAccout]=useState()
     let colorDarkBlue = "#142C8E"
     useEffect(()=>{
         setPosts([])
@@ -40,6 +41,7 @@ export default function ListPublicationsUser(props){
             if(cookieObjectApiKey.apiKey){
                 getPostsInitialPrivet(data[0].id,1)
             }
+            setCloseAccout(data[0].close)
         }
     } 
     let getPostsInitial=async(uId, p)=>{
@@ -105,14 +107,17 @@ export default function ListPublicationsUser(props){
     return(
         <Box mt={"60px"} w={["90%","90%","100%","90%","60%"]} flexDirection={"column"} display={"flex"} justifyContent={"center"} >
                 <Box  display={"flex"} justifyContent={["center"]} flexWrap={"wrap"}>
-                {!cookieObjectApiKey.apiKey &&
-                 posts
-                    .map((post)=>
+                    {!cookieObjectApiKey.apiKey && posts.length>0 && 
+                    posts.map((post)=>
                         <Box m={"0.3%"} >
                             <Image  onClick={()=>{navigate("/mediaPost/"+post.id)}} src={Commons.baseUrl+"/images/"+ userIdRef.current+post.id+"mini.png"} />
                         </Box>
                     )}
-
+                {!cookieObjectApiKey.apiKey && posts.length==0 && closeAccout==0 &&
+                    <Box borderWidth={"1px"} w={["95%","85%","65%","60%","60%"]} h={"100px"} display={"flex"} alignItems={"center"} justifyContent={"center"}>
+                        <Text textAlign={"center"} fontSize={["26px","26px","30px","30px","30px",]}>Dont have any publication yet</Text>
+                    </Box>
+                    }
                   {(cookieObjectApiKey.apiKey && postsInCloseAccount.length>0) && 
                   postsInCloseAccount.map((post)=>
                         <Box m={"0.3%"} >
@@ -125,6 +130,7 @@ export default function ListPublicationsUser(props){
                     {(listOfButtons.length>1 && i<=(listOfButtons.length-1)) && 
                     <Button bg="lightblue"  w={"10%"} m={"5px"} onClick={e=>{getPosts( userIdRef.current,(i+1))}} >Show more</Button>}
                 </Box>}
+
                 {postsInCloseAccount.length>0 && 
                 <Box mt={"20px"} w="100%" display={"flex"} justifyContent={"center"}>
                     {(listOfButtons.length>1 && i<=(listOfButtons.length-1)) && 
@@ -132,15 +138,18 @@ export default function ListPublicationsUser(props){
                 </Box>}
                 {(posts.length==0 && postsInCloseAccount.length==0) &&
                 <Box minH={["50vh"]}  mt={"20px"} w="100%" display={"flex"} alignItems={"center"} justifyContent={"center"}>
-                 {(cookieObjectApiKey.apiKey && cookieObjectApiKey.uniqueName!=props.uniqueName && message )&& 
-                <Text textAlign={"center"} fontSize={"20px"}>{message}</Text>}
+                    {(cookieObjectApiKey.apiKey && cookieObjectApiKey.uniqueName!=props.uniqueName && message )&& 
+                    <Text textAlign={"center"} fontSize={"20px"}>{message}</Text>}
 
-                 {!cookieObjectApiKey.apiKey && 
-                <Box display={"flex"} flexDirection={"column"} alignItems={"center"} justifyContent={"center"}>
-                    <Text textAlign={"center"} fontSize={"20px"}>This is a privae account, login and subscribe to see publication</Text>
-                    <Button mt={"20px"} color={"white"}  bg={colorDarkBlue}  onClick={()=>navigate("/")}>Login</Button>
-                </Box>
-                }
+                    {(cookieObjectApiKey.apiKey && cookieObjectApiKey.uniqueName!=props.uniqueName&&closeAccout==0 )&& 
+                    <Text textAlign={"center"} fontSize={["26px","26px","30px","30px","30px",]}>Dont have any publication yet</Text>}
+                    
+                    {(!cookieObjectApiKey.apiKey && closeAccout==1 ) &&
+                    <Box display={"flex"} flexDirection={"column"} alignItems={"center"} justifyContent={"center"}>
+                        <Text textAlign={"center"} fontSize={"20px"}>This is a privae account, login and subscribe to see publication</Text>
+                        <Button mt={"20px"} color={"white"}  bg={colorDarkBlue}  onClick={()=>navigate("/")}>Login</Button>
+                    </Box>
+                    }
                 </Box>}
         </Box>
     )
