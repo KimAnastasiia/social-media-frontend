@@ -29,7 +29,6 @@ import {
     const [cookieObjectApiKey, setCookieObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email", "uniqueName"]);
     const [searchFollowing, setSearchFollowing]=useState("")
     const { Search } = Input;
-    const [online, setOnline]=useState(false)
     const navigate  = useNavigate();
     useEffect(()=>{
         getUser()

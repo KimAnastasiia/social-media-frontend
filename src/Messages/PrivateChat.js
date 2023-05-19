@@ -147,6 +147,8 @@ export default function PrivateChat(props){
         })
         if(response.ok){
             getUser()
+            messagesList.current=messagesList.current.filter((message)=>message.messageId!==id)
+            setMessages(messagesList.current)
          }
     }
     return(

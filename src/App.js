@@ -14,11 +14,7 @@ import ListSubscriptionRequestsUser from './User/ListSubscriptionRequestsUser';
 import AllDialogues from './Messages/AllDialogues';
 import PrivateChat from './Messages/PrivateChat';
 function App() {
-
-  const [email, setEmail]=useState("")
-
-
-
+  
   return (
     <Box >
       <Menu/>

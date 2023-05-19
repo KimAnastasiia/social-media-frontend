@@ -1,5 +1,5 @@
 import React,{useState, useEffect,useRef} from "react"
-import { Box, Flex, Text, Button, Stack, Img, HStack,Avatar,Hide,Show ,Input,InputGroup,InputLeftElement,Alert,
+import { Box, Flex, Divider, Text, Button, Stack, Img, HStack,Avatar,Hide,Show ,Input,InputGroup,InputLeftElement,Alert,
     useToast ,
     AlertTitle,
     AlertDescription,
@@ -325,12 +325,12 @@ export default function DetailsUser(props){
 
                     <Box w={["80%","80%","70%","70%","70%"]}  ml={"6%"}  >
 
-                        <Box display={"flex"} alignItems={"center"} justifyContent={"space-around"}>
-                            <Text  fontSize={"24px"}>{user.uniqueName}</Text>
+                        <Box display={["block","block","flex","flex","flex"]} alignItems={"center"} justifyContent={"space-around"}>
+                            <Text textAlign={"center"}   fontSize={"24px"}>{user.uniqueName}</Text>
                             {cookieObjectApiKey.id==user.id &&
-                            <Box w={"100%"}  display={"flex"} alignItems={"center"} justifyContent={"space-around"} >
+                            <Box mt={"10px"} mb={"10px"} w={"100%"}  display={"flex"} alignItems={"center"} justifyContent={"space-around"} >
                                
-                                <Button bg={colorLightBlue} onClick={()=>{navigate('/users/edit')}} >Edit profile</Button>
+                                <Button  color={"gray"} colorScheme='teal' variant='outline'  onClick={()=>{navigate('/users/edit')}} >Edit profile</Button>
                                 <Box  onClick={onOpen}>
                                     <SettingOutlined style={{ fontSize: '23px' }} />
                                 </Box>
@@ -385,7 +385,7 @@ export default function DetailsUser(props){
                         <Text fontWeight={"bold"} >{user.name}</Text>
                         {cookieObjectApiKey.id==user.id &&
                         <Box  display={"flex"} justifyContent={"center"}>
-                           <Button bg={colorLightBlue} onClick={()=>navigate("/users/publication")}  >Add new publication</Button>
+                           <Button mt="20px" bg={colorLightBlue} onClick={()=>navigate("/users/publication")}  >Add new publication</Button>
                         </Box>}
                         {!cookieObjectApiKey.apiKey &&
                         <Box display={"flex"} justifyContent={"center"}>
@@ -435,8 +435,8 @@ export default function DetailsUser(props){
                                       </Box>
                                     </AlertDialogBody>
                                     <AlertDialogFooter>
-                                        <CameraOutlined style={{ fontSize: '20px', color:"gray" }}  />
-                                        <Button bg={colorLightBlue} color={"black"} onClick={() => {sendMessage(); onClose();}}  colorScheme='blue' ml={3}>
+                                       
+                                        <Button borderRadius={"lg"} w={"100%"} bg={colorLightBlue} color={"black"} onClick={() => {sendMessage(); onClose();}}  colorScheme='blue' >
                                             send
                                         </Button>
                                     </AlertDialogFooter>

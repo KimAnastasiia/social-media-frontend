@@ -56,11 +56,9 @@ export default function Menu(props){
         navigate("/users/"+uniqueName)
     }
     let navigateTo=()=>{
-        if(cookieObjectApiKey.apiKey){
-            navigate("/users/"+cookieObjectApiKey.uniqueName)
-        }else{
+        
             navigate("/")
-        }
+        
     }
     let getListSubscriptionRequestsUser=async()=>{
         let response = await fetch(Commons.baseUrl+"/friends/subscriptionRequests?apiKey="+cookieObjectApiKey.apiKey)
@@ -94,8 +92,8 @@ return (
    
             <Box  w={["90%","90%","70%","80%","35%"]} mt={"10px"} mb={"10px"} display="flex" alignItems={"center"} justifyContent="space-between" >
                     <Box display="flex" alignItems={"center"} justifyContent="space-between" onClick={navigateTo} >
-                        <Text fontSize={["10px","10px","16px","19px","21px"]} color={colorLightBlue} >{cookieObjectApiKey.uniqueName}</Text>
-                        <QqOutlined style={{fontSize: '30px', color: colorLightBlue } } />
+                     
+                      <QqOutlined style={{fontSize: '30px', color: colorLightBlue } } />
                     </Box>
                     { cookieObjectApiKey.apiKey && 
                     <WechatOutlined id="messages" onClick={()=>{navigate("/users/yourDialogues")}} style={{fontSize: '30px', color: colorLightBlue} }  />}
@@ -123,34 +121,39 @@ return (
                         }
                     />
                         { cookieObjectApiKey.apiKey &&  
-                        <Box>
-                        <Box onClick={onOpen}>
-                            <LogoutOutlined style={{fontSize: '29px', color: colorLightBlue } }/>
-                        </Box>
-                    
-                        <AlertDialog
-                            motionPreset='slideInBottom'
-                            leastDestructiveRef={cancelRef}
-                            onClose={onClose}
-                            isOpen={isOpen}
-                            isCentered
-                        >
-                            <AlertDialogOverlay />
-                            <AlertDialogContent>
-                                <AlertDialogCloseButton/>
-                                <AlertDialogBody>
-                                    <Text fontSize={"20px"}>Do you really want to leave the page?</Text>
-                                </AlertDialogBody>
-                                <AlertDialogFooter display={"flex"} justifyContent={"space-around"} >
-                                            <Button bg={colorGreen} color={"white"} onClick={()=>{goOut(); onClose()} }  mt={"3"} mb={"3"} w={"30%"} >
-                                               yes
-                                            </Button>
-                                            <Button bg={colorLightBlue} onClick={onClose} w={"30%"}>
-                                                no
-                                            </Button>
-                                </AlertDialogFooter>
-                            </AlertDialogContent>
-                        </AlertDialog>
+                        <Box  display="flex" alignItems={"center"} justifyContent="space-between" >
+                            <Box onClick={onOpen} mr={"10px"}>
+                                <LogoutOutlined style={{fontSize: '29px', color: colorLightBlue } }/>
+                            </Box>
+                        
+                            <AlertDialog
+                                motionPreset='slideInBottom'
+                                leastDestructiveRef={cancelRef}
+                                onClose={onClose}
+                                isOpen={isOpen}
+                                isCentered
+                            >
+                                <AlertDialogOverlay />
+                                <AlertDialogContent>
+                                    <AlertDialogCloseButton/>
+                                    <AlertDialogBody>
+                                        <Text fontSize={"20px"}>Do you really want to leave the page?</Text>
+                                    </AlertDialogBody>
+                                    <AlertDialogFooter display={"flex"} justifyContent={"space-around"} >
+                                                <Button bg={colorGreen} color={"white"} onClick={()=>{goOut(); onClose()} }  mt={"3"} mb={"3"} w={"30%"} >
+                                                yes
+                                                </Button>
+                                                <Button bg={colorLightBlue} onClick={onClose} w={"30%"}>
+                                                    no
+                                                </Button>
+                                    </AlertDialogFooter>
+                                </AlertDialogContent>
+                            </AlertDialog>
+                            
+                            <Button onClick={()=>{navigate("/users/"+cookieObjectApiKey.uniqueName)}} variant='link'  display={["block","block","none","none","none"]}  fontSize={["15px","16px","16px","19px","21px"]} color={colorLightBlue} >{cookieObjectApiKey.uniqueName.substring(0,4)}...</Button>
+
+                            <Button onClick={()=>{navigate("/users/"+cookieObjectApiKey.uniqueName)}}  variant='link'  display={["none","none","block","block","block"]} fontSize={["10px","10px","16px","19px","21px"]} color={colorLightBlue} >{cookieObjectApiKey.uniqueName}</Button>
+                        
                         </Box>
                         }
             </Box>  

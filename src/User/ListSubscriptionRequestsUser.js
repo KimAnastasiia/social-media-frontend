@@ -78,7 +78,7 @@ export default function ListSubscriptionRequestsUser(props){
                         </Box>
                         <Box display={"flex"}  w={"40%"} justifyContent={"space-around"}>
                             <Button onClick={()=>{accept(follower.id)}} bg={colorLightBlue} color="black">Approve</Button>
-                            <Button color={colorLightBlue} onClick={()=>{declineSubscriptionRequest(follower.id)}} colorScheme='teal' variant='outline'>Cancel</Button>
+                            <Button color={"gray"} onClick={()=>{declineSubscriptionRequest(follower.id)}} colorScheme='teal' variant='outline'>Cancel</Button>
                         </Box>
                     </Box>
                 )}
