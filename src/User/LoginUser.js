@@ -1,27 +1,36 @@
-
 import React,{useState, useEffect,useRef} from "react"
-import { Box, Checkbox, Text, Button, Stack, Img, Badge,Avatar,Hide,Show ,Input,InputGroup,InputLeftElement,Alert,
+import { Box, Image, Text, Button, Stack, Img, Badge,Avatar,Hide,Show ,Input,InputGroup,InputLeftElement,Alert,
 AlertIcon, AlertTitle} from "@chakra-ui/react";
-import { Link } from "react-router-dom";
-import { SearchIcon } from '@chakra-ui/icons'
-import {QqOutlined } from '@ant-design/icons';
 import { useNavigate   } from "react-router-dom";
 import Commons from "../Utility/Commons";
 import { useSelector, useDispatch } from "react-redux";
 import { useCookies } from 'react-cookie'; 
+import { Result } from 'antd'
+import { FrownOutlined} from '@ant-design/icons';
+import FormatDate from "../Utility/FormatDate";
 
 export default function LoginUser(props){
+
     const dispatch = useDispatch();
+
     const [cookieObjectApiKey, setCookieObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email", "uniqueName"])
     const [email , setEmail]=useState("")
     const navigate  = useNavigate();
     const [emailError, setEmailError]=useState(false)
+    const [listOfPublication, setListOfPublication]=useState([])
 
+    let publications=useRef([])
     useEffect(()=>{
         if(email.length==0){
             setEmailError(false)
         }
     },[email])
+
+    useEffect(()=>{
+        if(cookieObjectApiKey.apiKey){
+            getFolloving()
+        }
+    },[])
 
     const putEmail=(e)=>{
         setEmail(e.target.value)
@@ -43,8 +52,39 @@ export default function LoginUser(props){
 
     }
 
+    let getFolloving=async()=>{
+        let response = await fetch(Commons.baseUrl+"/public/friends/following?id="+cookieObjectApiKey.id)
+        if(response.ok){
+            let data = await response.json()
+            if(data.following.length>0){
+                await getPosts(data.following)
+                
+            }
+        }
+    } 
+    let getPosts= async (listFollowing)=>{
+
+        let informationPost=[]
+
+        await listFollowing.forEach( async(user, i)=>{
+
+            let response = await fetch(Commons.baseUrl+"/mediaPost/lastPost?userId="+user.id+"&apiKey="+cookieObjectApiKey.apiKey)
+            if(response.ok){
+                let data = await response.json()
+                if(data.length>0){
+                    informationPost=informationPost.concat(data)
+                    setListOfPublication(informationPost)
+                    publications.current=informationPost
+                }
+            }
+   
+        })
+   
+
+    }
+
 return (
-    <div>
+    <Box>
     {!cookieObjectApiKey.apiKey && 
         <Box pt="200px" display={"flex"} justifyContent="center"  >
             <Box mr={"20px"} display={["none","none","none","block","block"]}>
@@ -75,18 +115,45 @@ return (
                 </Box>
 
                 <Box  w={["80%", "80%", "100%", "100%","100%"]}  borderRadius={"lg"}  p={"20px"} borderWidth={"1px"} display="flex" flexDirection={"column"} justifyContent="center" alignItems={"center"} >
-                
                     <Button onClick={()=>{navigate("/registration")}} id="registration" color={"white"}  mb={"20px"}  w={"70%"}  bg={"#4A8F06"}>Registration</Button>
                     <Text textAlign={"center"} w={"80%"} color="#555657">After signing up, you'll get access to all of Penguin ID's features</Text>
                 </Box>
 
             </Box>
         </Box>}
-
-
-
-
- </div>
+        {cookieObjectApiKey.apiKey &&
+        <Box>  
+            {listOfPublication.length>0 &&
+            <Box>
+                { listOfPublication.sort((a,b)=>b.postId-a.postId)
+                .map((following)=>
+                    <Box w={"100%"} display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
+                        <Box w={"30%"} p={"20px"}  borderRadius={"lg"} mb={"20px"} borderWidth={"1px"} display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
+                            <Box w={"90%"} >
+                                <Box mb={"20px"} display={"flex"} justifyContent={"flex-start"}>
+                                    <Avatar src={Commons.baseUrl+"/images/"+following.userId+"avatar.png"} ></Avatar>
+                                    <Box w={"100%"} ml={"10px"}>
+                                        <Button variant='link'>{following.uniqueName}</Button>
+                                        <Box justifyContent={"space-between"} display={"flex"} w={"100%"}>
+                                            <Text >{following.comment}</Text>
+                                            <Text >{ FormatDate(following.date)}</Text>
+                                        </Box>
+                                    </Box>
+                                </Box>
+                            </Box>
+                            <Image borderRadius={"lg"}  w={"90%"} src={Commons.baseUrl+"/images/"+following.userId+following.postId+"big.png"} />
+                        </Box>
+                    </Box>)}
+            </Box>}
+            {listOfPublication.length==0 &&
+               <Result
+               icon={<FrownOutlined />}
+               title="You dont have any friends yet"
+             />
+            }
+        </Box>
+        }
+ </Box>
 
 
 )}

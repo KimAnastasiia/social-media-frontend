@@ -40,14 +40,13 @@ export default function PublicationDetails (props){
     const [postLikes, setPostLikes]=useState(0)
     let userIdOfPublication=useRef(0)
     const [myLike, setMyLike]=useState([])
-    const [listOfUsersWhoLikedThePost, setListOfUsersWhoLikedThePost ]=useState([])
+
     let colorDarkBlue = "#142C8E"
     let colorLightBlue = "#B4DCFF"
     useEffect (()=>{ 
         dataOfpublication()
         numberOfLikes()
         myLikeOnPost()
-        console.log(listOfUsersWhoLikedThePost)
     },[])
 
 
@@ -157,7 +156,6 @@ export default function PublicationDetails (props){
             let data = await response.json()
             if(!data.error){
                 setPostLikes(data.rowsCount[0].totalLikes)
-                setListOfUsersWhoLikedThePost(data.rowsName)
             }
         }
     }
