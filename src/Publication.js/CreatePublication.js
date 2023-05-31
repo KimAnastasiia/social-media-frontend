@@ -55,7 +55,7 @@ export default function CreatePublication(props){
                     
                     <Box  w={"100%"} display={"flex"} justifyContent={"center"}>
                         <Form.Item name="image">
-                            <Upload  action={ (file) => {chageValueImage(file)} }  listType="picture">
+                            <Upload  action={ (file) => {chageValueImage(file)} }  listType="picture" >
                                 <Text  style={{fontSize: '20px', width:["300px","400px"], borderWidth:"1px", borderStyle:"dashed solid", padding:"10px", textAlign:"center" }} >
                                     <Box display={"flex"} justifyContent={"center"}>
                                         <img  src="/images/photo-svgrepo-com.svg" ></img>

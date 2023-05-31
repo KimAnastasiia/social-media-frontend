@@ -13,7 +13,7 @@ export default function ListPublicationsUser(props){
     const [posts, setPosts]=useState([])
     const [listOfButtons,setListOfButtons]=useState([])
     let userIdRef = useRef()
-    const [i, setI]=useState(0)
+    const [i, setI]=useState(1)
     const [postsInCloseAccount, setPostsInCloseAccount]=useState([])
     const [cookieObjectApiKey, setCookieObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email", "uniqueName"]);
     const [message, setMessage]=useState(false)
@@ -108,7 +108,9 @@ export default function ListPublicationsUser(props){
         <Box mt={"60px"} w={["90%","90%","100%","90%","60%"]} flexDirection={"column"} display={"flex"} justifyContent={"center"} >
                 <Box  display={"flex"} justifyContent={["center"]} flexWrap={"wrap"}>
                     {!cookieObjectApiKey.apiKey && posts.length>0 && 
-                    posts.map((post)=>
+                    //doesn't work sort 
+                    posts.sort((a,b)=>b.id-a.id)
+                    .map((post)=>
                         <Box m={"0.3%"} >
                             <Image  onClick={()=>{navigate("/mediaPost/"+post.id)}} src={Commons.baseUrl+"/images/"+ userIdRef.current+post.id+"mini.png"} />
                         </Box>
@@ -119,7 +121,8 @@ export default function ListPublicationsUser(props){
                     </Box>
                     }
                   {(cookieObjectApiKey.apiKey && postsInCloseAccount.length>0) && 
-                  postsInCloseAccount.map((post)=>
+                  postsInCloseAccount.sort((a,b)=>b.id-a.id)
+                  .map((post)=>
                         <Box m={"0.3%"} >
                             <Image  onClick={()=>{navigate("/mediaPost/"+post.id)}} src={Commons.baseUrl+"/images/"+ userIdRef.current+post.id+"mini.png"} />
                         </Box>

@@ -1,30 +1,11 @@
 
 import React,{useState, useEffect,useRef} from "react"
-import { Box, Flex, Text, Button, Stack, Img, HStack,Avatar,Hide,Show ,Input,InputGroup,InputLeftElement,Alert,
-    Image,
-    AlertTitle,
-    AlertDescription,
- } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
-
+import { Box, Flex, Text, Button, Stack, Img, HStack,Avatar} from "@chakra-ui/react";
 import Commons from "../Utility/Commons";
-import {SettingOutlined ,SmileOutlined,SendOutlined,HeartOutlined,EllipsisOutlined,BookOutlined} from '@ant-design/icons';
 import { useCookies } from 'react-cookie'; 
 import { useNavigate   } from "react-router-dom";
-import { useParams } from "react-router-dom";
 import FormatDate from "../Utility/FormatDate";
-import {
-    AlertDialog,
-    AlertDialogBody,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogContent,
-    AlertDialogOverlay,AlertDialogCloseButton,useDisclosure
-  } from '@chakra-ui/react'
-import { Switch } from '@chakra-ui/react'
-import ListPublicationsUser from "./ListPublicationsUser";
-import ListFollowersUser from "./ListFollowersUser";
-import ListFollowingUser from "./ListFollowingUser";
+
 export default function ListSubscriptionRequestsUser(props){
     const navigate  = useNavigate();
     const [cookieObjectApiKey, setCookieObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email", "uniqueName"])
@@ -66,7 +47,10 @@ export default function ListSubscriptionRequestsUser(props){
         <Box minH={["30vh"]} display={"flex"} alignItems={"center"} justifyContent={"center"} flexDirection={"column"}>
             <Box borderRadius={"lg"} borderWidth={"1px"}  w={["90%","90%","70%","60%","30%"]}>
                 <Text mt="30px" mb="30px" fontSize={"30px"} textAlign={"center"}>Yours subscription requests</Text>
-                {listSubscriptionRequests.map((follower)=>
+
+                {listSubscriptionRequests.length>0 &&
+                
+                listSubscriptionRequests.map((follower)=>
             
                     <Box  w={"80%"} m={"20px"} alignItems={"center"} display={"flex"} justifyContent={"space-between"}>
                         <Box onClick={()=>{navigate("/users/"+follower.uniqueName)}} alignItems={"center"}  w={"60%"} display={"flex"} justifyContent={"space-around"} >
@@ -82,6 +66,11 @@ export default function ListSubscriptionRequestsUser(props){
                         </Box>
                     </Box>
                 )}
+                 {listSubscriptionRequests.length==0 &&
+                 <Box borderTopWidth={"1px"} minH={["30vh"]} w={"100%"} display={"flex"} alignItems={"center"} justifyContent={"center"}>
+                     <Text fontSize={"25px"} w={"100%"} textAlign={"center"}>You dont have any requests yet</Text>
+                </Box>
+                 }
             </Box>
         </Box>
     )

@@ -12,7 +12,6 @@ import FormatDate from "../Utility/FormatDate";
 export default function LoginUser(props){
 
     const dispatch = useDispatch();
-
     const [cookieObjectApiKey, setCookieObjectApiKey, removeCookiObjectApiKey] = useCookies(['apiKey', "id", "email", "uniqueName"])
     const [email , setEmail]=useState("")
     const navigate  = useNavigate();
@@ -86,7 +85,7 @@ export default function LoginUser(props){
 return (
     <Box>
     {!cookieObjectApiKey.apiKey && 
-        <Box pt="200px" display={"flex"} justifyContent="center"  >
+        <Box pt={["0px","200px","200px","200px","200px"]} display={"flex"} justifyContent="center"  >
             <Box mr={"20px"} display={["none","none","none","block","block"]}>
                 <Text textAlign={"center"} fontSize="2xl" fontWeight={"bold"} >Penguin for mobile devices</Text>
                 <Text textAlign={"center"} color="#555657" >Install our official mobile app and stay in touch with your friends anytime and anywhere.</Text>
@@ -128,10 +127,10 @@ return (
                 { listOfPublication.sort((a,b)=>b.postId-a.postId)
                 .map((following)=>
                     <Box w={"100%"} display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
-                        <Box w={"30%"} p={"20px"}  borderRadius={"lg"} mb={"20px"} borderWidth={"1px"} display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
+                        <Box w={["90%","80%","60%","50%","30%"]} p={"20px"}  borderRadius={"lg"} mb={"20px"} borderWidth={"1px"} display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
                             <Box w={"90%"} >
                                 <Box mb={"20px"} display={"flex"} justifyContent={"flex-start"}>
-                                    <Avatar src={Commons.baseUrl+"/images/"+following.userId+"avatar.png"} ></Avatar>
+                                    <Avatar onClick={()=>{navigate("/users/"+following.uniqueName)}} src={Commons.baseUrl+"/images/"+following.userId+"avatar.png"} ></Avatar>
                                     <Box w={"100%"} ml={"10px"}>
                                         <Button variant='link'>{following.uniqueName}</Button>
                                         <Box justifyContent={"space-between"} display={"flex"} w={"100%"}>
@@ -141,7 +140,7 @@ return (
                                     </Box>
                                 </Box>
                             </Box>
-                            <Image borderRadius={"lg"}  w={"90%"} src={Commons.baseUrl+"/images/"+following.userId+following.postId+"big.png"} />
+                            <Image onClick={()=>{navigate('/mediaPost/'+following.postId)}} borderRadius={"lg"}  w={"90%"} src={Commons.baseUrl+"/images/"+following.userId+following.postId+"big.png"} />
                         </Box>
                     </Box>)}
             </Box>}

@@ -126,7 +126,7 @@ return(
             <Box mb={"10px"} minH={["7vh"]} display={"flex"} justifyContent={"space-between"} >
                 <Box  m={"10px"} w={"100%"} flexDirection={"column"} display={"flex"} justifyContent={"space-around"}>
                     <Box display={"flex"}   >
-                        <Avatar size={"xs"} onClick={()=>{navigate("/users/"+commentUser.uniqueName)}} name={commentUser.uniqueName}></Avatar>
+                        <Avatar size={"xs"} onClick={()=>{navigate("/users/"+commentUser.uniqueName)}}  src={Commons.baseUrl+"/images/"+commentUser.userId+"avatar.png"}></Avatar>
                         <Button variant='link' color={"black"} onClick={()=>{navigate("/users/"+commentUser.uniqueName)}}  mr={"20px"} fontWeight={"bold"} ml={"10px"} >{commentUser.uniqueName}</Button>
                         {(selectedCommentId.current != commentUser.id ) && <Text>{commentUser.comment}</Text>}
                         {( selectedCommentId.current == commentUser.id) &&
@@ -217,7 +217,7 @@ return(
         <Box mb={"10px"} minH={["7vh"]} display={"flex"} justifyContent={"space-between"} >
             <Box  m={"10px"} w={"100%"} flexDirection={"column"} display={"flex"} justifyContent={"space-around"}>
                 <Box display={"flex"}   >
-                    <Avatar onClick={()=>{navigate("/users/"+commentUser.uniqueName)}}  size={"xs"} name={commentUser.uniqueName}></Avatar>
+                    <Avatar onClick={()=>{navigate("/users/"+commentUser.uniqueName)}}  size={"xs"} src={Commons.baseUrl+"/images/"+commentUser.userId+"avatar.png"}></Avatar>
                     <Button variant={"link"} color={"black"} onClick={()=>{navigate("/users/"+commentUser.uniqueName)}}   mr={"20px"} fontWeight={"bold"} ml={"10px"} >{commentUser.uniqueName}</Button>
                     {(selectedCommentId.current != commentUser.id ) && <Text>{commentUser.comment}</Text>}
 

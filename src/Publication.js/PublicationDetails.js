@@ -190,7 +190,7 @@ export default function PublicationDetails (props){
                     <Box w={"100%"} h={"85%"} >
                         <Box borderBottomWidth={"2px"} h={"12%"} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
                             <Box  pl={"2%"} w={"100%"} display={"flex"} justifyContent={"start"} alignItems={"center"} >
-                                <Avatar onClick={()=>{navigate("/users/"+name)}} size={"md"}></Avatar>
+                                <Avatar src={Commons.baseUrl+"/images/"+publication.userId+"avatar.png"} onClick={()=>{navigate("/users/"+name)}}  size={"md"}></Avatar>
                                 <Box ml={"5px"}>
                                     <Button  variant='link' color={"black"} onClick={()=>{navigate("/users/"+name)}}>{name}</Button>
                                     <Text fontSize={"xs"} fontWeight={"bold"} >{publication.comment} </Text>
@@ -290,7 +290,7 @@ export default function PublicationDetails (props){
             <Box  minH={["89vh"]}  display={["block","block","none","none","none",]} w={"100%"} >
                     <Box borderTopWidth={"2px"}pt={"10px"} pb={"10px"} h={"10%"} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
                         <Box  pl={"2%"} w={"100%"} display={"flex"} justifyContent={"start"} alignItems={"center"} >
-                            <Avatar size={"md"}  onClick={()=>{navigate("/users/"+name)}}></Avatar>
+                            <Avatar src={Commons.baseUrl+"/images/"+publication.userId+"avatar.png"} size={"md"}  onClick={()=>{navigate("/users/"+name)}}></Avatar>
                             <Button  variant='link' color={"black"} onClick={()=>{navigate("/users/"+name)}} ml={"4%"}>{name}</Button>
                         </Box>
                         {(cookieObjectApiKey.id == userIdOfPublication.current) && <Box  pr={"2%"}  >

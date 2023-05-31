@@ -60,9 +60,9 @@ export default function PasswordUser(props){
     }
 
     return (
-        <Box display={"flex"} alignItems={"center"} minH={["89vh"]} justifyContent={"center"}>
-        <Box  border={"1px"} borderColor="lightgray" borderRadius={"lg"} display={"flex"} flexDirection={["column","column","row","row","row"]} >
-            <Box p={"50px"}w={["100%","100%","50%","50%", "50%"]}  bg={"#F9F9F9"}>
+        <Box display={"flex"} alignItems={"center"} minH={["0vh","0vh","89vh","89vh","89vh"]} justifyContent={"center"}>
+        <Box   borderWidth={["0px","1px","1px","1px","1px"]} borderRadius={"lg"} display={"flex"} flexDirection={["column","column","row","row","row"]} >
+            <Box display={["none","none","block","block","block"]} p={"50px"}w={["100%","100%","50%","50%", "50%"]}  bg={"#F9F9F9"}>
                 <Box m="10px" display={"flex"}>
                     <QqOutlined style={{fontSize: '30px', color: "#142C8E"} } />
                     <Text ml={"5px"} fontWeight={"bold"} fontSize="20px" color={"black"} >ID</Text>
