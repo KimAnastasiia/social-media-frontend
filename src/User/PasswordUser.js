@@ -17,6 +17,7 @@ export default function PasswordUser(props){
         if(password.length==0){
             setAlert(false)
         }
+        setAlert(false)
     },[password])
 
     let putPassword=(e)=>{
