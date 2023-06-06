@@ -6,7 +6,7 @@ User: sampleuser@sample.com
 
 password: 1234567
 
-User profile
+Main functionality
 - Register a new user including data validation
 - Login
 - Upload personal info and profile picture
@@ -16,6 +16,7 @@ User profile
 -	Explore users in the application using a filter
 -	Send friend request to a user
 -	Accept friend request
+-	Notifications for messages and friend requests
 -	See your friends list
 -	Start a chat with your friends
 -	See all your open chats
@@ -23,6 +24,7 @@ User profile
 -	See users profiles and post with pagination
 -	Like a user post
 -	Put a comment in a user post
+-	Check online status of users and last connection time
 
 Technical points
 React (Frontend)
@@ -32,6 +34,7 @@ React (Frontend)
 - Navigation
 -	Responsive design
 -	Input field validation
+-	Pagination
 -	Automatic Test with React JEST and puppeteer
 -	Cookies
 -	React hooks: userState, useRef, useEffect, useCookie, useNavigate...
