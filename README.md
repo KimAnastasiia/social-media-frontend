@@ -1,3 +1,49 @@
+# Introduction
+
+Deployed in	http://38.242.239.205:3001/
+
+User: sampleuser@sample.com
+
+password: 1234567
+
+User profile
+- Register a new user including data validation
+- Login
+- Upload personal info and profile picture
+-	View and edit user profile
+-	Create Posts with pictures
+-	Delete previous posts
+-	Explore users in the application using a filter
+-	Send friend request to a user
+-	Accept friend request
+-	See your friends list
+-	Start a chat with your friends
+-	See all your open chats
+-	Send messages and delete messages
+-	See users profiles and post with pagination
+-	Like a user post
+-	Put a comment in a user post
+
+Technical points
+React (Frontend)
+- Redux
+- Framework Chakra UI and Ant design
+-	Flex
+- Navigation
+-	Responsive design
+-	Input field validation
+-	Automatic Test with React JEST and puppeteer
+-	Cookies
+-	React hooks: userState, useRef, useEffect, useCookie, useNavigate...
+
+Node.js + express (backend)
+-	API Rest (GET, POST, PUT, DELETE)
+-	sharp for editing pictures
+-	JWT Token for ApiKey
+-	MySQL 
+- Routers and Middlewares
+- Encrypt information
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
